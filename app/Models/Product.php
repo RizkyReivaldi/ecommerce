@@ -1,17 +1,17 @@
 <?php
+// app/Models/Product.php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+
 class Product extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
-    protected $fillable =
-    [
+    protected $fillable = [
         'category_id',
         'name',
         'slug',
@@ -21,48 +21,65 @@ class Product extends Model
         'stock',
         'weight',
         'is_active',
-        'is_featured'
+        'is_featured',
     ];
 
     protected $casts = [
-        'price' => 'decimal:2',
+        'price'          => 'decimal:2',
         'discount_price' => 'decimal:2',
-        'is_active' => 'boolean',
-        'is_featured' => 'boolean',
+        'is_active'      => 'boolean',
+        'is_featured'    => 'boolean',
     ];
+
+    // ==================== BOOT ====================
 
     protected static function boot()
     {
         parent::boot();
 
-        static::creating(function($product) {
+        static::creating(function ($product) {
             if (empty($product->slug)) {
-                $product->slug + Str::slug($product->name);
+                $product->slug = Str::slug($product->name);
 
-                $count + Static::where('slug','like', $product->Slug . '%')->count();
-                if($count > 0) {
+                // Pastikan slug unik
+                $count = static::where('slug', 'like', $product->slug . '%')->count();
+                if ($count > 0) {
                     $product->slug .= '-' . ($count + 1);
                 }
             }
         });
     }
 
+    // ==================== RELATIONSHIPS ====================
+
+    /**
+     * Produk termasuk dalam satu kategori.
+     */
     public function category()
     {
-        return $this->belongTo(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
+    /**
+     * Produk memiliki banyak gambar.
+     */
     public function images()
     {
         return $this->hasMany(ProductImage::class)->orderBy('sort_order');
     }
 
-    public function primaryImages()
+    /**
+     * Gambar utama produk.
+     */
+    public function primaryImage()
     {
         return $this->hasOne(ProductImage::class)->where('is_primary', true);
     }
 
-     public function orderItems()
+    /**
+     * Item pesanan yang mengandung produk ini.
+     */
+    public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -99,7 +116,7 @@ class Product extends Model
      */
     public function getDiscountPercentageAttribute(): int
     {
-        if (!$this->has_discount) {
+        if (! $this->has_discount) {
             return 0;
         }
         return round((($this->price - $this->discount_price) / $this->price) * 100);
@@ -111,7 +128,7 @@ class Product extends Model
     public function getHasDiscountAttribute(): bool
     {
         return $this->discount_price !== null
-            && $this->discount_price < $this->price;
+        && $this->discount_price < $this->price;
     }
 
     /**
@@ -143,35 +160,48 @@ class Product extends Model
         return $query->where('is_active', true);
     }
 
+    /**
+     * Filter produk unggulan.
+     */
     public function scopeFeatured($query)
     {
         return $query->where('is_featured', true);
     }
 
+    /**
+     * Filter produk yang tersedia (ada stok).
+     */
     public function scopeInStock($query)
     {
         return $query->where('stock', '>', 0);
     }
 
+    /**
+     * Filter berdasarkan kategori (menggunakan slug).
+     */
     public function scopeByCategory($query, string $categorySlug)
     {
-        return $query->whereHas('category', function($q) use ($categorySlug) {
+        return $query->whereHas('category', function ($q) use ($categorySlug) {
             $q->where('slug', $categorySlug);
         });
     }
 
+    /**
+     * Pencarian produk.
+     */
     public function scopeSearch($query, string $keyword)
     {
         return $query->where(function ($q) use ($keyword) {
             $q->where('name', 'like', "%{$keyword}%")
-              ->orWhere('description', 'like', "%{$keyword}%");
+                ->orWhere('description', 'like', "%{$keyword}%");
         });
     }
 
-
+    /**
+     * Filter berdasarkan range harga.
+     */
     public function scopePriceRange($query, float $min, float $max)
     {
         return $query->whereBetween('price', [$min, $max]);
     }
-
 }
