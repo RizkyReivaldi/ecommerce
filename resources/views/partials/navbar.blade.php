@@ -44,12 +44,12 @@ FUNGSI: Navigation bar untuk customer
                 <li class="nav-item">
                     <a class="nav-link position-relative" href="{{ route('wishlist.index') }}">
                         <i class="bi bi-heart"></i>
-                        @if(auth()->user()->wishlist()->count() > 0 )
+                        {{-- @if(auth()->user()->wishlist()->count() > 0 ) --}}
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                             style="font-size: 0.6rem;">
                             {{ auth()->user()->wishlists()->count() }}
                         </span>
-                        @endif
+                        {{-- @endif --}}
                     </a>
                 </li>
 

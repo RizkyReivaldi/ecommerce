@@ -2,6 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,33 +66,7 @@ use App\Http\Controllers\Auth\GoogleController;
     Route::get('/auth/google/callback', 'callback')
         ->name('auth.google.callback');
 });
-?>
 
-
-<?php
-// ================================================
-// FILE: routes/web.php
-// FUNGSI: Definisi semua route website
-// ================================================
-
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\CatalogController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\OrderController;
-
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ProductController as AdminProductController;
-use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
-
-
-// ================================================
-// HALAMAN PUBLIK (Tanpa Login)
-// ================================================
-
-// Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Katalog Produk
@@ -124,16 +109,9 @@ Route::middleware('auth')->group(function () {
 // ================================================
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-    // Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Produk CRUD
     Route::resource('products', AdminProductController::class);
-
-    // Kategori CRUD
     Route::resource('categories', AdminCategoryController::class);
-
-    // Manajemen Pesanan
     Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
     Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
@@ -143,6 +121,31 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // ================================================
 // AUTH ROUTES (dari Laravel UI)
 // ================================================
+
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        // /admin/dashboard
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])
+            ->name('dashboard');
+        // ↑ Nama lengkap route: admin.dashboard
+        // ↑ URL: /admin/dashboard
+
+        // CRUD Produk: /admin/products, /admin/products/create, dll
+        Route::resource('/products', AdminProductController::class);
+        // ↑ resource() membuat 7 route sekaligus:
+        // - GET    /admin/products          → index   (admin.products.index)
+        // - GET    /admin/products/create   → create  (admin.products.create)
+        // - POST   /admin/products          → store   (admin.products.store)
+        // - GET    /admin/products/{id}     → show    (admin.products.show)
+        // - GET    /admin/products/{id}/edit→ edit    (admin.products.edit)
+        // - PUT    /admin/products/{id}     → update  (admin.products.update)
+        // - DELETE /admin/products/{id}     → destroy (admin.products.destroy)
+});
+
+
 Auth::routes();
 
 
