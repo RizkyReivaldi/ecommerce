@@ -11,18 +11,18 @@ class ProductObserver
     /**
      * Handle the Product "created" event.
      */
-    public function created(Product $product): void
-    {
-        // Clear cache produk featured
-        Cache::forget('featured_products');
-        Cache::forget('category_' . $product->category_id . '_products');
+    // public function created(Product $product): void
+    // {
+    //     // Clear cache produk featured
+    //     Cache::forget('featured_products');
+    //     Cache::forget('category_' . $product->category_id . '_products');
 
-        // Log activity
-            activity()
-            ->performedOn($product)
-            ->causedBy(auth()->user())
-            ->log('Produk baru dibuat: ' . $product->name);
-    }
+    //     // Log activity
+    //         activity()
+    //         ->performedOn($product)
+    //         ->causedBy(auth()->user())
+    //         ->log('Produk baru dibuat: ' . $product->name);
+    // }
 
     /**
      * Handle the Product "updated" event.

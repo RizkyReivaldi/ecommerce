@@ -1,10 +1,11 @@
 {{-- ================================================
-     FILE: resources/views/layouts/app.blade.php
-     FUNGSI: Master layout untuk halaman customer/publik
-     ================================================ --}}
+FILE: resources/views/layouts/app.blade.php
+FUNGSI: Master layout untuk halaman customer/publik
+================================================ --}}
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +23,7 @@
     {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
 
     {{-- Vite CSS --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -29,32 +31,34 @@
     {{-- Stack untuk CSS tambahan per halaman --}}
     @stack('styles')
 </head>
+
 <body>
     {{-- ============================================
-         NAVBAR
-         ============================================ --}}
+    NAVBAR
+    ============================================ --}}
     @include('partials.navbar')
 
     {{-- ============================================
-         FLASH MESSAGES
-         ============================================ --}}
+    FLASH MESSAGES
+    ============================================ --}}
     <div class="container mt-3">
         @include('partials.flash-messages')
     </div>
 
     {{-- ============================================
-         MAIN CONTENT
-         ============================================ --}}
+    MAIN CONTENT
+    ============================================ --}}
     <main class="min-vh-100">
         @yield('content')
     </main>
 
     {{-- ============================================
-         FOOTER
-         ============================================ --}}
+    FOOTER
+    ============================================ --}}
     @include('partials.footer')
 
     {{-- Stack untuk JS tambahan per halaman --}}
     @stack('scripts')
 </body>
+
 </html>
