@@ -111,3 +111,12 @@ Route::controller(GoogleController::class)->group(function () {
     Route::get('/auth/google/callback', 'callback')
         ->name('auth.google.callback');
 });
+
+
+// Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function() {
+//     return view('layouts.dashboard');
+// });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

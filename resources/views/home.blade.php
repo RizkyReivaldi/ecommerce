@@ -37,24 +37,24 @@
         <div class="container">
             <h2 class="text-center mb-4">Kategori Populer</h2>
             <div class="row g-4">
-                @foreach($categories as $category)
+
                     <div class="col-6 col-md-4 col-lg-2">
-                        <a href="{{ route('catalog.index', ['category' => $category->slug]) }}"
+                        <a href=""
                            class="text-decoration-none">
                             <div class="card border-0 shadow-sm text-center h-100">
                                 <div class="card-body">
-                                    <img src="{{ $category->image_url }}"
-                                         alt="{{ $category->name }}"
+                                    <img src=""
+                                         alt=""
                                          class="rounded-circle mb-3"
                                          width="80" height="80"
                                          style="object-fit: cover;">
-                                    <h6 class="card-title mb-0">{{ $category->name }}</h6>
-                                    <small class="text-muted">{{ $category->products_count }} produk</small>
+                                    <h6 class="card-title mb-0"></h6>
+                                    <small class="text-muted">produk</small>
                                 </div>
                             </div>
                         </a>
                     </div>
-                @endforeach
+
             </div>
         </div>
     </section>
@@ -69,11 +69,9 @@
                 </a>
             </div>
             <div class="row g-4">
-                @foreach($featuredProducts as $product)
                     <div class="col-6 col-md-4 col-lg-3">
-                        @include('partials.product-card', ['product' => $product])
+                        @include('partials.product-card')
                     </div>
-                @endforeach
             </div>
         </div>
     </section>
@@ -113,11 +111,9 @@
         <div class="container">
             <h2 class="text-center mb-4">Produk Terbaru</h2>
             <div class="row g-4">
-                @foreach($latestProducts as $product)
                     <div class="col-6 col-md-4 col-lg-3">
-                        @include('partials.product-card', ['product' => $product])
+                        @include('partials.product-card')
                     </div>
-                @endforeach
             </div>
         </div>
     </section>
