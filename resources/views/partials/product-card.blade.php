@@ -52,7 +52,7 @@
             @endif
             <div class="fw-bold text-primary">
                 {{ $product->formatted_price }}
-            </div>
+            </div>  
         </div> --}}
 
         {{-- Stock Info --}}

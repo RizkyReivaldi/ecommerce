@@ -60,11 +60,6 @@ class User extends Authenticatable
     /**
      * User memiliki banyak item wishlist.
      */
-    public function wishlists()
-{
-    return $this->belongsToMany(Product::class, 'wishlists')
-        ->withTimestamps();
-}
 
     /**
      * User memiliki banyak pesanan.
@@ -77,7 +72,7 @@ class User extends Authenticatable
     /**
      * Relasi many-to-many ke products melalui wishlists.
      */
-    public function wishlistProducts()
+    public function wishlists()
     {
         return $this->belongsToMany(Product::class, 'wishlists')
             ->withTimestamps();
