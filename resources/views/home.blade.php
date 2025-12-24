@@ -112,7 +112,7 @@
             <h2 class="text-center mb-4">Produk Terbaru</h2>
             <div class="row g-4">
                     <div class="col-6 col-md-4 col-lg-3">
-                        @include('partials.product-card')
+                        @include('partials.product-card', ['product' => $product])
                     </div>
             </div>
         </div>
