@@ -24,7 +24,7 @@ use App\Http\Controllers\MidtransNotificationController;
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Katalog Produk
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/products', [CatalogController::class, 'index'])->name('catalog.index');
@@ -131,3 +131,8 @@ Route::controller(GoogleController::class)->group(function () {
 
 Route::post('midtrans/notification', [MidtransNotificationController::class, 'handle'])
     ->name('midtrans.notification');
+
+
+
+
+
