@@ -24,10 +24,11 @@ use App\Http\Controllers\MidtransNotificationController;
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Katalog Produk
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
-Route::get('/products', [CatalogController::class, 'index'])->name('catalog.index');
+// Route::get('/products', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/products/{slug}', [CatalogController::class, 'show'])->name('catalog.show');
 
 // ================================================
@@ -132,7 +133,15 @@ Route::controller(GoogleController::class)->group(function () {
 Route::post('midtrans/notification', [MidtransNotificationController::class, 'handle'])
     ->name('midtrans.notification');
 
+    // routes/web.php
 
+Route::prefix('admin/reports')->name('admin.reports.')->group(function () {
+    // This defines admin.reports.export-sales
+    Route::get('export-sales', [ReportController::class, 'exportSales'])
+        ->name('export-sales');
+});
+
+Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,1');
 
 
 

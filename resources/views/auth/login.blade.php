@@ -156,3 +156,4 @@ resources/views/auth/login.blade.php FUNGSI: Halaman form login
     </div>
 </div>
 @endsection {{-- ↑ Akhir dari section content --}}
+
