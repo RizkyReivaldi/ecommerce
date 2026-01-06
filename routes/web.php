@@ -12,23 +12,22 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MidtransNotificationController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MidtransNotificationController;
 // ================================================
 // HALAMAN PUBLIK (Tanpa Login)
 // ================================================
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,1');
 // Katalog Produk
 Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog.index');
-// Route::get('/products', [CatalogController::class, 'index'])->name('catalog.index');
+Route::get('/products', [CatalogController::class, 'index'])->name('catalog.index');
 Route::get('/products/{slug}', [CatalogController::class, 'show'])->name('catalog.show');
 
 // ================================================
@@ -70,10 +69,10 @@ Route::middleware('auth')->group(function () {
 // ================================================
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
-            // Laporan Penjualan
-            Route::get('/reports/sales', [\App\Http\Controllers\Admin\ReportController::class, 'sales'])->name('reports.sales');
-        // Update status pesanan
-        Route::patch('/orders/{order}/update-status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.update-status');
+    // Laporan Penjualan
+    Route::get('/reports/sales', [\App\Http\Controllers\Admin\ReportController::class, 'sales'])->name('reports.sales');
+    // Update status pesanan
+    Route::patch('/orders/{order}/update-status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.update-status');
     // Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -100,7 +99,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // ================================================
 Auth::routes();
 
-use App\Services\MidtransService;
+use Illuminate\Support\Facades\Route;
 
 // ================================================
 // GOOGLE OAUTH ROUTES
@@ -129,19 +128,7 @@ Route::controller(GoogleController::class)->group(function () {
         ->name('auth.google.callback');
 });
 
-
 Route::post('midtrans/notification', [MidtransNotificationController::class, 'handle'])
     ->name('midtrans.notification');
-
-    // routes/web.php
-
-Route::prefix('admin/reports')->name('admin.reports.')->group(function () {
-    // This defines admin.reports.export-sales
-    Route::get('export-sales', [ReportController::class, 'exportSales'])
-        ->name('export-sales');
-});
-
-Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,1');
-
 
 
