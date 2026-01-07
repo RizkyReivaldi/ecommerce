@@ -1,86 +1,188 @@
 @extends('layouts.app')
 
+@section('title', 'Katalog Produk')
+
 @section('content')
-<div class="container py-5">
-    <div class="row">
-        {{-- SIDEBAR FILTER --}}
-        <div class="col-lg-3 mb-4">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white fw-bold">Filter Produk</div>
-                <div class="card-body">
-                    <form action="{{ route('catalog.index') }}" method="GET">
-                        @if(request('q')) <input type="hidden" name="q" value="{{ request('q') }}"> @endif
 
-                        {{-- Filter Kategori --}}
-                        <div class="mb-4">
-                            <h6 class="fw-bold mb-2">Kategori</h6>
-                            @foreach($categories as $cat)
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="category" value="{{ $cat->slug }}" {{
-                                    request('category')==$cat->slug ? 'checked' : '' }}
-                                onchange="this.form.submit()">
-                                <label class="form-check-label">{{ $cat->name }} <small class="text-muted">({{
-                                        $cat->products_count }})</small></label>
-                            </div>
-                            @endforeach
+<style>
+    /* ===== SCROLL ANIMATION ===== */
+    .fade-up {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<div class="container py-4">
+    <div class="row g-4">
+
+        {{-- FILTER (Desktop Sidebar) --}}
+        <aside class="col-lg-3 d-none d-lg-block fade-up">
+            <div class="border rounded p-3 shadow-sm">
+                <h6 class="fw-semibold mb-3">
+                    <i class="bi bi-funnel me-1"></i> Filter
+                </h6>
+
+                <form action="{{ route('catalog.index') }}" method="GET">
+                    @if(request('q'))
+                        <input type="hidden" name="q" value="{{ request('q') }}">
+                    @endif
+
+                    {{-- Category --}}
+                    <div class="mb-4">
+                        <small class="fw-semibold text-muted">Kategori</small>
+                        @foreach($categories as $category)
+                        <div class="form-check mt-2">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="category"
+                                   value="{{ $category->slug }}"
+                                   {{ request('category') == $category->slug ? 'checked' : '' }}
+                                   onchange="this.form.submit()">
+                            <label class="form-check-label">
+                                {{ $category->name }}
+                            </label>
                         </div>
+                        @endforeach
+                    </div>
 
-                        {{-- Filter Harga --}}
-                        <div class="mb-3">
-                            <h6 class="fw-bold mb-2">Rentang Harga</h6>
-                            <div class="d-flex gap-2">
-                                <input type="number" name="min_price" class="form-control form-control-sm"
-                                    placeholder="Min" value="{{ request('min_price') }}">
-                                <input type="number" name="max_price" class="form-control form-control-sm"
-                                    placeholder="Max" value="{{ request('max_price') }}">
-                            </div>
+                    {{-- Price --}}
+                    <div class="mb-3">
+                        <small class="fw-semibold text-muted">Harga</small>
+                        <div class="d-flex gap-2 mt-2">
+                            <input type="number"
+                                   class="form-control form-control-sm"
+                                   name="min_price"
+                                   placeholder="Min"
+                                   value="{{ request('min_price') }}">
+                            <input type="number"
+                                   class="form-control form-control-sm"
+                                   name="max_price"
+                                   placeholder="Max"
+                                   value="{{ request('max_price') }}">
                         </div>
+                        <button class="btn btn-sm btn-dark w-100 mt-2">
+                            Terapkan
+                        </button>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary w-100 btn-sm">Terapkan Filter</button>
-                        <a href="{{ route('catalog.index') }}"
-                            class="btn btn-outline-secondary w-100 btn-sm mt-2">Reset</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        {{-- PRODUCT GRID --}}
-        <div class="col-lg-9">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="mb-0">Katalog Produk</h4>
-                {{-- Sorting --}}
-                <form method="GET" class="d-inline-block">
-                    @foreach(request()->except('sort') as $key => $value)
-                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
-                    @endforeach
-                    <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
-                        <option value="newest" {{ request('sort')=='newest' ? 'selected' : '' }}>Terbaru</option>
-                        <option value="price_asc" {{ request('sort')=='price_asc' ? 'selected' : '' }}>Harga Terendah
-                        </option>
-                        <option value="price_desc" {{ request('sort')=='price_desc' ? 'selected' : '' }}>Harga Tertinggi
-                        </option>
-                    </select>
+                    <div class="form-check">
+                        <input class="form-check-input"
+                               type="checkbox"
+                               name="on_sale"
+                               value="1"
+                               {{ request('on_sale') ? 'checked' : '' }}
+                               onchange="this.form.submit()">
+                        <label class="form-check-label">
+                            Diskon
+                        </label>
+                    </div>
                 </form>
             </div>
+        </aside>
 
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                @forelse($products as $product)
-                <div class="col">
-                    <x-product-card :product="$product" />
+        {{-- PRODUCT LIST --}}
+        <main class="col-lg-9">
+
+            {{-- Header --}}
+            <div class="d-flex justify-content-between align-items-center mb-3 fade-up">
+                <div>
+                    <h5 class="mb-0 fw-semibold">
+                        @if(request('q'))
+                            "{{ request('q') }}"
+                        @elseif(request('category'))
+                            {{ $categories->firstWhere('slug', request('category'))?->name }}
+                        @else
+                            Semua Produk
+                        @endif
+                    </h5>
+                    <small class="text-muted">{{ $products->total() }} produk</small>
                 </div>
-                @empty
-                <div class="col-12 text-center py-5">
-                    <img src="{{ asset('images/empty-state.svg') }}" width="150" class="mb-3 opacity-50">
-                    <h5>Produk tidak ditemukan</h5>
-                    <p class="text-muted">Coba kurangi filter atau gunakan kata kunci lain.</p>
-                </div>
-                @endforelse
+
+                <select class="form-select form-select-sm w-auto"
+                        onchange="location.href=this.value">
+                    <option value="{{ request()->fullUrlWithQuery(['sort'=>'newest']) }}">Terbaru</option>
+                    <option value="{{ request()->fullUrlWithQuery(['sort'=>'price_asc']) }}">Harga ↑</option>
+                    <option value="{{ request()->fullUrlWithQuery(['sort'=>'price_desc']) }}">Harga ↓</option>
+                </select>
             </div>
 
-            <div class="mt-4">
-                {{ $products->links('pagination::bootstrap-5') }}
+            {{-- Grid --}}
+            @if($products->count())
+            <div class="row g-3">
+                @foreach($products as $i => $product)
+                <div class="col-6 col-md-4 col-lg-3 fade-up"
+                     style="transition-delay: {{ $i * 0.06 }}s">
+                    @include('partials.product-card', ['product' => $product])
+                </div>
+                @endforeach
             </div>
-        </div>
+
+            <div class=" d-grid flex-column align-items-center mt-4 fade-up">
+                {{ $products->links() }}
+            </div>
+            @else
+            <div class="text-center py-5 text-muted fade-up">
+                <i class="bi bi-search fs-1"></i>
+                <p class="mt-3">Produk tidak ditemukan</p>
+            </div>
+            @endif
+        </main>
     </div>
 </div>
+
+{{-- ===== SCROLL OBSERVER ===== --}}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up')
+        .forEach(el => observer.observe(el));
+});
+</script>
+
+<style>
+    /* ===== PAGINATION FIX ===== */
+.pagination svg {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.pagination .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Paksa wrapper pagination jadi kolom */
+.pagination {
+    margin-top: .5rem;
+}
+
+nav[role="navigation"] > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    gap: .5rem;
+}
+
+/* Center text info */
+nav[role="navigation"] p {
+    margin-bottom: 0;
+    text-align: center;
+}
+
+}
+
+</style>
 @endsection

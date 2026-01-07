@@ -152,7 +152,7 @@
 
     {{-- Script Chart.js --}}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
+       <script>
         const ctx = document.getElementById('revenueChart').getContext('2d');
 
         // Data dari Controller (Blade to JS)
@@ -179,7 +179,9 @@
                 responsive: true,
                 maintainAspectRatio: false, // Penting agar Chart menyesuaikan container
                 plugins: {
-                    legend: { display: false },
+                    legend: {
+                        display: false
+                    },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
@@ -192,15 +194,21 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        grid: { borderDash: [2, 4] },
+                        grid: {
+                            borderDash: [2, 4]
+                        },
                         ticks: {
                             callback: function(value) {
-                                return 'Rp ' + new Intl.NumberFormat('id-ID', { notation: "compact" }).format(value);
+                                return 'Rp ' + new Intl.NumberFormat('id-ID', {
+                                    notation: "compact"
+                                }).format(value);
                             }
                         }
                     },
                     x: {
-                        grid: { display: false }
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
