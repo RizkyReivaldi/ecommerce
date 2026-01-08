@@ -1,45 +1,42 @@
 {{-- ================================================
-FILE: resources/views/partials/flash-messages.blade.php
-FUNGSI: Menampilkan notifikasi flash messages
+FLASH MESSAGES – GLASS INSTAX
 ================================================ --}}
 
-{{-- Success Message --}}
-@if(session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle me-2"></i>
-    {{ session('success') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-</div>
-@endif
+<div id="instax-toast-container">
 
-{{-- Error Message --}}
-@if(session('error'))
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <i class="bi bi-exclamation-triangle me-2"></i>
-    {{ session('error') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-</div>
-@endif
+    @if(session('success'))
+        <div class="instax-toast success">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>{{ session('success') }}</span>
+            <button class="toast-close">&times;</button>
+        </div>
+    @endif
 
-{{-- Info Message --}}
-@if(session('info'))
-<div class="alert alert-info alert-dismissible fade show" role="alert">
-    <i class="bi bi-info-circle me-2"></i>
-    {{ session('info') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-</div>
-@endif
+    @if(session('error'))
+        <div class="instax-toast error">
+            <i class="bi bi-x-circle-fill"></i>
+            <span>{{ session('error') }}</span>
+            <button class="toast-close">&times;</button>
+        </div>
+    @endif
 
-{{-- Validation Errors --}}
-@if($errors->any())
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <i class="bi bi-exclamation-triangle me-2"></i>
-    <strong>Terjadi kesalahan:</strong>
-    <ul class="mb-0 mt-2">
+    @if(session('info'))
+        <div class="instax-toast info">
+            <i class="bi bi-info-circle-fill"></i>
+            <span>{{ session('info') }}</span>
+            <button class="toast-close">&times;</button>
+        </div>
+    @endif
+
+    @if($errors->any())
         @foreach($errors->all() as $error)
-        <li>{{ $error }}</li>
+            <div class="instax-toast error">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                <span>{{ $error }}</span>
+                <button class="toast-close">&times;</button>
+            </div>
         @endforeach
-    </ul>
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    @endif
+
 </div>
-@endif
+

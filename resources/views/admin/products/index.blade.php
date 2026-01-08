@@ -11,9 +11,28 @@
                         <h3 class="card-title">Data Produk</h3>
                     </div>
                     <div class="card-body">
-                        <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">
-                            <i class="bi bi-plus-circle me-2"></i>Tambah Produk
-                        </a>
+
+                        <form method="GET" class="row g-2 mb-4">
+                            <div class="col-md-4">
+                                <select name="category" class="form-select">
+                                    <option value="">Semua Kategori</option>
+                                    @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ request('category')==$category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-outline-secondary w-100">Filter</button>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">
+                                    <i class="bi bi-plus-circle me-2"></i>Tambah Produk
+                                </a>
+                            </div>
+
+                        </form>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="table-light">

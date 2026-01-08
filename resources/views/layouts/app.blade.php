@@ -10,123 +10,203 @@ FUNGSI: Master layout untuk halaman customer/publik
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {{-- CSRF Token untuk AJAX --}}
+    {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- SEO Meta Tags --}}
+    {{-- SEO --}}
     <title>@yield('title', 'Toko Online') - {{ config('app.name') }}</title>
     <meta name="description" content="@yield('meta_description', 'Toko online terpercaya dengan produk berkualitas')">
 
     {{-- Favicon --}}
     <link rel="icon" href="{{ asset('favicon.ico') }}">
 
-    {{-- Google Fonts --}}
+    {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {{-- Vite CSS --}}
+    {{-- Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- Stack untuk CSS tambahan per halaman --}}
+    {{-- ================================
+    GLOBAL THEME STYLE (SAFE)
+    ================================ --}}
     @stack('styles')
+    <style>
+        /* ===== THEME VARIABLES ===== */
+        .theme-wrapper {
+            --bg-main: #f8fcfd;
+            --bg-glass: rgba(255,255,255,0.65);
+            --text-main: #3b5f6b;
+            --text-muted: #6b98a5;
+            --border-glass: rgba(255,255,255,0.35);
+        }
+
+        .theme-wrapper.dark {
+            --bg-main: #0f172a;
+            --bg-glass: rgba(30,41,59,0.6);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-glass: rgba(255,255,255,0.08);
+        }
+
+        /* ===== PAGE BACKGROUND ===== */
+        .theme-wrapper {
+            min-height: 100vh;
+            background: linear-gradient(
+                180deg,
+                var(--bg-main),
+                #ffffff
+            );
+            transition: background 0.4s ease;
+        }
+
+        /* ===== GLASS CARD ===== */
+        .glass-card,
+        .product-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border-glass);
+            border-radius: 18px;
+            transition: 0.35s ease;
+        }
+
+        .glass-card:hover,
+        .product-card:hover {
+            transform: translateY(-6px);
+        }
+
+        /* ===== TEXT ADAPTIVE ===== */
+        h1, h2, h3, h4, h5,
+        .card-title,
+        .product-title {
+            color: var(--text-main);
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+    </style>
 </head>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const toasts = document.querySelectorAll(".instax-toast");
+
+    toasts.forEach(toast => {
+        // Auto dismiss
+        setTimeout(() => dismissToast(toast), 4500);
+
+        // Manual close
+        toast.querySelector(".toast-close")
+            .addEventListener("click", () => dismissToast(toast));
+    });
+
+    function dismissToast(toast) {
+        toast.style.animation = "toast-out 0.35s ease forwards";
+        setTimeout(() => toast.remove(), 350);
+    }
+});
+</script>
+
 <body>
-    {{-- ============================================
-    NAVBAR
-    ============================================ --}}
+    {{-- NAVBAR --}}
     @include('partials.navbar')
 
-    {{-- ============================================
-    FLASH MESSAGES
-    ============================================ --}}
+    {{-- FLASH MESSAGES --}}
     <div class="container mt-3">
         @include('partials.flash-messages')
     </div>
 
-    {{-- ============================================
-    MAIN CONTENT
-    ============================================ --}}
+    {{-- ================================
+    MAIN CONTENT (WRAPPED SAFELY)
+    ================================ --}}
     <main class="min-vh-100">
-        @yield('content')
+        <div class="theme-wrapper">
+            @yield('content')
+        </div>
     </main>
 
-    {{-- ============================================
-    FOOTER
-    ============================================ --}}
+    {{-- FOOTER --}}
     @include('partials.footer')
 
-    {{-- Stack untuk JS tambahan per halaman --}}
+    {{-- ================================
+    EXISTING SCRIPTS (UNCHANGED)
+    ================================ --}}
     @stack('scripts')
+
+    {{-- THEME SWITCHER (ISOLATED & SAFE) --}}
     <script>
-        /**
-       * Fungsi AJAX untuk Toggle Wishlist
-       * Menggunakan Fetch API (Modern JS) daripada jQuery.
-       */
-      async function toggleWishlist(productId) {
-        try {
-          // 1. Ambil CSRF token dari meta tag HTML
-          // Laravale mewajibkan token ini untuk setiap request POST demi keamanan.
-          const token = document.querySelector('meta[name="csrf-token"]').content;
+        document.addEventListener('DOMContentLoaded', () => {
+            const wrapper = document.querySelector('.theme-wrapper');
+            const toggleBtn = document.getElementById('themeToggle');
+            if (!wrapper || !toggleBtn) return;
 
-          // 2. Kirim Request ke Server
-          const response = await fetch(`/wishlist/toggle/${productId}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRF-TOKEN": token, // Tempel token di header
-            },
-          });
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                wrapper.classList.add('dark');
+                toggleBtn.innerText = '☀️';
+            }
 
-          // 3. Handle jika user belum login (Error 401 Unauthorized)
-          if (response.status === 401) {
-            window.location.href = "/login"; // Lempar ke halaman login
-            return;
-          }
-
-          // 4. Baca respon JSON dari server
-          const data = await response.json();
-
-          if (data.status === "success") {
-            // 5. Update UI tanpa reload halaman
-            updateWishlistUI(productId, data.added); // Ganti warna ikon
-            updateWishlistCounter(data.count); // Update angka di header
-            showToast(data.message); // Tampilkan notifikasi
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          showToast("Terjadi kesalahan sistem.", "error");
-        }
-      }
-
-      function updateWishlistUI(productId, isAdded) {
-        // Cari semua tombol wishlist untuk produk ini (bisa ada di card & detail page)
-        const buttons = document.querySelectorAll(`.wishlist-btn-${productId}`);
-
-        buttons.forEach((btn) => {
-          const icon = btn.querySelector("i"); // Menggunakan tag <i> untuk Bootstrap Icons
-          if (isAdded) {
-            // Ubah jadi merah solid (Love penuh)
-            icon.classList.remove("bi-heart", "text-secondary");
-            icon.classList.add("bi-heart-fill", "text-danger");
-          } else {
-            // Ubah jadi abu-abu outline (Love kosong)
-            icon.classList.remove("bi-heart-fill", "text-danger");
-            icon.classList.add("bi-heart", "text-secondary");
-          }
+            toggleBtn.addEventListener('click', () => {
+                wrapper.classList.toggle('dark');
+                const isDark = wrapper.classList.contains('dark');
+                toggleBtn.innerText = isDark ? '☀️' : '🌙';
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
         });
-      }
-
-      function updateWishlistCounter(count) {
-        const badge = document.getElementById("wishlist-count");
-        if (badge) {
-          badge.innerText = count;
-          // Bootstrap badge display toggle logic
-          badge.style.display = count > 0 ? "inline-block" : "none";
-        }
-      }
     </script>
-    @stack('scripts')
-  </body>
 
-  </html>
+    {{-- ================================
+    WISHLIST SCRIPT (ORIGINAL)
+    ================================ --}}
+    <script>
+        async function toggleWishlist(productId) {
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]').content;
+                const response = await fetch(`/wishlist/toggle/${productId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": token,
+                    },
+                });
+
+                if (response.status === 401) {
+                    window.location.href = "/login";
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (data.status === "success") {
+                    updateWishlistUI(productId, data.added);
+                    updateWishlistCounter(data.count);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+        function updateWishlistUI(productId, isAdded) {
+            const buttons = document.querySelectorAll(`.wishlist-btn-${productId}`);
+            buttons.forEach(btn => {
+                const icon = btn.querySelector("i");
+                icon.className = isAdded
+                    ? "bi bi-heart-fill text-danger"
+                    : "bi bi-heart text-secondary";
+            });
+        }
+
+        function updateWishlistCounter(count) {
+            const badge = document.getElementById("wishlist-count");
+            if (badge) {
+                badge.innerText = count;
+                badge.style.display = count > 0 ? "inline-block" : "none";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -3,30 +3,46 @@
    FUNGSI: Entry point untuk semua CSS
    ================================================ */
 
-/* Import Bootstrap CSS */
-/* Kita import di sini agar ikut ter-compile oleh Vite dan bisa di-minify saat production */
+/* ================================================
+   BOOTSTRAP
+   ================================================ */
 @import "bootstrap/dist/css/bootstrap.min.css";
-
-/* Import Bootstrap Icons */
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
 /* ================================================
-   CUSTOM STYLES - Variabel dan Override
+   ROOT VARIABLES (BRAND)
    ================================================ */
-
 :root {
-  /* Warna Brand Toko */
-  --primary-color: #4f46e5; /* Indigo */
-  --secondary-color: #10b981; /* Emerald */
-  --accent-color: #f59e0b; /* Amber */
+  --primary-color: #4f46e5;
+  --secondary-color: #10b981;
+  --accent-color: #f59e0b;
 
-  /* Warna Text */
   --text-dark: #1f2937;
   --text-muted: #6b7280;
   --text-light: #9ca3af;
 }
 
-/* Override Bootstrap Primary */
+
+
+
+
+
+
+
+/* ================================================
+   BASE
+   ================================================ */
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--text-dark);
+}
+
+
+
+
+/* ================================================
+   BOOTSTRAP OVERRIDES
+   ================================================ */
 .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
@@ -37,46 +53,655 @@
   border-color: #4338ca;
 }
 
+
+
+
+
 /* ================================================
-   LAYOUT STYLES
+   LAYOUT
    ================================================ */
-
-body {
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
-  color: var(--text-dark);
-}
-
-/* Navbar Custom */
 .navbar-brand {
   font-weight: 700;
   font-size: 1.5rem;
 }
 
-/* Footer */
 footer {
   background-color: #1f2937;
-  color: #fff;
+  color: #ffffff;
 }
 
-/* Card Produk */
+
+
+/* ================================================
+   THEME SYSTEM – DAY (SUNSET SKY)
+   ================================================ */
+.theme-wrapper {
+  /* 🌅 Sunset sky colors */
+  --bg-main: #ffedd5;          /* warm peach */
+  --bg-sunset-mid: #fdba74;    /* orange */
+  --bg-sunset-deep: #f472b6;   /* pink */
+
+  --bg-glass: rgba(255, 255, 255, 0.6);
+  --text-main: #3b2f2f;
+  --text-muted-theme: #7c4a2d;
+  --border-glass: rgba(255, 255, 255, 0.35);
+
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    var(--bg-main) 0%,
+    var(--bg-sunset-mid) 45%,
+    var(--bg-sunset-deep) 100%
+  );
+
+  transition: background 0.6s ease;
+}
+
+
+
+
+/* ================================================
+   DARK MODE – NIGHT SKY
+   ================================================ */
+.theme-wrapper.dark {
+  --bg-main: #020617;
+  --bg-glass: rgba(15, 23, 42, 0.65);
+  --text-main: #e5e7eb;
+  --text-muted-theme: #9ca3af;
+  --border-glass: rgba(255, 255, 255, 0.08);
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(59,130,246,0.15), transparent 40%),
+    radial-gradient(circle at 80% 10%, rgba(99,102,241,0.12), transparent 45%),
+    linear-gradient(180deg, #020617 0%, #020617 100%);
+}
+
+
+/* ================================================
+   NIGHT SKY STARS (OPTIONAL)
+   ================================================ */
+.theme-wrapper.dark::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.5), transparent);
+  background-size: 300px 300px;
+  pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   GLASSMORPHISM CARDS
+   ================================================ */
+.glass-card,
 .product-card {
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+  border-radius: 18px;
+  transition: all 0.35s ease;
+}
+
+.glass-card:hover,
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   PRODUCT CARD
+   ================================================ */
+.product-card {
+  overflow: hidden;
+}
+
+.product-title,
+.card-title {
+  color: var(--text-main);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.product-title:hover {
+  opacity: 0.85;
+}
+
+.price-instax {
+  color: var(--text-muted-theme);
+  font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   BADGES
+   ================================================ */
+.badge-discount,
+.badge-instax-discount {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--accent-color);
+  color: #ffffff;
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   TEXT HELPERS
+   ================================================ */
+.text-muted {
+  color: var(--text-muted-theme) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   OPTIONAL BACKGROUND DECOR
+   ================================================ */
+.theme-wrapper::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(74,188,220,0.08), transparent 40%),
+    radial-gradient(circle at 85% 15%, rgba(107,152,165,0.08), transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(140,214,231,0.06), transparent 40%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   PRODUCT CARD – GLASS INSTAX THEME
+   ================================================ */
+
+.product-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  border: 1px solid var(--border-glass);
+  transition: all 0.35s ease;
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 35px rgba(0,0,0,0.08);
 }
 
-/* Badge Diskon */
-.badge-discount {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #ef4444;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 600;
+/* Image */
+.product-img {
+  height: 200px;
+  object-fit: contain;
+  padding: 12px;
+  transition: transform 0.4s ease;
 }
+
+.product-card:hover .product-img {
+  transform: scale(1.05);
+}
+
+/* Title */
+.product-title {
+  color: var(--text-main);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.product-title:hover {
+  color: var(--text-muted);
+}
+
+/* Price */
+.price-instax {
+  color: var(--text-main);
+  font-size: 1.05rem;
+}
+
+/* Discount Badge */
+.badge-instax-discount {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: linear-gradient(135deg, #6b98a5, #4a7c8b);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* Wishlist */
+.wishlist-btn {
+  background: rgba(255,255,255,0.75);
+  border: none;
+}
+
+.theme-wrapper.dark .wishlist-btn {
+  background: rgba(30,41,59,0.7);
+}
+
+.wishlist-btn i {
+  font-size: 1.1rem;
+}
+
+/* Footer */
+.product-card .card-footer {
+  background: transparent;
+}
+
+/* Button */
+.btn-instax {
+  background: linear-gradient(135deg, #6b98a5, #4a7c8b);
+  color: #fff;
+  border-radius: 30px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-instax:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(74,124,139,0.35);
+}
+
+.btn-instax:disabled {
+  background: #cfdde1;
+  color: #6c757d;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   NAVBAR – GLASS INSTAX
+   ================================================ */
+
+.instax-navbar {
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+/* Brand */
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--text-main);
+}
+
+.brand-icon {
+  font-size: 1.6rem;
+  color: var(--text-muted);
+}
+
+/* Links */
+.nav-link {
+  color: var(--text-main);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.nav-link:hover {
+  color: var(--text-muted);
+  transform: translateY(-2px);
+}
+
+/* Search */
+.navbar-search {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+}
+
+.navbar-search input {
+  border-radius: 999px;
+  padding-left: 42px;
+  border: none;
+  background: rgba(255,255,255,0.6);
+}
+
+.theme-wrapper.dark .navbar-search input {
+  background: rgba(30,41,59,0.6);
+  color: var(--text-main);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+/* Theme Toggle */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+}
+
+/* Badges */
+.badge-dot {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  font-size: 0.6rem;
+}
+
+/* User */
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+}
+
+/* Dropdown */
+.glass-dropdown {
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+}
+
+/* Auth Buttons */
+.btn-login {
+  background: linear-gradient(135deg, #6b98a5, #4a7c8b);
+  color: #fff;
+  border-radius: 999px;
+  padding: 6px 18px;
+}
+
+.btn-register {
+  border-radius: 999px;
+  border: 1px solid var(--text-muted);
+  color: var(--text-main);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   FOOTER – GLASS INSTAX
+   ================================================ */
+
+.instax-footer {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-glass);
+  color: var(--text-main);
+}
+
+/* Brand */
+.footer-brand {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.footer-text {
+  color: var(--text-muted);
+  max-width: 320px;
+}
+
+/* Titles */
+.footer-title {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+}
+
+/* Links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color 0.25s ease, padding-left 0.25s ease;
+}
+
+.footer-links a:hover {
+  color: var(--text-main);
+  padding-left: 4px;
+}
+
+/* Contact */
+.footer-contact {
+  list-style: none;
+  padding: 0;
+  color: var(--text-muted);
+}
+
+.footer-contact li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-contact i {
+  margin-right: 8px;
+}
+
+/* Social */
+.footer-social a {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  margin-right: 12px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.footer-social a:hover {
+  color: var(--text-main);
+  transform: translateY(-2px);
+}
+
+/* Divider */
+.footer-divider {
+  border-color: var(--border-glass);
+  margin: 2rem 0 1.5rem;
+}
+
+/* Bottom */
+.footer-copy {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.footer-payments {
+  height: 28px;
+  opacity: 0.9;
+}
+
+
+
+
+
+
+
+
+/* ================================================
+   FLASH MESSAGES – GLASS INSTAX
+   ================================================ */
+
+/* ================================================
+   FLOATING TOAST NOTIFICATIONS – INSTAX
+   ================================================ */
+
+#instax-toast-container {
+  position: fixed;
+  top: 90px;
+  right: 24px;
+  z-index: 1080;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Toast base */
+.instax-toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 280px;
+  max-width: 360px;
+
+  padding: 14px 16px;
+  border-radius: 14px;
+
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid var(--border-glass);
+  border-left: 4px solid transparent;
+
+  color: var(--text-main);
+
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+
+  animation: toast-in 0.45s ease forwards;
+}
+
+/* Icons */
+.instax-toast i {
+  font-size: 1.25rem;
+}
+
+/* Close */
+.toast-close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Types */
+.instax-toast.success { border-left-color: #10b981; }
+.instax-toast.error   { border-left-color: #ef4444; }
+.instax-toast.info    { border-left-color: #3b82f6; }
+
+/* Dark mode shadow */
+.theme-wrapper.dark .instax-toast {
+  box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+}
+
+/* Animations */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-out {
+  to {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+}
+
+

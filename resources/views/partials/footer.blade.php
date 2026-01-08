@@ -1,93 +1,67 @@
-{{-- ================================================
-FILE: resources/views/partials/footer.blade.php
-FUNGSI: Footer website
-================================================ --}}
-
-<footer class="bg-dark text-light pt-5 pb-3 mt-5">
-    <div class="container">
+<footer class="instax-footer mt-5">
+    <div class="container py-5">
         <div class="row g-4">
-            {{-- Brand & Description --}}
+
+            {{-- Brand --}}
             <div class="col-lg-4 col-md-6">
-                <h5 class="text-white mb-3">
-                    <i class="bi bi-bag-heart-fill me-2"></i>TokoOnline
+                <h5 class="footer-brand mb-3">
+                    <i class="bi bi-camera-fill me-2"></i>
+                    Instax Shop
                 </h5>
-                <p class="text-secondary">
-                    Toko online terpercaya dengan berbagai produk berkualitas.
-                    Belanja mudah, aman, dan nyaman.
+                <p class="footer-text">
+                    Toko kamera Instax terpercaya.
+                    Belanja kamera, film, dan aksesoris dengan aman & nyaman.
                 </p>
-                <div class="d-flex gap-3 mt-3">
-                    <a href="#" class="text-secondary fs-5"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-secondary fs-5"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="text-secondary fs-5"><i class="bi bi-twitter-x"></i></a>
-                    <a href="#" class="text-secondary fs-5"><i class="bi bi-youtube"></i></a>
+
+                <div class="footer-social mt-3">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#"><i class="bi bi-youtube"></i></a>
                 </div>
             </div>
 
-            {{-- Quick Links --}}
+            {{-- Menu --}}
             <div class="col-lg-2 col-md-6">
-                <h6 class="text-white mb-3">Menu</h6>
-                <ul class="list-unstyled">
-                    <li class="mb-2">
-                        <a href="{{ route('catalog.index') }}" class="text-secondary text-decoration-none">
-                            Katalog Produk
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-secondary text-decoration-none">Tentang Kami</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-secondary text-decoration-none">Kontak</a>
-                    </li>
+                <h6 class="footer-title">Menu</h6>
+                <ul class="footer-links">
+                    <li><a href="{{ route('catalog.index') }}">Katalog</a></li>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Kontak</a></li>
                 </ul>
             </div>
 
             {{-- Help --}}
             <div class="col-lg-2 col-md-6">
-                <h6 class="text-white mb-3">Bantuan</h6>
-                <ul class="list-unstyled">
-                    <li class="mb-2">
-                        <a href="#" class="text-secondary text-decoration-none">FAQ</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-secondary text-decoration-none">Cara Belanja</a>
-                    </li>
-                    <li class="mb-2">
-                        <a href="#" class="text-secondary text-decoration-none">Kebijakan Privasi</a>
-                    </li>
+                <h6 class="footer-title">Bantuan</h6>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Cara Belanja</a></li>
+                    <li><a href="#">Kebijakan Privasi</a></li>
                 </ul>
             </div>
 
             {{-- Contact --}}
             <div class="col-lg-4 col-md-6">
-                <h6 class="text-white mb-3">Hubungi Kami</h6>
-                <ul class="list-unstyled text-secondary">
-                    <li class="mb-2">
-                        <i class="bi bi-geo-alt me-2"></i>
-                        Jl. Contoh No. 123, Bandung
-                    </li>
-                    <li class="mb-2">
-                        <i class="bi bi-telephone me-2"></i>
-                        (022) 123-4567
-                    </li>
-                    <li class="mb-2">
-                        <i class="bi bi-envelope me-2"></i>
-                        info@tokoonline.com
-                    </li>
+                <h6 class="footer-title">Hubungi Kami</h6>
+                <ul class="footer-contact">
+                    <li><i class="bi bi-geo-alt"></i> Bandung, Indonesia</li>
+                    <li><i class="bi bi-telephone"></i> (022) 123-4567</li>
+                    <li><i class="bi bi-envelope"></i> support@instaxshop.com</li>
                 </ul>
             </div>
         </div>
 
-        <hr class="my-4 border-secondary">
+        <hr class="footer-divider">
 
-        <div class="row align-items-center">
-            <div class="col-md-6 text-center text-md-start">
-                <p class="text-secondary mb-0 small">
-                    &copy; {{ date('Y') }} TokoOnline. All rights reserved.
-                </p>
-            </div>
-            <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
-                <img src="{{ asset('images/payment-methods.png') }}" alt="Payment Methods" height="30">
-            </div>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <p class="footer-copy mb-2 mb-md-0">
+                © {{ date('Y') }} Instax Shop. All rights reserved.
+            </p>
+
+            <img src="{{ asset('images/payment-methods.png') }}"
+                 alt="Payment Methods"
+                 class="footer-payments">
         </div>
     </div>
 </footer>

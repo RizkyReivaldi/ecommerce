@@ -1,82 +1,84 @@
-{{-- ================================================
-FILE: resources/views/partials/product-card.blade.php
-FUNGSI: Komponen kartu produk yang reusable
-================================================ --}}
+<div class="card product-card h-100 border-0">
 
-<div class="card product-card h-100 border-0 shadow-sm">
     {{-- Product Image --}}
-    <div class="position-relative">
+    <div class="position-relative overflow-hidden rounded-top">
         <a href="{{ route('catalog.show', $product->slug) }}">
-            <img src="{{ $product->image_url }}" class="card-img-top" alt="{{ $product->name }}"
-                style="height: 200px; object-fit: cover;">
+            <img
+                src="{{ $product->image_url }}"
+                class="card-img-top product-img"
+                alt="{{ $product->name }}">
         </a>
 
-        {{-- Badge Diskon --}}
+        {{-- Discount Badge --}}
         @if($product->has_discount)
-        <span class="badge-discount">
-            -{{ $product->discount_percentage }}%
-        </span>
+            <span class="badge-instax-discount">
+                -{{ $product->discount_percentage }}%
+            </span>
         @endif
 
-        {{-- Wishlist Button --}}
+        {{-- Wishlist --}}
         @auth
-        <button type="button" onclick="toggleWishlist({{ $product->id }})"
-            class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 rounded-circle wishlist-btn-{{ $product->id }}">
+        <button
+            type="button"
+            onclick="toggleWishlist({{ $product->id }})"
+            class="btn wishlist-btn position-absolute top-0 end-0 m-2 rounded-circle wishlist-btn-{{ $product->id }}">
             <i class="bi {{ auth()->user()->hasInWishlist($product) ? 'bi-heart-fill text-danger' : 'bi-heart' }}"></i>
         </button>
         @endauth
     </div>
 
-    {{-- Card Body --}}
+    {{-- Body --}}
     <div class="card-body d-flex flex-column">
-        {{-- Category --}}
-        <small class="text-muted mb-1">{{ $product->category->name }}</small>
 
-        {{-- Product Name --}}
+        <small class="text-muted mb-1">
+            {{ $product->category->name }}
+        </small>
+
         <h6 class="card-title mb-2">
-            <a href="{{ route('catalog.show', $product->slug) }}" class="text-decoration-none text-dark stretched-link">
+            <a href="{{ route('catalog.show', $product->slug) }}"
+               class="product-title stretched-link">
                 {{ Str::limit($product->name, 40) }}
             </a>
         </h6>
 
-        {{-- Price --}}
         <div class="mt-auto">
             @if($product->has_discount)
-            <small class="text-muted text-decoration-line-through">
-                {{ $product->formatted_original_price }}
-            </small>
+                <small class="text-muted text-decoration-line-through">
+                    {{ $product->formatted_original_price }}
+                </small>
             @endif
-            <div class="fw-bold text-primary">
+
+            <div class="price-instax fw-bold">
                 {{ $product->formatted_price }}
             </div>
         </div>
 
-        {{-- Stock Info --}}
+        {{-- Stock --}}
         @if($product->stock <= 5 && $product->stock > 0)
             <small class="text-warning mt-2">
                 <i class="bi bi-exclamation-triangle"></i>
                 Stok tinggal {{ $product->stock }}
             </small>
-            @elseif($product->stock == 0)
+        @elseif($product->stock == 0)
             <small class="text-danger mt-2">
                 <i class="bi bi-x-circle"></i> Stok Habis
             </small>
-            @endif
+        @endif
     </div>
 
-    {{-- Card Footer --}}
-    <div class="card-footer bg-white border-0 pt-0">
+    {{-- Footer --}}
+    <div class="card-footer border-0 pt-0">
         <form action="{{ route('cart.add') }}" method="POST">
             @csrf
             <input type="hidden" name="product_id" value="{{ $product->id }}">
             <input type="hidden" name="quantity" value="1">
-            <button type="submit" class="btn btn-primary btn-sm w-100" @if($product->stock == 0) disabled @endif>
+
+            <button
+                type="submit"
+                class="btn btn-instax w-100 btn-sm"
+                @disabled($product->stock == 0)>
                 <i class="bi bi-cart-plus me-1"></i>
-                @if($product->stock == 0)
-                Stok Habis
-                @else
-                Tambah Keranjang
-                @endif
+                {{ $product->stock == 0 ? 'Stok Habis' : 'Tambah Keranjang' }}
             </button>
         </form>
     </div>

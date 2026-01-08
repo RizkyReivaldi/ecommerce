@@ -62,10 +62,13 @@
                             <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled (Batalkan & Restock)</option>
                         </select>
                     </div>
-
                     <button type="submit" class="btn btn-primary w-100">
                         Update Status
                     </button>
+                    <hr>
+                    <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Kembali
+                    </a>
                 </form>
 
                 @if($order->status == 'cancelled')

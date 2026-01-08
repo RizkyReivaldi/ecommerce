@@ -1,52 +1,55 @@
-{{-- ================================================
-FILE: resources/views/catalog/show.blade.php
-FUNGSI: Halaman detail produk
-================================================ --}}
-
 @extends('layouts.app')
 
 @section('title', $product->name)
 
 @section('content')
-<div class="container py-4">
+<div class="container py-5">
+
     {{-- Breadcrumb --}}
     <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('catalog.index') }}">Katalog</a></li>
+        <ol class="breadcrumb instax-breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ route('home') }}">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{ route('catalog.index') }}">Katalog</a>
+            </li>
             <li class="breadcrumb-item">
                 <a href="{{ route('catalog.index', ['category' => $product->category->slug]) }}">
                     {{ $product->category->name }}
                 </a>
             </li>
-            <li class="breadcrumb-item active">{{ Str::limit($product->name, 30) }}</li>
+            <li class="breadcrumb-item active">
+                {{ Str::limit($product->name, 30) }}
+            </li>
         </ol>
     </nav>
 
-    <div class="row">
-        {{-- Product Images --}}
-        <div class="col-lg-6 mb-4">
-            <div class="card border-0 shadow-sm">
-                {{-- Main Image --}}
+    <div class="row g-5">
+        {{-- PRODUCT IMAGE --}}
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm instax-card">
                 <div class="position-relative">
-                    <img src="{{ $product->image_url }}" id="main-image" class="card-img-top" alt="{{ $product->name }}"
-                        style="height: 400px; object-fit: contain; background: #f8f9fa;">
+                    <img src="{{ $product->image_url }}"
+                         id="main-image"
+                         class="card-img-top product-detail-img"
+                         alt="{{ $product->name }}">
 
                     @if($product->has_discount)
-                    <span class="badge bg-danger position-absolute top-0 start-0 m-3 fs-6">
+                    <span class="badge badge-instax-discount fs-6">
                         -{{ $product->discount_percentage }}%
                     </span>
                     @endif
                 </div>
 
-                {{-- Thumbnail Gallery --}}
+                {{-- Thumbnails --}}
                 @if($product->images->count() > 1)
-                <div class="card-body">
+                <div class="card-body pt-3">
                     <div class="d-flex gap-2 overflow-auto">
                         @foreach($product->images as $image)
-                        <img src="{{ asset('storage/' . $image->image_path) }}" class="rounded border cursor-pointer"
-                            style="width: 80px; height: 80px; object-fit: cover; cursor: pointer;"
-                            onclick="document.getElementById('main-image').src = this.src">
+                        <img src="{{ asset('storage/' . $image->image_path) }}"
+                             class="instax-thumb"
+                             onclick="document.getElementById('main-image').src = this.src">
                         @endforeach
                     </div>
                 </div>
@@ -54,69 +57,77 @@ FUNGSI: Halaman detail produk
             </div>
         </div>
 
-        {{-- Product Info --}}
+        {{-- PRODUCT INFO --}}
         <div class="col-lg-6">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
+            <div class="card border-0 shadow-sm instax-card">
+                <div class="card-body p-4">
+
                     {{-- Category --}}
                     <a href="{{ route('catalog.index', ['category' => $product->category->slug]) }}"
-                        class="badge bg-light text-dark text-decoration-none mb-2">
+                       class="instax-badge mb-2 d-inline-block">
                         {{ $product->category->name }}
                     </a>
 
                     {{-- Title --}}
-                    <h2 class="mb-3">{{ $product->name }}</h2>
+                    <h2 class="fw-bold text-instax mb-3">
+                        {{ $product->name }}
+                    </h2>
 
                     {{-- Price --}}
                     <div class="mb-4">
                         @if($product->has_discount)
-                        <div class="text-muted text-decoration-line-through">
+                        <small class="text-muted text-decoration-line-through">
                             {{ $product->formatted_original_price }}
-                        </div>
+                        </small>
                         @endif
-                        <div class="h3 text-primary fw-bold mb-0">
+                        <div class="fs-3 fw-bold price-instax">
                             {{ $product->formatted_price }}
                         </div>
                     </div>
 
-                    {{-- Stock Status --}}
+                    {{-- Stock --}}
                     <div class="mb-4">
                         @if($product->stock > 10)
-                        <span class="badge bg-success">
-                            <i class="bi bi-check-circle me-1"></i> Stok Tersedia
+                        <span class="badge bg-success-subtle text-success">
+                            <i class="bi bi-check-circle"></i> Stok tersedia
                         </span>
                         @elseif($product->stock > 0)
-                        <span class="badge bg-warning text-dark">
-                            <i class="bi bi-exclamation-triangle me-1"></i> Stok Tinggal {{ $product->stock }}
+                        <span class="badge bg-warning-subtle text-warning">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            Stok tinggal {{ $product->stock }}
                         </span>
                         @else
-                        <span class="badge bg-danger">
-                            <i class="bi bi-x-circle me-1"></i> Stok Habis
+                        <span class="badge bg-danger-subtle text-danger">
+                            <i class="bi bi-x-circle"></i> Stok habis
                         </span>
                         @endif
                     </div>
 
-                    {{-- Add to Cart Form --}}
+                    {{-- Add to Cart --}}
                     <form action="{{ route('cart.add') }}" method="POST" class="mb-4">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
 
                         <div class="row g-3 align-items-end">
                             <div class="col-auto">
-                                <label class="form-label">Jumlah</label>
-                                <div class="input-group" style="width: 140px;">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        onclick="decrementQty()">-</button>
-                                    <input type="number" name="quantity" id="quantity" value="1" min="1"
-                                        max="{{ $product->stock }}" class="form-control text-center">
-                                    <button type="button" class="btn btn-outline-secondary"
-                                        onclick="incrementQty()">+</button>
+                                <label class="form-label text-muted">Jumlah</label>
+                                <div class="input-group instax-qty">
+                                    <button type="button" onclick="decrementQty()">−</button>
+                                    <input type="number"
+                                           name="quantity"
+                                           id="quantity"
+                                           value="1"
+                                           min="1"
+                                           max="{{ $product->stock }}">
+                                    <button type="button" onclick="incrementQty()">+</button>
                                 </div>
                             </div>
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary btn-lg w-100" @if($product->stock == 0)
-                                    disabled @endif>
-                                    <i class="bi bi-cart-plus me-2"></i>
+
+                            <div class="col ">
+                                <button type="submit"
+                                        class="btn btn-instax btn-lg w-100"
+                                        @if($product->stock == 0) disabled @endif>
+                                    <i class="bi bi-cart-plus me-2" ></i>
                                     Tambah ke Keranjang
                                 </button>
                             </div>
@@ -125,30 +136,29 @@ FUNGSI: Halaman detail produk
 
                     {{-- Wishlist --}}
                     @auth
-                    <button type="button" onclick="toggleWishlist({{ $product->id }})"
-                        class="btn btn-outline-danger mb-4 wishlist-btn-{{ $product->id }}">
-                        <i
-                            class="bi {{ auth()->user()->hasInWishlist($product) ? 'bi-heart-fill' : 'bi-heart' }} me-2"></i>
+                    <button type="button"
+                        onclick="toggleWishlist({{ $product->id }})"
+                        class="btn btn-outline-instax mb-4 wishlist-btn-{{ $product->id }}">
+                        <i class="bi {{ auth()->user()->hasInWishlist($product) ? 'bi-heart-fill text-danger' : 'bi-heart' }} me-2"></i>
                         {{ auth()->user()->hasInWishlist($product) ? 'Hapus dari Wishlist' : 'Tambah ke Wishlist' }}
                     </button>
                     @endauth
 
                     <hr>
 
-                    {{-- Product Details --}}
-                    <div class="mb-3">
-                        <h6>Deskripsi</h6>
-                        <p class="text-muted">{!! $product->description !!}</p>
+                    {{-- Description --}}
+                    <h6 class="fw-bold text-instax mb-2">Deskripsi Produk</h6>
+                    <p class="text-muted">{!! $product->description !!}</p>
+
+                    <div class="row text-muted small mt-3">
+                        <div class="col-6">
+                            <i class="bi bi-box"></i> Berat: {{ $product->weight }} gram
+                        </div>
+                        <div class="col-6">
+                            <i class="bi bi-tag"></i> SKU: PROD-{{ $product->id }}
+                        </div>
                     </div>
 
-                    <div class="row text-muted small">
-                        <div class="col-6 mb-2">
-                            <i class="bi bi-box me-2"></i> Berat: {{ $product->weight }} gram
-                        </div>
-                        <div class="col-6 mb-2">
-                            <i class="bi bi-tag me-2"></i> SKU: PROD-{{ $product->id }}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -157,19 +167,73 @@ FUNGSI: Halaman detail produk
 
 @push('scripts')
 <script>
-    function incrementQty() {
-        const input = document.getElementById('quantity');
-        const max = parseInt(input.max);
-        if (parseInt(input.value) < max) {
-            input.value = parseInt(input.value) + 1;
-        }
-    }
-    function decrementQty() {
-        const input = document.getElementById('quantity');
-        if (parseInt(input.value) > 1) {
-            input.value = parseInt(input.value) - 1;
-        }
-    }
+function incrementQty() {
+    const i = document.getElementById('quantity');
+    if (+i.value < +i.max) i.value++;
+}
+function decrementQty() {
+    const i = document.getElementById('quantity');
+    if (+i.value > 1) i.value--;
+}
 </script>
 @endpush
 @endsection
+
+<style>
+    /* ===== INSTAX DETAIL PAGE ===== */
+
+.instax-card {
+    border-radius: 20px;
+}
+
+.product-detail-img {
+    height: 420px;
+    object-fit: contain;
+    background: #f8f9fa;
+}
+
+.instax-thumb {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.instax-thumb:hover {
+    border-color: #6b98a5;
+}
+
+.instax-breadcrumb a {
+    color: #6b98a5;
+    text-decoration: none;
+}
+
+.instax-breadcrumb a:hover {
+    color: #4a7c8b;
+}
+
+.instax-qty {
+    border: 2px solid #6b98a5;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.instax-qty button {
+    background: none;
+    border: none;
+    padding: 8px 14px;
+    color: #6b98a5;
+    font-size: 1.2rem;
+}
+
+.instax-qty input {
+    border: none;
+    width: 50px;
+    text-align: center;
+}
+
+
+</style>
