@@ -1,212 +1,128 @@
 {{-- ================================================
 FILE: resources/views/layouts/app.blade.php
-FUNGSI: Master layout untuk halaman customer/publik
+FUNGSI: Master layout customer / publik
 ================================================ --}}
 
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- SEO --}}
     <title>@yield('title', 'Toko Online') - {{ config('app.name') }}</title>
-    <meta name="description" content="@yield('meta_description', 'Toko online terpercaya dengan produk berkualitas')">
+    <meta name="description" content="@yield('meta_description', 'Toko online terpercaya')">
 
-    {{-- Favicon --}}
     <link rel="icon" href="{{ asset('favicon.ico') }}">
 
-    {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    {{-- Vite --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    {{-- ================================
-    GLOBAL THEME STYLE (SAFE)
-    ================================ --}}
     @stack('styles')
-    <style>
-        /* ===== THEME VARIABLES ===== */
-        .theme-wrapper {
-            --bg-main: #f8fcfd;
-            --bg-glass: rgba(255,255,255,0.65);
-            --text-main: #3b5f6b;
-            --text-muted: #6b98a5;
-            --border-glass: rgba(255,255,255,0.35);
-        }
-
-        .theme-wrapper.dark {
-            --bg-main: #0f172a;
-            --bg-glass: rgba(30,41,59,0.6);
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-            --border-glass: rgba(255,255,255,0.08);
-        }
-
-        /* ===== PAGE BACKGROUND ===== */
-        .theme-wrapper {
-            min-height: 100vh;
-            background: linear-gradient(
-                180deg,
-                var(--bg-main),
-                #ffffff
-            );
-            transition: background 0.4s ease;
-        }
-
-        /* ===== GLASS CARD ===== */
-        .glass-card,
-        .product-card {
-            background: var(--bg-glass);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid var(--border-glass);
-            border-radius: 18px;
-            transition: 0.35s ease;
-        }
-
-        .glass-card:hover,
-        .product-card:hover {
-            transform: translateY(-6px);
-        }
-
-        /* ===== TEXT ADAPTIVE ===== */
-        h1, h2, h3, h4, h5,
-        .card-title,
-        .product-title {
-            color: var(--text-main);
-        }
-
-        .text-muted {
-            color: var(--text-muted) !important;
-        }
-    </style>
 </head>
 
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const toasts = document.querySelectorAll(".instax-toast");
-
-    toasts.forEach(toast => {
-        // Auto dismiss
-        setTimeout(() => dismissToast(toast), 4500);
-
-        // Manual close
-        toast.querySelector(".toast-close")
-            .addEventListener("click", () => dismissToast(toast));
-    });
-
-    function dismissToast(toast) {
-        toast.style.animation = "toast-out 0.35s ease forwards";
-        setTimeout(() => toast.remove(), 350);
-    }
-});
-</script>
-
 <body>
-    {{-- NAVBAR --}}
+<div class="theme-wrapper" id="themeWrapper">
+
+    {{-- 🌌 SKY SYSTEM --}}
+    <div id="sky-effects">
+        <div class="sky-layer sky-sunrise"></div>
+        <div class="sky-layer sky-day active"></div>
+        <div class="sky-layer sky-night"></div>
+
+        <div class="cloud-layer clouds-back"></div>
+        <div class="cloud-layer clouds-mid"></div>
+        <div class="cloud-layer clouds-front"></div>
+
+        <div class="sun-rays"></div>
+        <div class="moon"></div>
+        <div class="stars"></div>
+    </div>
+
     @include('partials.navbar')
 
-    {{-- FLASH MESSAGES --}}
     <div class="container mt-3">
         @include('partials.flash-messages')
     </div>
 
-    {{-- ================================
-    MAIN CONTENT (WRAPPED SAFELY)
-    ================================ --}}
-    <main class="min-vh-100">
-        <div class="theme-wrapper">
-            @yield('content')
-        </div>
+    <main class="min-vh-100 position-relative" style="z-index:2">
+        @yield('content')
     </main>
 
-    {{-- FOOTER --}}
     @include('partials.footer')
+</div>
 
-    {{-- ================================
-    EXISTING SCRIPTS (UNCHANGED)
-    ================================ --}}
-    @stack('scripts')
+{{-- ================= TOAST ================= --}}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".instax-toast").forEach(toast => {
+        setTimeout(() => toast.remove(), 4500);
+    });
+});
+</script>
 
-    {{-- THEME SWITCHER (ISOLATED & SAFE) --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const wrapper = document.querySelector('.theme-wrapper');
-            const toggleBtn = document.getElementById('themeToggle');
-            if (!wrapper || !toggleBtn) return;
+{{-- ============ THEME + SKY ENGINE ============ --}}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.getElementById('themeWrapper');
+    const toggle = document.getElementById('themeToggle');
 
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                wrapper.classList.add('dark');
-                toggleBtn.innerText = '☀️';
-            }
+    const skies = {
+        sunrise: document.querySelector('.sky-sunrise'),
+        day: document.querySelector('.sky-day'),
+        night: document.querySelector('.sky-night'),
+    };
 
-            toggleBtn.addEventListener('click', () => {
-                wrapper.classList.toggle('dark');
-                const isDark = wrapper.classList.contains('dark');
-                toggleBtn.innerText = isDark ? '☀️' : '🌙';
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            });
-        });
-    </script>
+    function setSky(mode) {
+        Object.values(skies).forEach(s => s?.classList.remove('active'));
+        skies[mode]?.classList.add('active');
+    }
 
-    {{-- ================================
-    WISHLIST SCRIPT (ORIGINAL)
-    ================================ --}}
-    <script>
-        async function toggleWishlist(productId) {
-            try {
-                const token = document.querySelector('meta[name="csrf-token"]').content;
-                const response = await fetch(`/wishlist/toggle/${productId}`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": token,
-                    },
-                });
+    function autoThemeByTime() {
+        const hour = new Date().getHours();
 
-                if (response.status === 401) {
-                    window.location.href = "/login";
-                    return;
-                }
-
-                const data = await response.json();
-
-                if (data.status === "success") {
-                    updateWishlistUI(productId, data.added);
-                    updateWishlistCounter(data.count);
-                }
-            } catch (error) {
-                console.error("Error:", error);
-            }
+        if (hour >= 5 && hour < 8) {
+            wrapper.classList.remove('dark');
+            setSky('sunrise');
+        } else if (hour >= 8 && hour < 18) {
+            wrapper.classList.remove('dark');
+            setSky('day');
+        } else {
+            wrapper.classList.add('dark');
+            setSky('night');
         }
+    }
 
-        function updateWishlistUI(productId, isAdded) {
-            const buttons = document.querySelectorAll(`.wishlist-btn-${productId}`);
-            buttons.forEach(btn => {
-                const icon = btn.querySelector("i");
-                icon.className = isAdded
-                    ? "bi bi-heart-fill text-danger"
-                    : "bi bi-heart text-secondary";
-            });
-        }
+    autoThemeByTime();
 
-        function updateWishlistCounter(count) {
-            const badge = document.getElementById("wishlist-count");
-            if (badge) {
-                badge.innerText = count;
-                badge.style.display = count > 0 ? "inline-block" : "none";
-            }
-        }
-    </script>
+    toggle?.addEventListener('click', () => {
+        wrapper.classList.toggle('dark');
+        const dark = wrapper.classList.contains('dark');
+        setSky(dark ? 'night' : 'day');
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+        toggle.innerText = dark ? '☀️' : '🌙';
+    });
+});
+</script>
 
+{{-- ============ SHOOTING STARS ============ --}}
+<script>
+setInterval(() => {
+    const wrapper = document.getElementById('themeWrapper');
+    if (!wrapper.classList.contains('dark')) return;
+
+    const star = document.createElement('div');
+    star.className = 'shooting-star';
+    star.style.top = Math.random() * 40 + '%';
+    star.style.left = Math.random() * 40 + '%';
+    document.getElementById('sky-effects').appendChild(star);
+
+    setTimeout(() => star.remove(), 1400);
+}, 6000);
+</script>
+
+@stack('scripts')
 </body>
 </html>

@@ -1,387 +1,317 @@
 /* ================================================
-   FILE: resources/css/app.css
-   FUNGSI: Entry point untuk semua CSS
-   ================================================ */
+FILE: resources/css/app.css
+================================================ */
 
-/* ================================================
-   BOOTSTRAP
-   ================================================ */
+/* BOOTSTRAP */
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-/* ================================================
-   ROOT VARIABLES (BRAND)
-   ================================================ */
+/* ROOT */
 :root {
-  --primary-color: #4f46e5;
-  --secondary-color: #10b981;
-  --accent-color: #f59e0b;
-
-  --text-dark: #1f2937;
-  --text-muted: #6b7280;
-  --text-light: #9ca3af;
+  --text-main:#0f172a;
+  --text-muted:#475569;
 }
 
+.theme-wrapper.dark {
+  --text-main:#ffffff;
+  --text-muted:#cbd5f5;
+}
 
-
-
-
-
-
-
-/* ================================================
-   BASE
-   ================================================ */
+/* BASE */
 body {
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
-  color: var(--text-dark);
+  font-family:"Inter",system-ui,sans-serif;
+  margin:0;
+}
+
+/* SKY */
+#sky-effects {
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.sky-layer {
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity 2s ease;
+}
+.sky-layer.active { opacity:1; }
+
+/* 🌅 SUNRISE */
+.sky-sunrise {
+  background:linear-gradient(180deg,#fde68a,#fca5a5,#93c5fd);
+}
+
+/* ☀️ DAY */
+.sky-day {
+  background:linear-gradient(180deg,#7dd3fc,#38bdf8,#bae6fd);
+}
+
+/* 🌙 NIGHT */
+.sky-night {
+  background:linear-gradient(180deg,#020617,#020617);
+}
+
+/* ☀️ SUN RAYS */
+.sun-rays {
+  position:fixed;
+  top:-200px;
+  right:-200px;
+  width:700px;
+  height:700px;
+  background:repeating-conic-gradient(
+    rgba(255,255,255,.18) 0deg,
+    rgba(255,255,255,.05) 10deg,
+    transparent 20deg
+  );
+  mask-image:radial-gradient(circle,black,transparent 65%);
+  animation:spin 80s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg);} }
+.theme-wrapper.dark .sun-rays { opacity:0; }
+
+/* 🌙 MOON */
+.moon {
+  position:fixed;
+  top:90px;
+  right:140px;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:radial-gradient(circle,#fff,#dbeafe);
+  box-shadow:0 0 80px rgba(255,255,255,.4);
+  opacity:0;
+}
+.theme-wrapper.dark .moon { opacity:1; }
+
+/* ✨ STARS */
+.stars {
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(1px 1px at 20% 30%, white, transparent),
+    radial-gradient(1px 1px at 80% 40%, white, transparent),
+    radial-gradient(1px 1px at 50% 70%, white, transparent);
+  animation:twinkle 6s infinite alternate;
+  opacity:0;
+}
+.theme-wrapper.dark .stars { opacity:.8; }
+@keyframes twinkle { from{opacity:.4} to{opacity:.8} }
+
+/* ☁️ CLOUDS */
+.cloud-layer {
+  position:absolute;
+  inset:-20%;
+  background-repeat:repeat-x;
+  opacity:.6;
+}
+.clouds-back { animation:cloud 220s linear infinite; }
+.clouds-mid  { animation:cloud 160s linear infinite; }
+.clouds-front{ animation:cloud 110s linear infinite; }
+
+@keyframes cloud {
+  from { background-position-x:0; }
+  to { background-position-x:1600px; }
+}
+
+.theme-wrapper.dark .cloud-layer { opacity:0; }
+
+/* 🌠 SHOOTING STAR */
+.shooting-star {
+  position:absolute;
+  width:160px;
+  height:2px;
+  background:linear-gradient(90deg,white,transparent);
+  transform:rotate(-45deg);
+  animation:shoot 1.2s ease-out forwards;
+}
+@keyframes shoot {
+  to { transform:translate(350px,350px) rotate(-45deg); opacity:0; }
+}
+
+/* TEXT AUTO COLOR */
+h1,h2,h3,h4,h5,h6,p,span,a,li {
+  color:var(--text-main);
+}
+.text-muted { color:var(--text-muted)!important; }
+
+
+
+/* ================= GLOBAL TEXT ================= */
+h1,h2,h3,h4,h5,h6,
+p,span,small,label,
+a,li,
+.nav-link,
+.card-title,
+.footer-title {
+  color: var(--text-main);
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
 }
 
 
 
+/* =========================================
+   NIGHT MODE – SOLID PRICE & BUTTON
+   ========================================= */
 
-/* ================================================
-   BOOTSTRAP OVERRIDES
-   ================================================ */
-.btn-primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-}
-
-.btn-primary:hover {
-  background-color: #4338ca;
-  border-color: #4338ca;
-}
-
-
-
-
-
-/* ================================================
-   LAYOUT
-   ================================================ */
-.navbar-brand {
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-footer {
-  background-color: #1f2937;
+/* Price text (final price) */
+.theme-wrapper.dark .price-instax {
   color: #ffffff;
-}
-
-
-
-/* ================================================
-   THEME SYSTEM – DAY (SUNSET SKY)
-   ================================================ */
-.theme-wrapper {
-  /* 🌅 Sunset sky colors */
-  --bg-main: #ffedd5;          /* warm peach */
-  --bg-sunset-mid: #fdba74;    /* orange */
-  --bg-sunset-deep: #f472b6;   /* pink */
-
-  --bg-glass: rgba(255, 255, 255, 0.6);
-  --text-main: #3b2f2f;
-  --text-muted-theme: #7c4a2d;
-  --border-glass: rgba(255, 255, 255, 0.35);
-
-  min-height: 100vh;
   background: linear-gradient(
     180deg,
-    var(--bg-main) 0%,
-    var(--bg-sunset-mid) 45%,
-    var(--bg-sunset-deep) 100%
+    #1e293b,
+    #0f172a
+  );
+  padding: 6px 10px;
+  border-radius: 10px;
+  display: inline-block;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.45);
+}
+
+/* Strikethrough original price */
+.theme-wrapper.dark .text-decoration-line-through {
+  color: #94a3b8 !important;
+}
+
+/* Add to cart button – solid */
+.theme-wrapper.dark .btn-instax {
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #4338ca
+  );
+  border: none;
+  color: #ffffff;
+
+  box-shadow:
+    0 10px 25px rgba(79,70,229,0.45),
+    0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* Button hover */
+.theme-wrapper.dark .btn-instax:hover {
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #4f46e5
+  );
+  transform: translateY(-1px);
+}
+
+/* Disabled button */
+.theme-wrapper.dark .btn-instax:disabled {
+  background: #334155;
+  color: #94a3b8;
+  box-shadow: none;
+}
+
+
+/* =========================================
+   SOLID PRICE & BUTTON (DAY + NIGHT)
+   ========================================= */
+
+/* ===== PRICE (FINAL & NORMAL) ===== */
+.price-instax {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff,
+    #f1f5f9
   );
 
-  transition: background 0.6s ease;
+  color: #0f172a;
+
+  box-shadow:
+    0 6px 16px rgba(15,23,42,0.08),
+    0 2px 6px rgba(15,23,42,0.05);
 }
 
-
-
-
-/* ================================================
-   DARK MODE – NIGHT SKY
-   ================================================ */
-.theme-wrapper.dark {
-  --bg-main: #020617;
-  --bg-glass: rgba(15, 23, 42, 0.65);
-  --text-main: #e5e7eb;
-  --text-muted-theme: #9ca3af;
-  --border-glass: rgba(255, 255, 255, 0.08);
-
-  background:
-    radial-gradient(circle at 20% 20%, rgba(59,130,246,0.15), transparent 40%),
-    radial-gradient(circle at 80% 10%, rgba(99,102,241,0.12), transparent 45%),
-    linear-gradient(180deg, #020617 0%, #020617 100%);
+/* Original (strikethrough) price */
+.text-decoration-line-through {
+  color: #64748b !important;
 }
 
-
-/* ================================================
-   NIGHT SKY STARS (OPTIONAL)
-   ================================================ */
-.theme-wrapper.dark::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.5), transparent);
-  background-size: 300px 300px;
-  pointer-events: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ================================================
-   GLASSMORPHISM CARDS
-   ================================================ */
-.glass-card,
-.product-card {
-  background: var(--bg-glass);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border-glass);
-  border-radius: 18px;
-  transition: all 0.35s ease;
-}
-
-.glass-card:hover,
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-}
-
-
-
-
-
-
-
-
-
-
-
-/* ================================================
-   PRODUCT CARD
-   ================================================ */
-.product-card {
-  overflow: hidden;
-}
-
-.product-title,
-.card-title {
-  color: var(--text-main);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.product-title:hover {
-  opacity: 0.85;
-}
-
-.price-instax {
-  color: var(--text-muted-theme);
-  font-weight: 600;
-}
-
-
-
-
-
-
-
-
-
-
-/* ================================================
-   BADGES
-   ================================================ */
-.badge-discount,
-.badge-instax-discount {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: var(--accent-color);
+/* ===== NIGHT MODE PRICE ===== */
+.theme-wrapper.dark .price-instax {
+  background: linear-gradient(
+    180deg,
+    #1e293b,
+    #0f172a
+  );
   color: #ffffff;
-  font-size: 0.75rem;
-  padding: 6px 10px;
-  border-radius: 20px;
-  font-weight: 600;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.55),
+    0 4px 10px rgba(0,0,0,0.4);
 }
 
-
-
-
-
-
-
-
-
-
-
-/* ================================================
-   TEXT HELPERS
-   ================================================ */
-.text-muted {
-  color: var(--text-muted-theme) !important;
+.theme-wrapper.dark .text-decoration-line-through {
+  color: #94a3b8 !important;
 }
 
-
-
-
-
-
-
-
-
-
-
-/* ================================================
-   OPTIONAL BACKGROUND DECOR
-   ================================================ */
-.theme-wrapper::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(74,188,220,0.08), transparent 40%),
-    radial-gradient(circle at 85% 15%, rgba(107,152,165,0.08), transparent 40%),
-    radial-gradient(circle at 50% 85%, rgba(140,214,231,0.06), transparent 40%);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ================================================
-   PRODUCT CARD – GLASS INSTAX THEME
-   ================================================ */
-
-.product-card {
-  background: var(--bg-glass);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 18px;
-  border: 1px solid var(--border-glass);
-  transition: all 0.35s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 35px rgba(0,0,0,0.08);
-}
-
-/* Image */
-.product-img {
-  height: 200px;
-  object-fit: contain;
-  padding: 12px;
-  transition: transform 0.4s ease;
-}
-
-.product-card:hover .product-img {
-  transform: scale(1.05);
-}
-
-/* Title */
-.product-title {
-  color: var(--text-main);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.product-title:hover {
-  color: var(--text-muted);
-}
-
-/* Price */
-.price-instax {
-  color: var(--text-main);
-  font-size: 1.05rem;
-}
-
-/* Discount Badge */
-.badge-instax-discount {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: linear-gradient(135deg, #6b98a5, #4a7c8b);
-  color: #fff;
-  font-size: 0.75rem;
-  padding: 6px 12px;
-  border-radius: 20px;
-}
-
-/* Wishlist */
-.wishlist-btn {
-  background: rgba(255,255,255,0.75);
-  border: none;
-}
-
-.theme-wrapper.dark .wishlist-btn {
-  background: rgba(30,41,59,0.7);
-}
-
-.wishlist-btn i {
-  font-size: 1.1rem;
-}
-
-/* Footer */
-.product-card .card-footer {
-  background: transparent;
-}
-
-/* Button */
+/* ===== ADD TO CART BUTTON (DAY) ===== */
 .btn-instax {
-  background: linear-gradient(135deg, #6b98a5, #4a7c8b);
-  color: #fff;
-  border-radius: 30px;
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #4338ca
+  );
   border: none;
-  transition: all 0.3s ease;
+  color: #ffffff;
+
+  box-shadow:
+    0 10px 22px rgba(79,70,229,0.35),
+    0 4px 10px rgba(15,23,42,0.2);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
 }
 
+/* Hover */
 .btn-instax:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(74,124,139,0.35);
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #4f46e5
+  );
+  transform: translateY(-1px);
 }
 
+/* ===== ADD TO CART BUTTON (NIGHT) ===== */
+.theme-wrapper.dark .btn-instax {
+  background: linear-gradient(
+    135deg,
+    #6366f1,
+    #4f46e5
+  );
+
+  box-shadow:
+    0 14px 35px rgba(79,70,229,0.45),
+    0 6px 14px rgba(0,0,0,0.45);
+}
+
+/* Disabled button */
 .btn-instax:disabled {
-  background: #cfdde1;
-  color: #6c757d;
+  background: #cbd5f5;
+  color: #475569;
+  box-shadow: none;
+}
+
+.theme-wrapper.dark .btn-instax:disabled {
+  background: #334155;
+  color: #94a3b8;
 }
 
 
@@ -397,233 +327,162 @@ footer {
 
 
 
-/* ================================================
-   NAVBAR – GLASS INSTAX
-   ================================================ */
 
-.instax-navbar {
+/* ================= SURFACE UI (NON-GLASS CARDS) ================= */
+
+/* Solid card surface – DAY */
+.card,
+.product-card,
+.glass-card {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.96),
+    rgba(248,250,252,0.96)
+  );
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 18px;
+  box-shadow:
+    0 10px 25px rgba(15,23,42,0.08),
+    0 2px 6px rgba(15,23,42,0.05);
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+/* Hover lift */
+.card:hover,
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 18px 40px rgba(15,23,42,0.12),
+    0 6px 12px rgba(15,23,42,0.08);
+}
+
+/* Solid card surface – NIGHT */
+.theme-wrapper.dark .card,
+.theme-wrapper.dark .product-card,
+.theme-wrapper.dark .glass-card {
+  background: linear-gradient(
+    180deg,
+    rgba(30,41,59,0.96),
+    rgba(15,23,42,0.96)
+  );
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 14px 35px rgba(0,0,0,0.55),
+    0 4px 10px rgba(0,0,0,0.4);
+}
+
+
+
+/* Keep NAVBAR + FOOTER glass */
+.instax-navbar,
+.instax-footer,
+.glass-dropdown {
   background: var(--bg-glass);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid var(--border-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: 18px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================= NAVBAR (STABLE) ================= */
+.instax-navbar {
+  min-height: 72px;
+  padding: 0.5rem 0;
+  transform: translateZ(0);
+  will-change: backdrop-filter;
+}
+
+.instax-navbar .container {
+  min-height: 72px;
+  align-items: center;
 }
 
 /* Brand */
 .navbar-brand {
   font-weight: 700;
-  font-size: 1.4rem;
-  color: var(--text-main);
-}
-
-.brand-icon {
-  font-size: 1.6rem;
-  color: var(--text-muted);
+  font-size: 1.05rem;
+  white-space: nowrap;
 }
 
 /* Links */
 .nav-link {
-  color: var(--text-main);
-  transition: transform 0.25s ease, color 0.25s ease;
+  padding: 0.45rem 0.75rem;
+  line-height: 1.2;
+  transition: transform .25s ease, color .25s ease;
 }
 
 .nav-link:hover {
-  color: var(--text-muted);
   transform: translateY(-2px);
 }
 
 /* Search */
 .navbar-search {
   position: relative;
+  max-width: 360px;
   width: 100%;
-  max-width: 420px;
 }
 
 .navbar-search input {
+  height: 42px;
+  padding-left: 38px;
   border-radius: 999px;
-  padding-left: 42px;
   border: none;
-  background: rgba(255,255,255,0.6);
 }
 
-.theme-wrapper.dark .navbar-search input {
-  background: rgba(30,41,59,0.6);
-  color: var(--text-main);
-}
-
+/* Search icon */
 .search-icon {
   position: absolute;
   top: 50%;
-  left: 16px;
+  left: 14px;
   transform: translateY(-50%);
-  color: var(--text-muted);
+  font-size: 0.9rem;
+  opacity: 0.6;
 }
 
-/* Theme Toggle */
-.theme-toggle-btn {
-  background: transparent;
-  border: none;
-  font-size: 1.2rem;
-}
-
-/* Badges */
-.badge-dot {
-  position: absolute;
-  top: -4px;
-  right: -8px;
-  font-size: 0.6rem;
-}
-
-/* User */
+/* Avatar */
 .user-avatar {
   width: 32px;
   height: 32px;
   object-fit: cover;
 }
 
-/* Dropdown */
-.glass-dropdown {
+/* Theme toggle */
+.theme-toggle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  padding: 0;
+  display: grid;
+  place-items: center;
   background: var(--bg-glass);
-  backdrop-filter: blur(14px);
   border: 1px solid var(--border-glass);
 }
 
-/* Auth Buttons */
-.btn-login {
-  background: linear-gradient(135deg, #6b98a5, #4a7c8b);
-  color: #fff;
-  border-radius: 999px;
-  padding: 6px 18px;
-}
-
-.btn-register {
-  border-radius: 999px;
-  border: 1px solid var(--text-muted);
-  color: var(--text-main);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ================================================
-   FOOTER – GLASS INSTAX
-   ================================================ */
-
+/* ================= FOOTER ================= */
 .instax-footer {
-  background: var(--bg-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid var(--border-glass);
-  color: var(--text-main);
+  padding-top: 3rem;
 }
 
-/* Brand */
-.footer-brand {
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.footer-text {
-  color: var(--text-muted);
-  max-width: 320px;
-}
-
-/* Titles */
-.footer-title {
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--text-main);
-}
-
-/* Links */
-.footer-links {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-links li {
-  margin-bottom: 0.6rem;
-}
-
-.footer-links a {
-  text-decoration: none;
-  color: var(--text-muted);
-  transition: color 0.25s ease, padding-left 0.25s ease;
-}
-
-.footer-links a:hover {
-  color: var(--text-main);
-  padding-left: 4px;
-}
-
-/* Contact */
-.footer-contact {
-  list-style: none;
-  padding: 0;
-  color: var(--text-muted);
-}
-
-.footer-contact li {
-  margin-bottom: 0.6rem;
-}
-
-.footer-contact i {
-  margin-right: 8px;
-}
-
-/* Social */
-.footer-social a {
-  color: var(--text-muted);
-  font-size: 1.2rem;
-  margin-right: 12px;
-  transition: transform 0.25s ease, color 0.25s ease;
-}
-
-.footer-social a:hover {
-  color: var(--text-main);
-  transform: translateY(-2px);
-}
-
-/* Divider */
-.footer-divider {
-  border-color: var(--border-glass);
-  margin: 2rem 0 1.5rem;
-}
-
-/* Bottom */
-.footer-copy {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.footer-payments {
-  height: 28px;
-  opacity: 0.9;
-}
-
-
-
-
-
-
-
-
-/* ================================================
-   FLASH MESSAGES – GLASS INSTAX
-   ================================================ */
-
-/* ================================================
-   FLOATING TOAST NOTIFICATIONS – INSTAX
-   ================================================ */
-
+/* ================= TOAST ================= */
 #instax-toast-container {
   position: fixed;
   top: 90px;
@@ -634,74 +493,598 @@ footer {
   gap: 12px;
 }
 
-/* Toast base */
 .instax-toast {
   display: flex;
   align-items: center;
   gap: 12px;
-
   min-width: 280px;
-  max-width: 360px;
-
   padding: 14px 16px;
   border-radius: 14px;
-
   background: var(--bg-glass);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  border: 1px solid var(--border-glass);
   border-left: 4px solid transparent;
-
   color: var(--text-main);
-
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-
-  animation: toast-in 0.45s ease forwards;
+  animation: toast-in .4s ease forwards;
 }
 
-/* Icons */
-.instax-toast i {
-  font-size: 1.25rem;
-}
-
-/* Close */
-.toast-close {
-  margin-left: auto;
-  background: transparent;
-  border: none;
-  color: inherit;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-/* Types */
 .instax-toast.success { border-left-color: #10b981; }
-.instax-toast.error   { border-left-color: #ef4444; }
-.instax-toast.info    { border-left-color: #3b82f6; }
+.instax-toast.error { border-left-color: #ef4444; }
+.instax-toast.info { border-left-color: #3b82f6; }
 
-/* Dark mode shadow */
-.theme-wrapper.dark .instax-toast {
-  box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes toast-out {
+  to { opacity: 0; transform: translateX(40px); }
 }
 
-/* Animations */
-@keyframes toast-in {
+/* ================= MOBILE FIX ================= */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    padding-top: 1rem;
+  }
+
+  .navbar-search {
+    margin: 1rem 0;
+    max-width: 100%;
+  }
+}
+
+
+/* =================================================
+   NAVBAR – SOLID SURFACE (OVERRIDE GLASS)
+   Paste at VERY BOTTOM of app.css
+================================================= */
+
+/* REMOVE glass effect from navbar */
+.instax-navbar {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.97),
+    rgba(248,250,252,0.97)
+  ) !important;
+
+  border-bottom: 1px solid rgba(15,23,42,0.08);
+  border-radius: 0 !important;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  box-shadow:
+    0 8px 24px rgba(15,23,42,0.08);
+
+  min-height: 72px;
+  padding: 0.5rem 0;
+  transform: translateZ(0);
+}
+
+/* Keep navbar height stable */
+.instax-navbar .container {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+}
+
+/* Text & links */
+.instax-navbar .navbar-brand,
+.instax-navbar .nav-link {
+  color: var(--text-main) !important;
+}
+
+/* Search input */
+.instax-navbar .navbar-search input {
+  background: #ffffff;
+  border: 1px solid rgba(15,23,42,0.1);
+}
+
+/* ================= DARK MODE ================= */
+
+.theme-wrapper.dark .instax-navbar {
+  background: linear-gradient(
+    180deg,
+    rgba(15,23,42,0.97),
+    rgba(2,6,23,0.97)
+  ) !important;
+
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.55);
+}
+
+.theme-wrapper.dark .instax-navbar .navbar-brand,
+.theme-wrapper.dark .instax-navbar .nav-link {
+  color: #ffffff !important;
+}
+
+.theme-wrapper.dark .instax-navbar .navbar-search input {
+  background: rgba(30,41,59,0.95);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #ffffff;
+}
+
+
+
+
+/* =====================================================
+   SOLID FOOTER (MATCH NAVBAR STYLE)
+   ===================================================== */
+
+/* DAY MODE */
+.instax-footer {
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.98),
+    rgba(248,250,252,0.98)
+  );
+
+  border-top: 1px solid rgba(15,23,42,0.08);
+
+  box-shadow:
+    0 -12px 30px rgba(15,23,42,0.06),
+    0 -2px 6px rgba(15,23,42,0.04);
+
+  border-radius: 24px 24px 0 0;
+}
+
+/* NIGHT MODE */
+.theme-wrapper.dark .instax-footer {
+  background: linear-gradient(
+    180deg,
+    rgba(30,41,59,0.98),
+    rgba(15,23,42,0.98)
+  );
+
+  border-top: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 -18px 40px rgba(0,0,0,0.6),
+    0 -4px 12px rgba(0,0,0,0.45);
+}
+
+/* =====================================================
+   FOOTER TEXT COLORS
+   ===================================================== */
+
+.instax-footer,
+.instax-footer p,
+.instax-footer a,
+.instax-footer li,
+.instax-footer h5,
+.instax-footer h6 {
+  color: var(--text-main);
+}
+
+.instax-footer a {
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.instax-footer a:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Muted text */
+.footer-text,
+.footer-copy {
+  color: var(--text-muted);
+}
+
+/* =====================================================
+   DIVIDER + ICONS
+   ===================================================== */
+
+.footer-divider {
+  border-color: rgba(15,23,42,0.1);
+}
+
+.theme-wrapper.dark .footer-divider {
+  border-color: rgba(255,255,255,0.12);
+}
+
+/* Social icons */
+.footer-social a {
+  font-size: 1.2rem;
+  margin-right: 12px;
+  display: inline-block;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+.footer-social a:hover {
+  transform: translateY(-3px) scale(1.08);
+  opacity: 1;
+}
+
+
+
+
+
+
+/* =========================================
+   DISCOUNT BADGE – FIX POSITION
+   ========================================= */
+
+.badge-instax-discount {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  z-index: 5;
+
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #dc2626
+  );
+  color: #ffffff;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 6px 16px rgba(239,68,68,0.45);
+}
+
+
+
+
+
+
+/* ================= DISCOUNT BADGE GLOW ================= */
+
+.badge-instax-discount {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    135deg,
+    #ef4444,
+    #f97316
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 0 0 rgba(239,68,68,0.6);
+
+  animation: discount-glow 2.2s infinite ease-in-out;
+}
+
+/* Glow animation */
+@keyframes discount-glow {
+  0% {
+    box-shadow:
+      0 0 0 rgba(239,68,68,0.6);
+  }
+  50% {
+    box-shadow:
+      0 0 18px rgba(239,68,68,0.9),
+      0 0 32px rgba(249,115,22,0.6);
+  }
+  100% {
+    box-shadow:
+      0 0 0 rgba(239,68,68,0.6);
+  }
+}
+
+/* NIGHT MODE — stronger glow */
+.theme-wrapper.dark .badge-instax-discount {
+  background: linear-gradient(
+    135deg,
+    #fb7185,
+    #f97316
+  );
+
+  animation: discount-glow-night 2.2s infinite ease-in-out;
+}
+
+@keyframes discount-glow-night {
+  0% {
+    box-shadow: 0 0 0 rgba(251,113,133,0.7);
+  }
+  50% {
+    box-shadow:
+      0 0 22px rgba(251,113,133,1),
+      0 0 42px rgba(249,115,22,0.8);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(251,113,133,0.7);
+  }
+}
+
+
+
+/* ================= PRICE PULSE (DISCOUNT ONLY) ================= */
+
+/* Apply animation only when discount exists */
+.product-card:has(.badge-instax-discount) .price-instax {
+  animation: price-pulse 1.8s infinite ease-in-out;
+}
+
+/* Day pulse */
+@keyframes price-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 6px 16px rgba(15,23,42,0.08);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow:
+      0 12px 30px rgba(34,197,94,0.35);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 6px 16px rgba(15,23,42,0.08);
+  }
+}
+
+/* Night pulse */
+.theme-wrapper.dark .product-card:has(.badge-instax-discount) .price-instax {
+  animation: price-pulse-night 1.8s infinite ease-in-out;
+}
+
+@keyframes price-pulse-night {
+  0% {
+    transform: scale(1);
+    box-shadow:
+      0 10px 25px rgba(0,0,0,0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow:
+      0 0 28px rgba(34,197,94,0.7),
+      0 0 48px rgba(34,197,94,0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 10px 25px rgba(0,0,0,0.5);
+  }
+}
+
+
+/* =====================================================
+   TOAST / NOTIFICATION — SOLID (NO TRANSPARENCY)
+   ===================================================== */
+
+/* BASE TOAST */
+.instax-toast {
+  background: linear-gradient(
+    180deg,
+    #ffffff,
+    #f8fafc
+  ) !important;
+
+  border: 1px solid rgba(15,23,42,0.08);
+  border-left-width: 4px;
+
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  box-shadow:
+    0 12px 30px rgba(15,23,42,0.12),
+    0 4px 10px rgba(15,23,42,0.08);
+
+  color: #0f172a;
+}
+
+/* ================= DARK MODE ================= */
+
+.theme-wrapper.dark .instax-toast {
+  background: linear-gradient(
+    180deg,
+    #1e293b,
+    #0f172a
+  ) !important;
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 16px 40px rgba(0,0,0,0.6),
+    0 6px 14px rgba(0,0,0,0.45);
+
+  color: #ffffff;
+}
+
+/* =====================================================
+   STATUS COLORS (LEFT BORDER)
+   ===================================================== */
+
+.instax-toast.success {
+  border-left-color: #22c55e;
+}
+
+.instax-toast.error {
+  border-left-color: #ef4444;
+}
+
+.instax-toast.info {
+  border-left-color: #3b82f6;
+}
+
+/* Optional: subtle entrance polish */
+.instax-toast {
+  animation: toast-in-solid .35s ease forwards;
+}
+
+@keyframes toast-in-solid {
   from {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(30px) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes toast-out {
-  to {
-    opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(0) scale(1);
   }
 }
 
 
+/* =====================================================
+   TOAST — STRONG TYPE VISUALS
+   ===================================================== */
+
+/* BASE */
+.instax-toast {
+  position: relative;
+  overflow: hidden;
+  font-weight: 500;
+}
+
+/* ================= SUCCESS ================= */
+
+.instax-toast.success {
+  background: linear-gradient(
+    180deg,
+    #ecfdf5,
+    #d1fae5
+  ) !important;
+
+  border-left-color: #22c55e;
+
+  box-shadow:
+    0 12px 30px rgba(34,197,94,0.35),
+    0 4px 12px rgba(15,23,42,0.1);
+}
+
+/* ================= ERROR ================= */
+
+.instax-toast.error {
+  background: linear-gradient(
+    180deg,
+    #fef2f2,
+    #fee2e2
+  ) !important;
+
+  border-left-color: #ef4444;
+
+  box-shadow:
+    0 12px 30px rgba(239,68,68,0.35),
+    0 4px 12px rgba(15,23,42,0.1);
+}
+
+/* ================= INFO ================= */
+
+.instax-toast.info {
+  background: linear-gradient(
+    180deg,
+    #eff6ff,
+    #dbeafe
+  ) !important;
+
+  border-left-color: #3b82f6;
+
+  box-shadow:
+    0 12px 30px rgba(59,130,246,0.35),
+    0 4px 12px rgba(15,23,42,0.1);
+}
+
+/* ================= DARK MODE ================= */
+
+.theme-wrapper.dark .instax-toast.success {
+  background: linear-gradient(
+    180deg,
+    #064e3b,
+    #022c22
+  ) !important;
+}
+
+.theme-wrapper.dark .instax-toast.error {
+  background: linear-gradient(
+    180deg,
+    #7f1d1d,
+    #450a0a
+  ) !important;
+}
+
+.theme-wrapper.dark .instax-toast.info {
+  background: linear-gradient(
+    180deg,
+    #1e3a8a,
+    #172554
+  ) !important;
+}
+
+/* =====================================================
+   UNIQUE CLOSE BUTTON
+   ===================================================== */
+
+.toast-close {
+  width: 30px;
+  height: 30px;
+
+  border-radius: 50%;
+  border: none;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(0,0,0,0.08);
+  color: inherit;
+
+  font-size: 0.95rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+
+/* Hover */
+.toast-close:hover {
+  transform: rotate(90deg) scale(1.05);
+  background: rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* ================= TYPE-COLORED CLOSE BUTTON ================= */
+
+.instax-toast.success .toast-close {
+  color: #16a34a;
+}
+
+.instax-toast.error .toast-close {
+  color: #dc2626;
+}
+
+.instax-toast.info .toast-close {
+  color: #2563eb;
+}
+
+/* Dark mode close button */
+.theme-wrapper.dark .toast-close {
+  background: rgba(255,255,255,0.12);
+}
+
+.theme-wrapper.dark .toast-close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* =====================================================
+   OPTIONAL: LEFT GLOW STRIP (PREMIUM TOUCH)
+   ===================================================== */
+
+.instax-toast::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: inherit;
+  filter: brightness(1.2);
+}

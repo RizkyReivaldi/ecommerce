@@ -35,11 +35,7 @@
                 </li>
 
                 {{-- Theme Toggle --}}
-                <li class="nav-item ms-2">
-                    <button id="themeToggle" class="btn theme-toggle-btn">
-                        🌙
-                    </button>
-                </li>
+
 
                 @auth
                     {{-- Wishlist --}}
@@ -110,6 +106,11 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item ms-2">
+                    <button id="themeToggle" class="btn theme-toggle-btn">
+                        🌙
+                    </button>
+                </li>
                 @else
                     <li class="nav-item">
                         <a class="btn btn-login ms-2" href="{{ route('login') }}">Masuk</a>

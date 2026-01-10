@@ -3,13 +3,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\ProfileUpdateRequest as RequestsProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+
 
 class ProfileController extends Controller
 {
@@ -27,7 +31,7 @@ class ProfileController extends Controller
     /**
      * Mengupdate informasi profil user.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(RequestsProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
 
@@ -102,6 +106,7 @@ class ProfileController extends Controller
         return back()->with('success', 'Foto profil berhasil dihapus.');
     }
 
+
     /**
      * Update password user.
      */
@@ -109,7 +114,7 @@ class ProfileController extends Controller
     {
         $validated = $request->validateWithBag('updatePassword', [
             'current_password' => ['required', 'current_password'],
-            'password'         => ['required', 'confirmed', 'min:8'],
+            'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
         $request->user()->update([
@@ -148,4 +153,29 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function updateAvatar(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ]);
+
+        $user = $request->user();
+
+        // Hapus avatar lama
+        if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
+        // Simpan avatar baru
+        $path = $request->file('avatar')->store('avatars', 'public');
+
+        $user->update([
+            'avatar' => $path,
+        ]);
+
+        return back()->with('success', 'Foto profil berhasil diperbarui.');
+
+    }
+
 }

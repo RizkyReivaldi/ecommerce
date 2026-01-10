@@ -4,8 +4,6 @@
 
 @section('content')
 
-<div class="page-background">
-
 {{-- HERO SECTION --}}
 <section class="py-5 hero-section">
     <div class="container">
@@ -96,5 +94,5 @@
     </div>
 </section>
 
-</div>
+
 @endsection
