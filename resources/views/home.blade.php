@@ -4,18 +4,32 @@
 
 @section('content')
 
-{{-- HERO SECTION --}}
-<section class="py-5 hero-section">
-    <div class="container">
+{{-- HERO SLIDER --}}
+<section class="py-5 hero-section hero-slider">
+    {{-- Slides --}}
+    <div class="hero-slide active"
+         style="background-image:url('{{ asset('./storage/products/images-removebg-preview.png') }}')"></div>
+
+    <div class="hero-slide"
+         style="background-image:url('{{ asset('./storage/products/25e26c3f-2e73-4dc5-bc76-baa9a6d2e8dc.jpg') }}')"></div>
+
+    <div class="hero-slide"
+         style="background-image:url('{{ asset('images/hero/hero-3.jpg') }}')"></div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="container position-relative" style="z-index:2">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-3">
+                <h1 class="display-4 fw-bold mb-3 hero-text-white">
                     Belanja Kamera Instax<br>Mudah & Terpercaya
                 </h1>
-                <p class="lead mb-4 text-muted">
+
+                <p class="lead mb-4 hero-text-white-muted">
                     Temukan kamera Instax original, film, dan aksesoris
                     dengan harga terbaik.
                 </p>
+
                 <a href="{{ route('catalog.index') }}" class="btn btn-cta-primary">
                     <i class="bi bi-bag me-2"></i>Mulai Belanja
                 </a>
@@ -29,7 +43,8 @@
     </div>
 </section>
 
-<div class="instax-divider"></div>
+{{-- BAR --}}
+<div class="section-bar"><span>Hero → Kategori</span></div>
 
 {{-- KATEGORI --}}
 <section class="py-5">
@@ -59,6 +74,9 @@
     </div>
 </section>
 
+{{-- BAR --}}
+<div class="section-bar"><span>Kategori → Unggulan</span></div>
+
 {{-- PRODUK UNGGULAN --}}
 <section class="py-5 section-soft">
     <div class="container">
@@ -79,6 +97,9 @@
     </div>
 </section>
 
+{{-- BAR --}}
+<div class="section-bar"><span>Unggulan → Terbaru</span></div>
+
 {{-- PRODUK TERBARU --}}
 <section class="py-5">
     <div class="container">
@@ -93,6 +114,5 @@
         </div>
     </div>
 </section>
-
 
 @endsection

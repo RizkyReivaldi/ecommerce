@@ -33,9 +33,13 @@
                                         value="{{ $category->slug }}"
                                         {{ request('category') == $category->slug ? 'checked' : '' }}
                                         onchange="this.form.submit()">
-                                    <label class="form-check-label">
-                                        {{ $category->name }}
-                                    </label>
+                                    <label class="form-check-label d-flex justify-content-between align-items-center w-100">
+                                    <span>{{ $category->name }}</span>
+                                    <small class="category-count">
+                                        {{ $category->products_count }}
+                                    </small>
+                                </label>
+
                                 </div>
                                 @endforeach
                             </div>

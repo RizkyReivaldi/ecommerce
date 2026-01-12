@@ -300,3 +300,6 @@ Route::get('/test-email', function () {
 
     return "Email berhasil dikirim! Silakan cek dashboard Mailtrap Anda.";
 });
+
+
+

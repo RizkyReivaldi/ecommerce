@@ -62,14 +62,12 @@
             <div class="card border-0 shadow-sm instax-card">
                 <div class="card-body p-4">
 
-                    {{-- Category --}}
                     <a href="{{ route('catalog.index', ['category' => $product->category->slug]) }}"
                        class="instax-badge mb-2 d-inline-block">
                         {{ $product->category->name }}
                     </a>
 
-                    {{-- Title --}}
-                    <h2 class="fw-bold text-instax mb-3">
+                    <h2 class="fw-bold text-instax mb-3 product-title">
                         {{ $product->name }}
                     </h2>
 
@@ -88,17 +86,19 @@
                     {{-- Stock --}}
                     <div class="mb-4">
                         @if($product->stock > 10)
-                        <span class="badge bg-success-subtle text-success">
-                            <i class="bi bi-check-circle"></i> Stok tersedia
+                        <span class="badge stock-badge success">
+                            <i class="bi bi-check-circle"></i>
+                            Stok tersedia ({{ $product->stock }})
                         </span>
                         @elseif($product->stock > 0)
-                        <span class="badge bg-warning-subtle text-warning">
+                        <span class="badge stock-badge warning">
                             <i class="bi bi-exclamation-triangle"></i>
-                            Stok tinggal {{ $product->stock }}
+                            Sisa {{ $product->stock }}
                         </span>
                         @else
-                        <span class="badge bg-danger-subtle text-danger">
-                            <i class="bi bi-x-circle"></i> Stok habis
+                        <span class="badge stock-badge danger">
+                            <i class="bi bi-x-circle"></i>
+                            Stok habis
                         </span>
                         @endif
                     </div>
@@ -110,7 +110,7 @@
 
                         <div class="row g-3 align-items-end">
                             <div class="col-auto">
-                                <label class="form-label text-muted">Jumlah</label>
+                                <label class="form-label qty-label">Jumlah</label>
                                 <div class="input-group instax-qty">
                                     <button type="button" onclick="decrementQty()">−</button>
                                     <input type="number"
@@ -123,18 +123,17 @@
                                 </div>
                             </div>
 
-                            <div class="col ">
+                            <div class="col">
                                 <button type="submit"
-                                        class="btn btn-instax btn-lg w-100"
+                                        class="btn btn-instax btn-lg w-100 solid-btn"
                                         @if($product->stock == 0) disabled @endif>
-                                    <i class="bi bi-cart-plus me-2" ></i>
+                                    <i class="bi bi-cart-plus me-2"></i>
                                     Tambah ke Keranjang
                                 </button>
                             </div>
                         </div>
                     </form>
 
-                    {{-- Wishlist --}}
                     @auth
                     <button type="button"
                         onclick="toggleWishlist({{ $product->id }})"
@@ -146,11 +145,10 @@
 
                     <hr>
 
-                    {{-- Description --}}
                     <h6 class="fw-bold text-instax mb-2">Deskripsi Produk</h6>
-                    <p class="text-muted">{!! $product->description !!}</p>
+                    <p class="product-desc">{!! $product->description !!}</p>
 
-                    <div class="row text-muted small mt-3">
+                    <div class="row small meta-info mt-3">
                         <div class="col-6">
                             <i class="bi bi-box"></i> Berat: {{ $product->weight }} gram
                         </div>
@@ -179,61 +177,4 @@ function decrementQty() {
 @endpush
 @endsection
 
-<style>
-    /* ===== INSTAX DETAIL PAGE ===== */
 
-.instax-card {
-    border-radius: 20px;
-}
-
-.product-detail-img {
-    height: 420px;
-    object-fit: contain;
-    background: #f8f9fa;
-}
-
-.instax-thumb {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.instax-thumb:hover {
-    border-color: #6b98a5;
-}
-
-.instax-breadcrumb a {
-    color: #6b98a5;
-    text-decoration: none;
-}
-
-.instax-breadcrumb a:hover {
-    color: #4a7c8b;
-}
-
-.instax-qty {
-    border: 2px solid #6b98a5;
-    border-radius: 30px;
-    overflow: hidden;
-}
-
-.instax-qty button {
-    background: none;
-    border: none;
-    padding: 8px 14px;
-    color: #6b98a5;
-    font-size: 1.2rem;
-}
-
-.instax-qty input {
-    border: none;
-    width: 50px;
-    text-align: center;
-}
-
-
-</style>

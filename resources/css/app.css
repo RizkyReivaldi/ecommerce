@@ -23,114 +23,229 @@ body {
   margin:0;
 }
 
-/* SKY */
+/* =====================================================
+   SKY EFFECTS – FINAL STABLE VERSION
+   ===================================================== */
+
 #sky-effects {
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  overflow:hidden;
-  pointer-events:none;
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
 }
+
+/* ================= SKY LAYERS ================= */
 
 .sky-layer {
-  position:absolute;
-  inset:0;
-  opacity:0;
-  transition:opacity 2s ease;
-}
-.sky-layer.active { opacity:1; }
-
-/* 🌅 SUNRISE */
-.sky-sunrise {
-  background:linear-gradient(180deg,#fde68a,#fca5a5,#93c5fd);
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.8s ease;
 }
 
-/* ☀️ DAY */
+.sky-layer.active {
+    opacity: 1;
+}
+
+/* DAY */
 .sky-day {
-  background:linear-gradient(180deg,#7dd3fc,#38bdf8,#bae6fd);
+    background: linear-gradient(
+        180deg,
+        #7dd3fc,
+        #38bdf8,
+        #bae6fd
+    );
 }
 
-/* 🌙 NIGHT */
+/* SUNSET */
+.sky-sunset {
+    background: linear-gradient(
+        180deg,
+        #fca5a5,
+        #fb7185,
+        #93c5fd
+    );
+}
+
+/* NIGHT */
 .sky-night {
-  background:linear-gradient(180deg,#020617,#020617);
+    background: linear-gradient(
+        180deg,
+        #020617,
+        #020617
+    );
 }
 
-/* ☀️ SUN RAYS */
+/* ================= SUN RAYS ================= */
+
 .sun-rays {
-  position:fixed;
-  top:-200px;
-  right:-200px;
-  width:700px;
-  height:700px;
-  background:repeating-conic-gradient(
-    rgba(255,255,255,.18) 0deg,
-    rgba(255,255,255,.05) 10deg,
-    transparent 20deg
-  );
-  mask-image:radial-gradient(circle,black,transparent 65%);
-  animation:spin 80s linear infinite;
+    position: absolute;
+    inset: -60%;
+    background: conic-gradient(
+        rgba(255,255,255,.18),
+        transparent 40%,
+        rgba(255,255,255,.08),
+        transparent 70%
+    );
+    animation: sunSpin 80s linear infinite;
+    opacity: 0;
 }
-@keyframes spin { to { transform:rotate(360deg);} }
-.theme-wrapper.dark .sun-rays { opacity:0; }
 
-/* 🌙 MOON */
-.moon {
-  position:fixed;
-  top:90px;
-  right:140px;
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  background:radial-gradient(circle,#fff,#dbeafe);
-  box-shadow:0 0 80px rgba(255,255,255,.4);
-  opacity:0;
+.sky-day.active .sun-rays,
+.sky-sunset.active .sun-rays {
+    opacity: 1;
 }
-.theme-wrapper.dark .moon { opacity:1; }
 
-/* ✨ STARS */
-.stars {
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(1px 1px at 20% 30%, white, transparent),
-    radial-gradient(1px 1px at 80% 40%, white, transparent),
-    radial-gradient(1px 1px at 50% 70%, white, transparent);
-  animation:twinkle 6s infinite alternate;
-  opacity:0;
+@keyframes sunSpin {
+    to { transform: rotate(360deg); }
 }
-.theme-wrapper.dark .stars { opacity:.8; }
-@keyframes twinkle { from{opacity:.4} to{opacity:.8} }
 
-/* ☁️ CLOUDS */
+/* ================= CLOUDS (PARALLAX) ================= */
+
 .cloud-layer {
-  position:absolute;
-  inset:-20%;
-  background-repeat:repeat-x;
-  opacity:.6;
-}
-.clouds-back { animation:cloud 220s linear infinite; }
-.clouds-mid  { animation:cloud 160s linear infinite; }
-.clouds-front{ animation:cloud 110s linear infinite; }
-
-@keyframes cloud {
-  from { background-position-x:0; }
-  to { background-position-x:1600px; }
+    position: absolute;
+    inset: 0;
+    background-repeat: repeat-x;
+    opacity: .6;
 }
 
-.theme-wrapper.dark .cloud-layer { opacity:0; }
+.clouds-back  { animation: cloudMove 220s linear infinite; opacity: .25; }
+.clouds-mid   { animation: cloudMove 150s linear infinite; opacity: .4; }
+.clouds-front { animation: cloudMove 90s linear infinite;  opacity: .6; }
 
-/* 🌠 SHOOTING STAR */
+@keyframes cloudMove {
+    from { background-position-x: 0; }
+    to   { background-position-x: -2000px; }
+}
+
+.theme-wrapper.dark .cloud-layer {
+    opacity: 0;
+}
+
+/* ================= STARS ================= */
+
+.stars {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+        radial-gradient(1px 1px at 70% 40%, #fff, transparent),
+        radial-gradient(1px 1px at 50% 80%, #fff, transparent),
+        radial-gradient(2px 2px at 80% 20%, #fff, transparent);
+    opacity: 0;
+    animation: twinkle 6s infinite alternate;
+}
+
+.theme-wrapper.dark .stars {
+    opacity: 1;
+}
+
+@keyframes twinkle {
+    from { opacity: .5; }
+    to   { opacity: 1; }
+}
+
+/* ================= NEBULA ================= */
+
+.nebula {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 30% 40%, rgba(170,120,255,.2), transparent 60%),
+        radial-gradient(circle at 70% 60%, rgba(80,160,255,.15), transparent 65%);
+    opacity: 0;
+    animation: nebulaMove 60s ease-in-out infinite alternate;
+}
+
+.theme-wrapper.dark .nebula {
+    opacity: 1;
+}
+
+@keyframes nebulaMove {
+    from { transform: translateX(-20px); }
+    to   { transform: translateX(20px); }
+}
+
+/* ================= MOON ================= */
+
+.moon {
+    position: absolute;
+    top: 8%;
+    right: 10%;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #f5f3ce;
+    box-shadow: 0 0 40px rgba(255,255,220,.45);
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.theme-wrapper.dark .moon {
+    opacity: 1;
+}
+
+/* ================= SHOOTING STAR ================= */
+
 .shooting-star {
-  position:absolute;
-  width:160px;
-  height:2px;
-  background:linear-gradient(90deg,white,transparent);
-  transform:rotate(-45deg);
-  animation:shoot 1.2s ease-out forwards;
+    position: absolute;
+    width: 140px;
+    height: 2px;
+    background: linear-gradient(90deg, white, transparent);
+    transform: rotate(-30deg);
+    animation: shoot 1.4s ease-out forwards;
+    pointer-events: none;
 }
+
 @keyframes shoot {
-  to { transform:translate(350px,350px) rotate(-45deg); opacity:0; }
+    to {
+        transform: translate(600px, 300px) rotate(-30deg);
+        opacity: 0;
+    }
 }
+
+
+/* 🌌 STARFIELD */
+#starfield {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ☁️ CLOUD PARALLAX */
+.cloud-layer {
+    position: absolute;
+    inset: 0;
+    background-repeat: repeat-x;
+    animation: cloudMove linear infinite;
+}
+.cloud-layer { background-image: url(white-vector-realistic-cloud-set-260nw-2605554037.webp) }
+
+
+/* ✨ STRONGER TWINKLE */
+@keyframes twinkle {
+    0%   { opacity: .2 }
+    50%  { opacity: 1 }
+    100% { opacity: .3 }
+}
+
+.stars {
+    animation: twinkle 2.5s infinite alternate;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* TEXT AUTO COLOR */
 h1,h2,h3,h4,h5,h6,p,span,a,li {
@@ -152,6 +267,108 @@ a,li,
 
 .text-muted {
   color: var(--text-muted) !important;
+}
+
+
+
+.cloud-layer {
+    position: absolute;
+    inset: 0;
+    background-repeat: repeat-x;
+    pointer-events: none;
+    animation: cloudMove 120s linear infinite;
+}
+
+.clouds-back { opacity: .25; animation-duration: 180s; }
+.clouds-mid  { opacity: .4;  animation-duration: 120s; }
+.clouds-front{ opacity: .6;  animation-duration: 90s; }
+
+@keyframes cloudMove {
+    from { background-position-x: 0; }
+    to   { background-position-x: -2000px; }
+}
+
+.nebula {
+    position: absolute;
+    inset: -30%;
+    background:
+        radial-gradient(circle at 20% 40%, rgba(120,80,255,.25), transparent 60%),
+        radial-gradient(circle at 70% 60%, rgba(80,200,255,.18), transparent 65%),
+        radial-gradient(circle at 50% 50%, rgba(255,100,200,.12), transparent 70%);
+    filter: blur(80px);
+    animation: nebula-drift 90s linear infinite;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.dark .nebula {
+    opacity: 1;
+}
+
+@keyframes nebula-drift {
+    0% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(-5%, 3%) scale(1.05); }
+    100% { transform: translate(0,0) scale(1); }
+}
+
+
+.theme-wrapper.dark .nebula {
+    opacity: 1;
+}
+
+.stars {
+    background-image:
+        radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+        radial-gradient(1px 1px at 70% 40%, #fff, transparent),
+        radial-gradient(1px 1px at 50% 80%, #fff, transparent);
+    animation: twinkle 4s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: .6; }
+    to   { opacity: 1; }
+}
+
+
+.moon {
+    position: absolute;
+    top: 8%;
+    right: 10%;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #f5f3ce;
+    box-shadow: 0 0 40px rgba(255,255,220,.4);
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.theme-wrapper.dark .moon {
+    opacity: 1;
+}
+
+/* moon phase overlay */
+.moon.phase::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #000;
+    transform-origin: right;
+}
+
+.moon {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #ddd);
+    position: absolute;
+    top: 80px;
+    right: 80px;
+    box-shadow:
+        inset calc(var(--moon-phase) * 60px) 0 0 rgba(0,0,0,0.85),
+        0 0 40px rgba(255,255,255,0.25);
+    transition: box-shadow 1s linear;
 }
 
 
@@ -1088,3 +1305,593 @@ a,li,
   background: inherit;
   filter: brightness(1.2);
 }
+
+
+/* =====================================
+   HERO SLIDER (SECTION ONLY)
+===================================== */
+
+.hero-section {
+  position: relative;
+  min-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* Slides */
+.hero-slider .hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0;
+  transform: scale(1.08);
+  transition:
+    opacity 1.2s ease,
+    transform 6s ease;
+}
+
+/* Active slide */
+.hero-slider .hero-slide.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+/* Overlay for readability */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(2,6,23,0.55),
+    rgba(2,6,23,0.75)
+  );
+  z-index: 1;
+}
+
+/* Hero content above slides */
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Image inside hero (right side product) */
+.hero-img {
+  max-height: 420px;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Mobile fix */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 70vh;
+    text-align: center;
+  }
+}
+
+
+/* =====================================
+   HERO TEXT – ALWAYS WHITE (DAY + NIGHT)
+===================================== */
+
+.hero-text-white {
+    color: #ffffff !important;
+}
+
+.hero-text-white-muted {
+    color: rgba(255, 255, 255, 0.78) !important;
+}
+
+/* =====================================
+   CTA PRIMARY – GLOW EFFECT
+===================================== */
+
+.btn-cta-primary {
+    position: relative;
+    color: #fff !important;
+    background: linear-gradient(135deg, #ff4d6d, #ff8fa3);
+    border: none;
+    box-shadow:
+        0 0 0 rgba(255, 77, 109, 0.6);
+    transition: transform .25s ease, box-shadow .25s ease;
+    animation: ctaGlow 2.4s infinite ease-in-out;
+}
+
+/* Hover pop */
+.btn-cta-primary:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow:
+        0 0 25px rgba(255, 77, 109, 0.8),
+        0 0 60px rgba(255, 143, 163, 0.6);
+}
+
+/* Glow animation */
+@keyframes ctaGlow {
+    0% {
+        box-shadow:
+            0 0 12px rgba(255, 77, 109, 0.4);
+    }
+    50% {
+        box-shadow:
+            0 0 28px rgba(255, 77, 109, 0.9),
+            0 0 55px rgba(255, 143, 163, 0.7);
+    }
+    100% {
+        box-shadow:
+            0 0 12px rgba(255, 77, 109, 0.4);
+    }
+}
+.dark .btn-cta-primary {
+    animation-duration: 1.8s;
+    box-shadow:
+        0 0 22px rgba(255, 120, 160, 0.9),
+        0 0 70px rgba(255, 120, 160, 0.7);
+}
+
+
+
+/* =====================================
+   SUBTLE SECTION BAR (DAY / NIGHT)
+===================================== */
+
+.section-bar {
+    position: relative;
+    margin: 2.25rem 0;
+    text-align: center;
+}
+
+/* line */
+.section-bar::before {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 65%;
+    margin: 0 auto;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0,0,0,.15),
+        transparent
+    );
+}
+
+/* text */
+.section-bar span {
+    position: relative;
+    top: -0.6rem;
+    padding: 0 .75rem;
+    font-size: .7rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,.45);   /* DAY TEXT */
+    background: transparent;
+}
+
+/* ===============================
+   DARK MODE (NIGHT)
+=============================== */
+
+.dark .section-bar::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.25),
+        transparent
+    );
+}
+
+.dark .section-bar span {
+    color: rgba(255,255,255,.65);
+}
+
+
+/* ===============================
+   SECTION BAR – ANIMATED
+=============================== */
+
+.section-bar {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all .6s ease;
+    text-align: center;
+    margin: 3rem 0 2rem;
+}
+
+.section-bar.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-bar::before {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 60%;
+    margin: 0 auto;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0,0,0,.2),
+        transparent
+    );
+}
+
+.section-bar span {
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,.5);
+    padding: 0 .75rem;
+    position: relative;
+    top: -0.6rem;
+}
+
+/* icon */
+.section-bar span::before {
+    content: attr(data-icon);
+    margin-right: .4rem;
+}
+
+/* DARK MODE */
+.dark .section-bar::before {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.25),
+        transparent
+    );
+}
+
+.dark .section-bar span {
+    color: rgba(255,255,255,.65);
+}
+
+
+/* ===============================
+   SCROLL PROGRESS BAR
+=============================== */
+
+#page-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    z-index: 9999;
+    background: linear-gradient(
+        90deg,
+        #ff4d6d,
+        #ff9f43
+    );
+    transition: width .15s ease;
+}
+/* SECTION HEADER BAR */
+.section-header {
+    position: relative;
+    margin: 5rem auto 2.5rem;
+    padding: 1.2rem 2rem;
+    max-width: 1100px;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    border-radius: 16px;
+    background: linear-gradient(
+        to right,
+        var(--bar-accent, #ff5f9e),
+        transparent
+    );
+
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+}
+
+/* visible on scroll */
+.section-header.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ICON */
+.section-icon {
+    font-size: 1.6rem;
+}
+
+/* TITLE */
+.section-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+}
+/* Light mode */
+.theme-wrapper:not(.dark) .section-header {
+    --bar-accent: rgba(255, 95, 158, 0.25);
+    color: #222;
+}
+
+/* Dark mode */
+.theme-wrapper.dark .section-header {
+    --bar-accent: rgba(255, 95, 158, 0.4);
+    color: #fff;
+}
+
+
+/* Dark mode – search placeholder text */
+.theme-wrapper.dark .navbar-search input::placeholder {
+    color: #ffffff;
+    opacity: 0.85; /* optional, makes it softer */
+}
+
+
+/* ===============================
+   INSTAX CATALOG PAGE
+================================ */
+
+/* Page background */
+.instax-page-bg {
+    position: relative;
+    z-index: 2;
+}
+
+/* ================= FILTER SIDEBAR ================= */
+.instax-filter {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.theme-wrapper.dark .instax-filter {
+    background: rgba(20, 25, 40, 0.6);
+    border-color: rgba(255,255,255,0.08);
+}
+
+/* Filter title */
+.instax-filter h6 {
+    color: #ff6f91;
+}
+
+.theme-wrapper.dark .instax-filter h6 {
+    color: #ff9bb3;
+}
+
+/* ================= FORM CONTROLS ================= */
+.instax-filter .form-control,
+.instax-filter .form-select {
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+    font-size: 0.85rem;
+}
+
+.theme-wrapper.dark .instax-filter .form-control {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+    color: #fff;
+}
+
+/* Checkbox & radio */
+.instax-filter .form-check-label {
+    font-size: 0.85rem;
+}
+
+/* ================= HEADER ================= */
+.text-instax {
+    color: #ff6f91;
+}
+
+.theme-wrapper.dark .text-instax {
+    color: #ff9bb3;
+}
+
+/* Sort select */
+.instax-select {
+    border-radius: 999px;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+}
+
+/* ================= PAGINATION ================= */
+.pagination {
+    justify-content: center;
+}
+
+.pagination .page-link {
+    border-radius: 999px;
+    margin: 0 3px;
+    font-size: 0.8rem;
+}
+
+/* ================= ANIMATION ================= */
+.fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.fade-up.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s ease;
+}
+
+@media (min-width: 992px) {
+    .instax-filter {
+        position: sticky;
+        top: 90px;
+    }
+}
+.product-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+.theme-wrapper.dark .pagination .page-link {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border-color: rgba(255,255,255,0.15);
+}
+/* ===============================
+   CATALOG DARK MODE TEXT FIX
+================================ */
+
+.theme-wrapper.dark .instax-page-bg,
+.theme-wrapper.dark .instax-page-bg h1,
+.theme-wrapper.dark .instax-page-bg h2,
+.theme-wrapper.dark .instax-page-bg h3,
+.theme-wrapper.dark .instax-page-bg h4,
+.theme-wrapper.dark .instax-page-bg h5,
+.theme-wrapper.dark .instax-page-bg h6,
+.theme-wrapper.dark .instax-page-bg p,
+.theme-wrapper.dark .instax-page-bg span,
+.theme-wrapper.dark .instax-page-bg label,
+.theme-wrapper.dark .instax-page-bg small {
+    color: #ffffff !important;
+}
+
+/* Muted text but still readable */
+.theme-wrapper.dark .instax-page-bg .text-muted {
+    color: rgba(255,255,255,0.65) !important;
+}
+/* ===============================
+   CATEGORY COUNT BADGE
+================================ */
+
+.category-count {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.08);
+    color: #333;
+}
+
+.theme-wrapper.dark .category-count {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+}
+
+/* ===============================
+   FILTER PRICE – DARK MODE
+================================ */
+
+.theme-wrapper.dark .instax-filter small,
+.theme-wrapper.dark .instax-filter label {
+    color: #ffffff !important;
+}
+
+/* Inputs text + placeholder */
+.theme-wrapper.dark .instax-filter input.form-control {
+    background: rgba(255,255,255,0.08);
+    color: #ffffff;
+    border-color: rgba(255,255,255,0.25);
+}
+
+.theme-wrapper.dark .instax-filter input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+/* Button */
+.theme-wrapper.dark .instax-filter .instax-btn {
+    background: linear-gradient(135deg, #ffffff, #dddddd);
+    color: #000;
+}
+
+
+/* ===============================
+   PRODUCT DETAIL – DARK MODE
+   =============================== */
+
+/* Judul produk */
+.theme-wrapper.dark .product-title {
+    color: #ffffff !important;
+}
+
+/* Breadcrumb */
+.theme-wrapper.dark .instax-breadcrumb,
+.theme-wrapper.dark .instax-breadcrumb a {
+    color: #d0d0d0 !important;
+}
+
+/* Deskripsi produk */
+.theme-wrapper.dark .product-desc {
+    color: #eaeaea !important;
+}
+
+/* Meta info (berat, SKU) */
+.theme-wrapper.dark .meta-info {
+    color: #d6d6d6 !important;
+}
+
+/* Label jumlah */
+.theme-wrapper.dark .qty-label {
+    color: #ffffff !important;
+}
+
+/* Small muted text (harga coret, dll) */
+.theme-wrapper.dark .text-muted {
+    color: #cfcfcf !important;
+}
+
+/* Card background tetap solid */
+.theme-wrapper.dark .instax-card {
+    background: #151515 !important;
+    color: #ffffff;
+}
+
+/* ===============================
+   WISHLIST BUTTON – MATCH OTHER BUTTONS
+   =============================== */
+
+.btn-outline-instax {
+    background: #da7cb0;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 14px;
+    padding: 10px 18px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+/* Hover effect */
+.btn-outline-instax:hover {
+    background: #da7cb0;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+/* Active / pressed */
+.btn-outline-instax:active {
+    transform: scale(0.97);
+}
+
+/* Icon spacing */
+.btn-outline-instax i {
+    transition: transform 0.25s ease;
+}
+
+/* Heart animation on hover */
+.btn-outline-instax:hover i {
+    transform: scale(1.15);
+}
+
+/* ===============================
+   DARK MODE SUPPORT
+   =============================== */
+.theme-wrapper.dark .btn-outline-instax {
+    background: #840b9f;
+    color: #ffffff !important;
+}
+
+
