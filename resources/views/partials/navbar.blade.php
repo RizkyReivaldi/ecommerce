@@ -1,3 +1,14 @@
+@php
+    $cartCount = auth()->check()
+        ? (auth()->user()->cart?->items()->count() ?? 0)
+        : 0;
+
+    $wishlistCount = auth()->check()
+        ? auth()->user()->wishlists()->count()
+        : 0;
+@endphp
+
+
 <nav class="navbar navbar-expand-lg instax-navbar sticky-top">
     <div class="container">
 
@@ -18,11 +29,10 @@
             {{-- Search --}}
             <form class="mx-auto navbar-search" action="{{ route('catalog.index') }}" method="GET">
                 <input
-
                     type="text"
                     name="q"
                     class="form-control"
-                    placeholder=" 🔍  Cari kamera Instax…"
+                    placeholder=" 🔍  Cari kamera Instx"
                     value="{{ request('q') }}">
             </form>
 
@@ -52,27 +62,30 @@
                         <li class="nav-item">
                             <a class="nav-link position-relative" href="{{ route('wishlist.index') }}">
                                 <i class="bi bi-heart"></i>
-                                @if (auth()->user()->wishlists()->count() > 0)
-                                    <span class="badge badge-dot bg-danger">
-                                        {{ auth()->user()->wishlists()->count() }}
-                                    </span>
-                                @endif
+
+                                <span
+                                    id="wishlist-count"
+                                    class="badge badge-dot bg-danger"
+                                    style="{{ auth()->user()->wishlists()->count() > 0 ? '' : 'display:none' }}"
+                                >
+                                    {{ auth()->user()->wishlists()->count() }}
+                                </span>
                             </a>
                         </li>
-
                     {{-- Cart --}}
                     <li class="nav-item">
                         <a class="nav-link position-relative" href="{{ route('cart.index') }}">
                             <i class="bi bi-cart3"></i>
-                            @php $cartCount = auth()->user()->cart?->items()->count() ?? 0; @endphp
-                            @if ($cartCount > 0)
-                                <span class="badge badge-dot bg-primary">
-                                    {{ $cartCount }}
-                                </span>
-                            @endif
+
+                            <span
+                                id="cart-count"
+                                class="badge badge-dot bg-primary"
+                                style="{{ $cartCount > 0 ? '' : 'display:none' }}"
+                            >
+                                {{ $cartCount }}
+                            </span>
                         </a>
                     </li>
-
                     {{-- User --}}
                     <li class="nav-item dropdown ms-2">
                         <a class="nav-link dropdown-toggle d-flex align-items-center"

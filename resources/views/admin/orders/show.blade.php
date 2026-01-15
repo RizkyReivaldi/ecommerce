@@ -12,16 +12,18 @@
             </div>
             <div class="card-body">
                 @foreach($order->items as $item)
-                    <div class="d-flex mb-3">
-                        <img src="{{ $item->product->image_url }}" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
-                        <div class="flex-grow-1">
-                            <h6 class="mb-0 fw-bold">{{ $item->product->name }}</h6>
-                            <small class="text-muted">{{ $item->quantity }} x Rp {{ number_format($item->price, 0, ',', '.') }}</small>
-                        </div>
-                        <div class="fw-bold">
-                            Rp {{ number_format($item->quantity * $item->price, 0, ',', '.') }}
-                        </div>
+                <div class="d-flex mb-3">
+                    <img src="{{ $item->product->image_url }}" class="rounded me-3"
+                        style="width: 60px; height: 60px; object-fit: cover;">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-bold">{{ $item->product->name }}</h6>
+                        <small class="text-muted">{{ $item->quantity }} x Rp {{ number_format($item->price, 0, ',', '.')
+                            }}</small>
                     </div>
+                    <div class="fw-bold">
+                        Rp {{ number_format($item->quantity * $item->price, 0, ',', '.') }}
+                    </div>
+                </div>
                 @endforeach
                 <hr>
                 <div class="d-flex justify-content-between fs-5 fw-bold">
@@ -48,33 +50,39 @@
         <div class="card shadow-sm border-0 bg-light">
             <div class="card-body">
                 <h6 class="fw-bold mb-3">Update Status Order</h6>
-                <form action="{{ route('admin.orders.update-status', $order) }}" method="POST">
+                <form action="{{ route('admin.orders.updateStatus', $order) }}" method="POST">
                     @csrf
                     @method('PATCH')
 
                     <div class="mb-3">
-                        <label class="form-label small text-muted">Status Saat Ini: <strong>{{ ucfirst($order->status) }}</strong></label>
+                        <label class="form-label small text-muted">Status Saat Ini: <strong>{{ ucfirst($order->status)
+                                }}</strong></label>
                         <select name="status" class="form-select">
                             <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing (Sedang Dikemas)</option>
-                            <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Shipped (Dikirim)</option>
-                            <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered (Sampai Tujuan)</option>
-                            <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled (Batalkan & Restock)</option>
+                            <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Processing
+                                (Sedang Dikemas)</option>
+                            <option value="shipped" {{ $order->status == 'shipped' ? 'selected' : '' }}>Shipped
+                                (Dikirim)</option>
+                            <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered
+                                (Sampai Tujuan)</option>
+                            <option value=" {{ $order->status }}" {{ $order->status == 'completed' ? 'selected' : '' }}> Completed
+                                (Selesai)
+                            </option>
+                            <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled
+                                (Batalkan & Restock)</option>
                         </select>
                     </div>
+
                     <button type="submit" class="btn btn-primary w-100">
                         Update Status
                     </button>
-                    <hr>
-                    <a href="{{ route('admin.orders.index') }}" class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-left"></i> Kembali
-                    </a>
                 </form>
 
                 @if($order->status == 'cancelled')
-                    <div class="alert alert-danger mt-3 mb-0 small">
-                        <i class="bi bi-info-circle"></i> Pesanan ini telah dibatalkan. Stok produk telah dikembalikan otomatis.
-                    </div>
+                <div class="alert alert-danger mt-3 mb-0 small">
+                    <i class="bi bi-info-circle"></i> Pesanan ini telah dibatalkan. Stok produk telah dikembalikan
+                    otomatis.
+                </div>
                 @endif
             </div>
         </div>

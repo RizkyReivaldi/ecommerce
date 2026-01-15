@@ -166,7 +166,7 @@
             });
         }
     });
-</script>
+</script>   
 @endpush
 @endif
 

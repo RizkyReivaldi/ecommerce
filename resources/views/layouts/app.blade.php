@@ -17,15 +17,13 @@
 
 <body>
 
-{{-- 🔹 SCROLL PROGRESS BAR --}}
+{{-- 🔹 SCROLL PROGRESS --}}
 <div id="page-progress"></div>
 
 <div class="theme-wrapper" id="themeWrapper">
 
     {{-- 🌌 SKY SYSTEM --}}
     <div id="sky-effects">
-
-        {{-- ☀️ DAY --}}
         <div class="sky-layer sky-day active">
             <div class="sun-rays"></div>
             <div class="cloud-layer clouds-back"  data-depth="0.15"></div>
@@ -33,16 +31,13 @@
             <div class="cloud-layer clouds-front" data-depth="0.6"></div>
         </div>
 
-        {{-- 🌅 SUNSET --}}
         <div class="sky-layer sky-sunset"></div>
 
-        {{-- 🌙 NIGHT --}}
         <div class="sky-layer sky-night">
             <canvas id="starfield"></canvas>
             <div class="nebula"></div>
             <div class="moon"></div>
         </div>
-
     </div>
 
     @include('partials.navbar')
@@ -54,82 +49,135 @@
     @include('partials.footer')
 </div>
 
-{{-- =====================================================
-   THEME + SKY ENGINE (PERFORMANCE SAFE)
-===================================================== --}}
 @stack('scripts')
+
+{{-- =====================================================
+   🌗 THEME + AUTO SKY
+===================================================== --}}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.getElementById('themeWrapper');
     const toggle  = document.getElementById('themeToggle');
+    const moon    = document.querySelector('.moon');
 
-    const day     = document.querySelector('.sky-day');
-    const sunset  = document.querySelector('.sky-sunset');
-    const night   = document.querySelector('.sky-night');
+    const layers = {
+        day: document.querySelector('.sky-day'),
+        sunset: document.querySelector('.sky-sunset'),
+        night: document.querySelector('.sky-night')
+    };
 
-    function clearSky() {
-        day?.classList.remove('active');
-        sunset?.classList.remove('active');
-        night?.classList.remove('active');
+    function setSky(type) {
+        Object.values(layers).forEach(l => l?.classList.remove('active'));
+        layers[type]?.classList.add('active');
     }
 
-    function setSky(mode) {
-        clearSky();
-        document.querySelector('.sky-' + mode)?.classList.add('active');
-    }
+    /* ============================
+       🌗 DRAG MOON SYSTEM
+    ============================ */
 
-    function applyTheme(theme, save = true) {
-        wrapper.classList.toggle('dark', theme === 'dark');
-        setSky(theme === 'dark' ? 'night' : 'day');
-        toggle && (toggle.textContent = theme === 'dark' ? '☀️' : '🌙');
-        save && localStorage.setItem('theme', theme);
-    }
+    let dragging = false;
 
-    function autoThemeByTime() {
-        if (localStorage.getItem('theme')) return;
-        const h = new Date().getHours();
-        if (h >= 6 && h < 17) setSky('day');
-        else if (h >= 17 && h < 19) setSky('sunset');
+    function updateByPosition(x) {
+        const w = window.innerWidth;
+        const p = Math.min(Math.max(x / w, 0), 1);
+
+        moon.style.left = `${p * 100}%`;
+
+        if (p < 0.35) {
+            wrapper.classList.remove('dark');
+            setSky('day');
+            toggle && (toggle.textContent = '🌙');
+            localStorage.setItem('theme', 'light');
+        }
+        else if (p < 0.6) {
+            wrapper.classList.remove('dark');
+            setSky('sunset');
+            toggle && (toggle.textContent = '🌗');
+        }
         else {
             wrapper.classList.add('dark');
             setSky('night');
+            toggle && (toggle.textContent = '☀️');
+            localStorage.setItem('theme', 'dark');
         }
     }
 
-    const saved = localStorage.getItem('theme');
-    saved ? applyTheme(saved, false) : autoThemeByTime();
-
-    toggle?.addEventListener('click', () => {
-        applyTheme(wrapper.classList.contains('dark') ? 'light' : 'dark');
+    moon?.addEventListener('mousedown', e => {
+        dragging = true;
+        moon.classList.add('dragging');
+        e.preventDefault();
     });
 
-    setInterval(autoThemeByTime, 60000);
+    window.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        updateByPosition(e.clientX);
+    });
+
+    window.addEventListener('mouseup', () => {
+        dragging = false;
+        moon.classList.remove('dragging');
+    });
+
+    /* TOUCH SUPPORT */
+    moon?.addEventListener('touchstart', () => {
+        dragging = true;
+        moon.classList.add('dragging');
+    }, { passive: true });
+
+    window.addEventListener('touchmove', e => {
+        if (!dragging) return;
+        updateByPosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+        dragging = false;
+        moon.classList.remove('dragging');
+    });
+
+    /* INITIAL STATE */
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') {
+        moon.style.left = '75%';
+        wrapper.classList.add('dark');
+        setSky('night');
+        toggle && (toggle.textContent = '☀️');
+    } else {
+        moon.style.left = '25%';
+        setSky('day');
+        toggle && (toggle.textContent = '🌙');
+    }
+
+    /* BUTTON STILL WORKS */
+    toggle?.addEventListener('click', () => {
+        const dark = wrapper.classList.toggle('dark');
+        setSky(dark ? 'night' : 'day');
+        toggle.textContent = dark ? '☀️' : '🌙';
+        moon.style.left = dark ? '75%' : '25%';
+        localStorage.setItem('theme', dark ? 'dark' : 'light');
+    });
 });
 </script>
 
+
+
 {{-- =====================================================
-   ☁️ CLOUD PARALLAX (DEPTH BASED, GPU SAFE)
+   ☁️ CLOUD PARALLAX
 ===================================================== --}}
 <script>
 (() => {
     const layers = document.querySelectorAll('.cloud-layer');
-    let lastY = window.scrollY;
-
     window.addEventListener('scroll', () => {
         const y = window.scrollY;
-        const delta = y - lastY;
-        lastY = y;
-
         layers.forEach(layer => {
-            const depth = parseFloat(layer.dataset.depth || 0.3);
-            layer.style.transform = `translate3d(0, ${y * depth}px, 0)`;
+            const d = parseFloat(layer.dataset.depth || 0.3);
+            layer.style.transform = `translate3d(0, ${y * d}px, 0)`;
         });
     }, { passive: true });
 })();
 </script>
 
 {{-- =====================================================
-   🌌 STARFIELD (STRONG TWINKLE)
+   🌌 STARFIELD
 ===================================================== --}}
 <script>
 (() => {
@@ -156,9 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
         for (const s of stars) {
             s.a += s.s;
             if (s.a > 1 || s.a < 0) s.s *= -1;
-
             ctx.beginPath();
-            ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(255,255,255,${s.a})`;
             ctx.fill();
         }
@@ -171,103 +218,112 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 </script>
 
+{{-- =====================================================
+   🔔 TOAST + ❤️ WISHLIST + 🛒 CART (NO RELOAD)
+===================================================== --}}
+<script>
+/* ================= TOAST ================= */
 
+function showToast(text) {
+    const toast = document.createElement('div');
+    toast.className = 'toast-instax';
+    toast.textContent = text;
+    document.body.appendChild(toast);
 
+    requestAnimationFrame(() => toast.classList.add('show'));
 
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
+}
 
+/* ================= BADGE UPDATE ================= */
 
+function updateBadge(id, delta) {
+    const badge = document.getElementById(id);
+    if (!badge) return;
 
+    let count = parseInt(badge.textContent || '0') + delta;
 
+    if (count <= 0) {
+        badge.textContent = '0';
+        badge.style.display = 'none';
+    } else {
+        badge.textContent = count;
+        badge.style.display = 'inline-block';
+    }
+}
 
+/* ================= WISHLIST ================= */
 
-{{-- bootstrap jangan di ganggu --}}
+async function toggleWishlist(productId, btn) {
+    const icon = btn.querySelector('i');
+    icon.classList.add('pop');
 
- <script>
-        async function toggleWishlist(productId) {
-            try {
-                const token = document.querySelector('meta[name="csrf-token"]').content;
-
-                const response = await fetch(`/wishlist/toggle/${productId}`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": token,
-                    },
-                });
-
-                if (response.status === 401) {
-                    window.location.href = "/login";
-                    return;
-                }
-
-                const data = await response.json();
-
-                if (data.status === "success") {
-                    updateWishlistUI(productId, data.added);
-                    updateWishlistCounter(data.count);
-                }
-            } catch (error) {
-                console.error(error);
-            }
+    const res = await fetch(`/wishlist/toggle/${productId}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         }
+    });
 
-        function updateWishlistUI(productId, isAdded) {
-            const buttons = document.querySelectorAll(`.wishlist-btn-${productId}`);
+    if (res.status === 401) {
+        location.href = '/login';
+        return;
+    }
 
-            buttons.forEach(btn => {
-                const icon = btn.querySelector("i");
-                if (isAdded) {
-                    icon.classList.remove("bi-heart");
-                    icon.classList.add("bi-heart-fill", "text-danger");
-                } else {
-                    icon.classList.remove("bi-heart-fill", "text-danger");
-                    icon.classList.add("bi-heart");
-                }
-            });
-        }
+    const data = await res.json();
 
-        function updateWishlistCounter(count) {
-            const badge = document.getElementById("wishlist-count");
-            if (!badge) return;
+    if (data.added) {
+        icon.classList.replace('bi-heart', 'bi-heart-fill');
+        showToast('❤️ Ditambahkan ke wishlist');
+        updateBadge('wishlist-count', +1);
+    } else {
+        icon.classList.replace('bi-heart-fill', 'bi-heart');
+        showToast('💔 Dihapus dari wishlist');
+        updateBadge('wishlist-count', -1);
+    }
 
-            badge.innerText = count;
-            badge.style.display = count > 0 ? "inline-block" : "none";
-        }
-    </script>
+    setTimeout(() => icon.classList.remove('pop'), 300);
+}
 
-    {{-- THEME TOGGLE --}}
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-                const html = document.documentElement;
-                const toggleBtn = document.getElementById("themeToggle");
-                const icon = document.getElementById("themeIcon");
+/* ================= CART ================= */
 
-                if (!toggleBtn) return;
+async function addToCart(productId) {
+    showToast('🛒 Ditambahkan ke keranjang');
 
-                const savedTheme = localStorage.getItem("theme") || "light";
-                setTheme(savedTheme);
+    const res = await fetch("{{ route('cart.add') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: document.getElementById(`qty-${productId}`)?.value || 1
+        })
+    });
 
-                toggleBtn.addEventListener("click", () => {
-                    const newTheme = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
-                    setTheme(newTheme);
-                });
+    if (res.ok) {
+        updateBadge('cart-count', +1);
+    }
+}
 
-                function setTheme(theme) {
-                    html.setAttribute("data-theme", theme);
-                    localStorage.setItem("theme", theme);
+/* ================= QTY ================= */
 
-                    if (theme === "dark") {
-                        icon.classList.replace("bi-moon-stars-fill", "bi-sun-fill");
-                    } else {
-                        icon.classList.replace("bi-sun-fill", "bi-moon-stars-fill");
-                    }
-                }
-            });
-    </script>
+function changeQty(id, step) {
+    const input = document.getElementById(`qty-${id}`);
+    if (!input) return;
+
+    let v = parseInt(input.value) + step;
+    input.value = Math.max(1, Math.min(input.max || 99, v));
+}
+</script>
 
 
 {{-- =====================================================
-   ⚡ PERFORMANCE HINTS
+   ⚡ PERFORMANCE
 ===================================================== --}}
 <style>
 #sky-effects,
@@ -276,7 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
 #starfield {
     will-change: transform, opacity;
 }
-</style>
+
+
 
 </body>
 </html>
