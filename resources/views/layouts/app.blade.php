@@ -49,8 +49,6 @@
     @include('partials.footer')
 </div>
 
-@stack('scripts')
-
 {{-- =====================================================
    🌗 THEME + AUTO SKY
 ===================================================== --}}
@@ -78,24 +76,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let dragging = false;
 
     function updateByPosition(x) {
+        if (!moon) return;
+
         const w = window.innerWidth;
         const p = Math.min(Math.max(x / w, 0), 1);
 
         moon.style.left = `${p * 100}%`;
 
         if (p < 0.35) {
-            wrapper.classList.remove('dark');
+            wrapper?.classList.remove('dark');
             setSky('day');
             toggle && (toggle.textContent = '🌙');
             localStorage.setItem('theme', 'light');
         }
         else if (p < 0.6) {
-            wrapper.classList.remove('dark');
+            wrapper?.classList.remove('dark');
             setSky('sunset');
             toggle && (toggle.textContent = '🌗');
         }
         else {
-            wrapper.classList.add('dark');
+            wrapper?.classList.add('dark');
             setSky('night');
             toggle && (toggle.textContent = '☀️');
             localStorage.setItem('theme', 'dark');
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('mouseup', () => {
         dragging = false;
-        moon.classList.remove('dragging');
+        moon?.classList.remove('dragging');
     });
 
     /* TOUCH SUPPORT */
@@ -131,34 +131,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('touchend', () => {
         dragging = false;
-        moon.classList.remove('dragging');
+        moon?.classList.remove('dragging');
     });
 
     /* INITIAL STATE */
     const saved = localStorage.getItem('theme');
     if (saved === 'dark') {
-        moon.style.left = '75%';
-        wrapper.classList.add('dark');
+        moon && (moon.style.left = '75%');
+        wrapper?.classList.add('dark');
         setSky('night');
         toggle && (toggle.textContent = '☀️');
     } else {
-        moon.style.left = '25%';
+        moon && (moon.style.left = '25%');
         setSky('day');
         toggle && (toggle.textContent = '🌙');
     }
 
     /* BUTTON STILL WORKS */
     toggle?.addEventListener('click', () => {
-        const dark = wrapper.classList.toggle('dark');
+        const dark = wrapper?.classList.toggle('dark');
         setSky(dark ? 'night' : 'day');
         toggle.textContent = dark ? '☀️' : '🌙';
-        moon.style.left = dark ? '75%' : '25%';
+        moon && (moon.style.left = dark ? '75%' : '25%');
         localStorage.setItem('theme', dark ? 'dark' : 'light');
     });
 });
 </script>
-
-
 
 {{-- =====================================================
    ☁️ CLOUD PARALLAX
@@ -332,8 +330,8 @@ function changeQty(id, step) {
 #starfield {
     will-change: transform, opacity;
 }
+</style>
 
-
-
+@stack('scripts')
 </body>
 </html>
