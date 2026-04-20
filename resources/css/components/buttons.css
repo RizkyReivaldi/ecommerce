@@ -1,0 +1,110 @@
+/* ======================================
+   BUTTONS & BUTTON STYLES
+====================================== */
+
+/* ===== PRIMARY ACTION BUTTON (DAY) ===== */
+.btn-instax {
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  border: none;
+  color: #ffffff;
+  box-shadow:
+    0 10px 22px rgba(79,70,229,0.35),
+    0 4px 10px rgba(15,23,42,0.2);
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
+}
+
+.btn-instax:hover {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  transform: translateY(-1px);
+}
+
+.btn-instax:disabled {
+  background: #cbd5f5;
+  color: #475569;
+  box-shadow: none;
+}
+
+/* ===== PRIMARY ACTION BUTTON (NIGHT) ===== */
+.theme-wrapper.dark .btn-instax {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  box-shadow:
+    0 14px 35px rgba(79,70,229,0.45),
+    0 6px 14px rgba(0,0,0,0.45);
+}
+
+.theme-wrapper.dark .btn-instax:hover {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  transform: translateY(-1px);
+}
+
+.theme-wrapper.dark .btn-instax:disabled {
+  background: #334155;
+  color: #94a3b8;
+  box-shadow: none;
+}
+
+/* ===== LOGIN / REGISTER BUTTONS ===== */
+.btn-login,
+.btn-register {
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  font-weight: 500;
+  color: var(--instax-text, #2f4f4f);
+  transition: all 0.25s ease;
+}
+
+.btn-login:hover,
+.btn-register:hover {
+  color: #6b98a5;
+  background: rgba(107, 152, 165, 0.08);
+  border-radius: 10px;
+}
+
+.theme-wrapper.dark .btn-login,
+.theme-wrapper.dark .btn-register {
+  color: #f1f5f9;
+}
+
+.theme-wrapper.dark .btn-login:hover,
+.theme-wrapper.dark .btn-register:hover {
+  color: #8fc7d6;
+  background: rgba(143, 199, 214, 0.12);
+}
+
+/* ===== OUTLINE INSTAX BUTTON ===== */
+.btn-outline-instax {
+  background: #da7cb0;
+  color: #ffffff !important;
+  border: none;
+  border-radius: 14px;
+  padding: 10px 18px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.btn-outline-instax:hover {
+  background: #da7cb0;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.btn-outline-instax:active {
+  transform: scale(0.97);
+}
+
+.btn-outline-instax i {
+  transition: transform 0.25s ease;
+}
+
+.btn-outline-instax:hover i {
+  transform: scale(1.15);
+}
+
+.theme-wrapper.dark .btn-outline-instax {
+  background: #840b9f;
+  color: #ffffff !important;
+}

@@ -1,101 +1,113 @@
-<div class="top-strip d-none d-lg-flex justify-content-between align-items-center px-4 py-2">
-    <div class="d-flex gap-3 small text-white-75">
-        <a href="#" class="top-strip-link">Mulai Jadi Event Creator</a>
-        <a href="#" class="top-strip-link">Biaya</a>
-        <a href="#" class="top-strip-link">Blog</a>
-        <a href="#" class="top-strip-link">Pusat Bantuan</a>
-    </div>
-    <div class="d-flex gap-3 small text-white-50">
-        <span>#Promo_Indodana</span>
-        <span>#LOKETPlus</span>
-        <span>#LOKETScreen</span>
-    </div>
-</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+    <div class="container-fluid px-4">
 
-<nav class="navbar navbar-expand-lg navbar-dark navbar-loket sticky-top shadow-sm">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center fw-bold" href="{{ route('home') }}">
-            <span class="brand-mark">LOKET</span>
+        {{-- Brand --}}
+        <a class="navbar-brand fw-bold" href="{{ route('admin.dashboard') }}">
+            ADMIN PANEL
         </a>
 
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        {{-- Toggle --}}
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarMain">
-            <form class="navbar-search mx-auto d-none d-lg-flex align-items-center" action="{{ route('catalog.index') }}" method="GET">
-                <div class="input-group shadow-sm w-100">
-                    <span class="input-group-text bg-white border-0"><i class="bi bi-search"></i></span>
-                    <input type="text" name="q" class="form-control rounded-pill ps-2 py-2 border-0" placeholder="Cari event seru di sini" value="{{ request('q') }}">
-                </div>
-            </form>
+        <div class="collapse navbar-collapse" id="adminNavbar">
 
-            <ul class="navbar-nav ms-auto align-items-center gap-2">
-                <li class="nav-item d-lg-none w-100 mb-2">
-                    <form action="{{ route('catalog.index') }}" method="GET">
-                        <div class="input-group shadow-sm w-100">
-                            <span class="input-group-text bg-white border-0"><i class="bi bi-search"></i></span>
-                            <input type="text" name="q" class="form-control rounded-pill ps-2 py-2 border-0" placeholder="Cari event seru di sini" value="{{ request('q') }}">
-                        </div>
-                    </form>
+            {{-- LEFT MENU --}}
+            <ul class="navbar-nav me-auto gap-2">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link px-3 text-white-75" href="{{ route('catalog.index') }}">Jelajah</a>
+                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                        <i class="bi bi-calendar-event"></i> Events
+                    </a>
                 </li>
 
-                @auth
-                    <li class="nav-item d-lg-none">
-                        <a class="nav-link px-3 text-white-75" href="{{ route('wishlist.index') }}">Wishlist</a>
-                    </li>
-                    <li class="nav-item d-lg-none">
-                        <a class="nav-link px-3 text-white-75" href="{{ route('cart.index') }}">Keranjang</a>
-                    </li>
-                @endauth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.categories.index') }}">
+                        <i class="bi bi-tags"></i> Categories
+                    </a>
+                </li>
 
-                @auth
-                    <li class="nav-item d-none d-lg-inline">
-                        <a class="nav-link px-3 text-white-75" href="{{ route('wishlist.index') }}">Wishlist</a>
-                    </li>
-                    <li class="nav-item d-none d-lg-inline">
-                        <a class="nav-link px-3 text-white-75" href="{{ route('cart.index') }}">Keranjang</a>
-                    </li>
-                    <li class="nav-item dropdown ms-2">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center px-3" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ auth()->user()->avatar_url }}" class="rounded-circle me-2 shadow-sm" width="32" height="32" alt="{{ auth()->user()->name }}">
-                            <span class="d-none d-lg-inline">{{ auth()->user()->name }}</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3">
-                            <li><a class="dropdown-item py-2" href="{{ route('profile.edit') }}"><i class="bi bi-person me-2"></i>Profil Saya</a></li>
-                            <li><a class="dropdown-item py-2" href="{{ route('orders.index') }}"><i class="bi bi-bag me-2"></i>Pesanan Saya</a></li>
-                            @if (auth()->user()->isAdmin())
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-primary py-2" href="{{ route('admin.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Admin Panel</a></li>
-                            @endif
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item text-danger py-2"><i class="bi bi-box-arrow-right me-2"></i>Logout</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                @else
-                    <li class="nav-item d-lg-none">
-                        <a class="nav-link px-3 text-white-75" href="{{ route('login') }}">Masuk</a>
-                    </li>
-                    <li class="nav-item d-lg-none">
-                        <a class="nav-link px-3 text-white-75" href="{{ route('register') }}">Daftar</a>
-                    </li>
-                    <li class="nav-item d-none d-lg-inline">
-                        <a class="nav-link px-3 text-white-75" href="{{ route('login') }}">Masuk</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-light btn-sm rounded-pill px-4 py-2" href="{{ route('register') }}">Daftar</a>
-                    </li>
-                @endauth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.orders.index') }}">
+                        <i class="bi bi-receipt"></i> Orders
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                        <i class="bi bi-people"></i> Users
+                    </a>
+                </li>
+
             </ul>
+
+            {{-- RIGHT SIDE --}}
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                {{-- Language Switcher --}}
+                <li class="nav-item dropdown me-2">
+                    <a class="nav-link dropdown-toggle" href="#" id="adminLanguageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ strtoupper(app()->getLocale()) }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="adminLanguageDropdown">
+                        <li><a class="dropdown-item {{ app()->getLocale() === 'id' ? 'active' : '' }}" href="{{ route('locale.switch', 'id') }}">ID - Bahasa</a></li>
+                        <li><a class="dropdown-item {{ app()->getLocale() === 'en' ? 'active' : '' }}" href="{{ route('locale.switch', 'en') }}">EN - English</a></li>
+                    </ul>
+                </li>
+
+                {{-- Quick Action --}}
+                {{-- <li class="nav-item me-2">
+                    <a href="{{ route('admin.dasboard') }}" class="btn btn-primary btn-sm rounded-pill px-3">
+                        + Create Event
+                    </a>
+                </li> --}}
+
+                {{-- User Dropdown --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown">
+                        <img src="{{ auth()->user()->avatar_url }}"
+                             class="rounded-circle me-2"
+                             width="32"
+                             height="32"
+                             alt="user">
+                        <span class="d-none d-lg-inline">{{ auth()->user()->name }}</span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                <i class="bi bi-person me-2"></i> Profile
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="{{ route('home') }}">
+                                <i class="bi bi-house me-2"></i> Back to Site
+                            </a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="dropdown-item text-danger">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
         </div>
     </div>
 </nav>

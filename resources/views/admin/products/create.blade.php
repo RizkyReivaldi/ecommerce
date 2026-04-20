@@ -1,7 +1,7 @@
 {{-- resources/views/admin/products/create.blade.php --}}
 @extends('layouts.admin')
 
-@section('title', 'Tambah Produk')
+@section('title', 'Tambah Event')
 
 @section('content')
 <div class="row justify-content-center">
@@ -10,7 +10,7 @@
         {{-- Header --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="h3 mb-0 fw-bold text-primary">
-                <i class="bi bi-box-seam me-1"></i> Tambah Produk Baru
+                <i class="bi bi-calendar-event me-1"></i> Tambah Event Baru
             </h2>
             <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">
                 <i class="bi bi-arrow-left"></i> Kembali
@@ -25,18 +25,18 @@
 
                     {{-- ================= BASIC INFO ================= --}}
                     <h6 class="fw-bold mb-3 text-muted">
-                        <i class="bi bi-info-circle me-1"></i> Informasi Produk
+                        <i class="bi bi-info-circle me-1"></i> Informasi Event
                     </h6>
 
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Nama Produk</label>
+                        <label class="form-label fw-semibold">Nama Event</label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                             value="{{ old('name') }}" required>
                         @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Kategori</label>
+                        <label class="form-label fw-semibold">Kategori Event</label>
                         <select name="category_id" class="form-select @error('category_id') is-invalid @enderror"
                             required>
                             <option value="">Pilih Kategori...</option>
@@ -51,16 +51,16 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label fw-semibold">Deskripsi Produk</label>
+                        <label class="form-label fw-semibold">Deskripsi Event</label>
                         <textarea name="description" rows="4"
                             class="form-control @error('description') is-invalid @enderror"
-                            placeholder="Deskripsi singkat produk...">{{ old('description') }}</textarea>
+                            placeholder="Deskripsi singkat event...">{{ old('description') }}</textarea>
                         @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
 
                     {{-- ================= PRICE & STOCK ================= --}}
                     <h6 class="fw-bold mb-3 text-muted">
-                        <i class="bi bi-cash-stack me-1"></i> Harga & Stok
+                        <i class="bi bi-cash-stack me-1"></i> Harga Tiket & Kuota
                     </h6>
 
                     <div class="row">
@@ -80,7 +80,7 @@
                         </div>
 
                         <div class="col-md-4 mb-3">
-                            <label class="form-label fw-semibold">Stok</label>
+                            <label class="form-label fw-semibold">Kuota Tiket</label>
                             <input type="number" name="stock" class="form-control @error('stock') is-invalid @enderror"
                                 value="{{ old('stock') }}" min="0" required>
                             @error('stock') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -88,7 +88,7 @@
                     </div>
 
                     <div class="mb-4 col-md-4">
-                        <label class="form-label fw-semibold">Berat (gram)</label>
+                        <label class="form-label fw-semibold">Durasi Event (menit)</label>
                         <input type="number" name="weight" class="form-control @error('weight') is-invalid @enderror"
                             value="{{ old('weight') }}" min="1" required>
                         @error('weight') <div class="invalid-feedback">{{ $message }}</div> @enderror
@@ -96,7 +96,7 @@
 
                     {{-- ================= IMAGES ================= --}}
                     <h6 class="fw-bold mb-3 text-muted">
-                        <i class="bi bi-images me-1"></i> Gambar Produk
+                        <i class="bi bi-images me-1"></i> Gambar Event
                     </h6>
 
                     <div class="mb-4">
@@ -112,7 +112,7 @@
 
                     {{-- ================= STATUS ================= --}}
                     <h6 class="fw-bold mb-3 text-muted">
-                        <i class="bi bi-toggle-on me-1"></i> Status Produk
+                        <i class="bi bi-toggle-on me-1"></i> Status Event
                     </h6>
 
                     <div class="row mb-4">
@@ -128,7 +128,7 @@
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" name="is_featured" value="1" {{
                                     old('is_featured') ? 'checked' : '' }}>
-                                <label class="form-check-label fw-semibold">Produk Unggulan</label>
+                                <label class="form-check-label fw-semibold">Event Unggulan</label>
                             </div>
                         </div>
                     </div>
@@ -136,7 +136,7 @@
                     {{-- SUBMIT --}}
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="bi bi-save me-1"></i> Simpan Produk
+                            <i class="bi bi-save me-1"></i> Simpan Event
                         </button>
                     </div>
 

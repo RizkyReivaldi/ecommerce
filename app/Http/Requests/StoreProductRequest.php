@@ -4,6 +4,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreProductRequest extends FormRequest
 {
@@ -12,9 +13,8 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // Hanya user dengan role 'admin' yang boleh menambah produk.
-        // auth()->check() memastikan user sudah login.
-        return auth()->check() && auth()->user()->role === 'admin';
+        // Siapa pun yang sudah login boleh membuat event/public product.
+        return Auth::check();
     }
 
     /**

@@ -40,7 +40,11 @@
         </div>
     </div>
 
-    @include('partials.navbar')
+    @hasSection('navbar')
+        @yield('navbar')
+    @else
+        @include('partials.navbar')
+    @endif
 
     <main class="min-vh-100 position-relative" style="z-index:2">
         @yield('content')

@@ -4,6 +4,7 @@
     {{-- Gambar --}}
     <div class="position-relative overflow-hidden bg-light" style="padding-top: 100%;">
         <img src="{{ $product->image_url }}"
+            onerror="this.onerror=null;this.src='{{ asset('images/no-product-image.svg') }}';"
             class="card-img-top position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
 
         @if($product->has_discount)

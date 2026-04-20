@@ -1,196 +1,208 @@
 @extends('layouts.app')
 
-@section('title', 'Katalog Produk')
+@section('title', 'Jelajah Event')
 
 @section('content')
+<style>
+    body {
+        background: #F5F7FA;
+    }
 
-<div class="instax-page-bg">
-    <div class="container py-4">
-        <div class="row g-4">
+    /* Header Style */
+    .loket-topbar {
+        background: #1E2937;
+        padding: 12px 0;
+    }
 
-            {{-- FILTER (Desktop Sidebar) --}}
-            <aside class="col-lg-3 d-none d-lg-block fade-up">
-                <div class="instax-filter p-3 shadow-sm">
+    .loket-logo {
+        font-weight: 900;
+        font-size: 1.5rem;
+        color: white;
+    }
 
-                    <h6 class="fw-semibold mb-3">
-                        <i class="bi bi-funnel me-1"></i> Filter
-                    </h6>
+    /* Sidebar */
+    .filter-sidebar {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        position: sticky;
+        top: 90px;
+        border: 1px solid #eee;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
 
-                    <form action="{{ route('catalog.index') }}" method="GET">
+    .filter-title {
+        font-weight: 700;
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+        color: #1E2937;
+    }
 
-                        {{-- keep query --}}
-                        @foreach(request()->except('stock_min') as $key => $value)
-                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
-                        @endforeach
+    .form-switch .form-check-input {
+        width: 48px;
+        height: 24px;
+    }
 
-                        {{-- Category --}}
-                        <div class="mb-4">
-                            <small class="fw-semibold text-muted">Kategori</small>
+    /* Cards */
+    .event-card {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #eee;
+        transition: all 0.3s ease;
+        background: white;
+    }
 
-                            @foreach($categories as $category)
-                            <div class="form-check mt-2">
-                                <input class="form-check-input"
-                                    type="radio"
-                                    name="category"
-                                    value="{{ $category->slug }}"
-                                    {{ request('category') == $category->slug ? 'checked' : '' }}
-                                    onchange="this.form.submit()">
+    .event-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
 
-                                <label class="form-check-label d-flex justify-content-between w-100">
-                                    <span>{{ $category->name }}</span>
-                                    <small>{{ $category->products_count }}</small>
-                                </label>
-                            </div>
-                            @endforeach
-                        </div>
+    .event-card img {
+        height: 180px;
+        object-fit: cover;
+    }
 
-                        {{-- Price --}}
-                        <div class="mb-4">
-                            <small class="fw-semibold text-muted">Harga</small>
-                            <div class="d-flex gap-2 mt-2">
-                                <input type="number"
-                                    class="form-control form-control-sm"
-                                    name="min_price"
-                                    placeholder="Min"
-                                    value="{{ request('min_price') }}">
+    .event-info {
+        padding: 14px;
+    }
 
-                                <input type="number"
-                                    class="form-control form-control-sm"
-                                    name="max_price"
-                                    placeholder="Max"
-                                    value="{{ request('max_price') }}">
-                            </div>
-                        </div>
+    .event-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 
-                        {{-- STOCK BAR --}}
-                        <div class="mb-4">
-                            <small class="fw-semibold text-muted d-flex justify-content-between">
-                                <span>Minimal Stok</span>
-                                <span id="stockValue">
-                                    {{ request('stock_min', 1) }}
-                                </span>
-                            </small>
+    .event-date {
+        font-size: 0.85rem;
+        color: #64748B;
+    }
 
-                            <input type="range"
-                                class="form-range mt-2"
-                                min="1"
-                                max="100"
-                                step="1"
-                                name="stock_min"
-                                value="{{ request('stock_min', 1) }}"
-                                oninput="document.getElementById('stockValue').innerText = this.value">
+    .event-price {
+        font-weight: 700;
+        color: #1E2937;
+        font-size: 1.1rem;
+    }
 
-                            <button class="btn instax-btn btn-sm w-100 mt-2">
-                                Terapkan
-                            </button>
-                        </div>
+    .organizer {
+        font-size: 0.8rem;
+        color: #64748B;
+    }
+</style>
 
-                        {{-- Discount --}}
-                        <div class="form-check">
-                            <input class="form-check-input"
-                                type="checkbox"
-                                name="on_sale"
-                                value="1"
-                                {{ request('on_sale') ? 'checked' : '' }}
-                                onchange="this.form.submit()">
+<div class="container-fluid px-lg-5 py-4">
 
-                            <label class="form-check-label">
-                                Diskon
-                            </label>
-                        </div>
+    <div class="row g-4">
 
-                    </form>
+        <!-- SIDEBAR -->
+        <aside class="col-lg-3 d-none d-lg-block">
+            <div class="filter-sidebar">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold mb-0">Filter</h5>
+                    <button class="btn btn-sm text-primary p-0">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </button>
                 </div>
-            </aside>
 
-            {{-- PRODUCT LIST --}}
-            <main class="col-lg-9">
-
-                {{-- Header --}}
-                <div class="d-flex justify-content-between align-items-center mb-3 fade-up">
-                    <div>
-                        <h5 class="mb-0 fw-semibold text-instax">
-                            @if(request('q'))
-                                "{{ request('q') }}"
-                            @elseif(request('category'))
-                                {{ $categories->firstWhere('slug', request('category'))?->name }}
-                            @else
-                                Semua Produk
-                            @endif
-                        </h5>
-                        <small class="text-muted">
-                            {{ $products->total() }} produk
-                        </small>
+                <!-- Online Event -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold">Event Online</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="onlineToggle">
+                        </div>
                     </div>
+                </div>
 
-                    {{-- SORT --}}
-                    <select class="form-select form-select-sm w-auto instax-select"
-                            onchange="location.href=this.value">
+                <!-- Location -->
+                <div class="mb-4">
+                    <div class="filter-title">Lokasi</div>
+                    <input type="text" class="form-control form-control-sm mb-2" placeholder="Cari lokasi...">
 
-                        <option value="{{ request()->fullUrlWithQuery(['sort'=>'newest']) }}"
-                            {{ request('sort') === 'newest' || !request('sort') ? 'selected' : '' }}>
-                            Terbaru
-                        </option>
+                    <div class="location-wrap" style="max-height: 200px; overflow-y: auto;">
+                        <a href="#" class="d-block py-1 text-decoration-none text-dark">Semua Lokasi</a>
+                        <a href="#" class="d-block py-1 text-decoration-none text-muted">Jakarta</a>
+                        <a href="#" class="d-block py-1 text-decoration-none text-muted">Bandung</a>
+                        <a href="#" class="d-block py-1 text-decoration-none text-muted">Bali</a>
+                        <a href="#" class="d-block py-1 text-decoration-none text-muted">Surabaya</a>
+                        <!-- Add more as needed -->
+                    </div>
+                </div>
 
-                        <option value="{{ request()->fullUrlWithQuery(['sort'=>'name_asc']) }}"
-                            {{ request('sort') === 'name_asc' ? 'selected' : '' }}>
-                            Nama A → Z
-                        </option>
+                <!-- Other Filters -->
+                <div class="mb-3">
+                    <div class="filter-title d-flex justify-content-between">
+                        Tipe Event <i class="bi bi-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="filter-title d-flex justify-content-between">
+                        Kategori Event <i class="bi bi-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="filter-title d-flex justify-content-between">
+                        Waktu <i class="bi bi-chevron-down"></i>
+                    </div>
+                </div>
 
-                        <option value="{{ request()->fullUrlWithQuery(['sort'=>'price_asc']) }}"
-                            {{ request('sort') === 'price_asc' ? 'selected' : '' }}>
-                            Harga ↑
-                        </option>
+                <!-- Price -->
+                <div>
+                    <div class="filter-title">Harga</div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="price" id="berbayar" checked>
+                        <label class="form-check-label" for="berbayar">Berbayar</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="price" id="gratis">
+                        <label class="form-check-label" for="gratis">Gratis</label>
+                    </div>
+                </div>
 
-                        <option value="{{ request()->fullUrlWithQuery(['sort'=>'price_desc']) }}"
-                            {{ request('sort') === 'price_desc' ? 'selected' : '' }}>
-                            Harga ↓
-                        </option>
+            </div>
+        </aside>
 
+        <!-- MAIN CONTENT -->
+        <main class="col-lg-9">
+
+            <!-- Top Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                <div class="small text-muted">
+                    Menampilkan <strong>{{ $products->firstItem() }} - {{ $products->lastItem() }}</strong> 
+                    dari <strong>{{ $products->total() }}</strong> event
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    <span class="small text-muted">Urutkan:</span>
+                    <select class="form-select form-select-sm" style="width: auto;">
+                        <option value="terdekat">Waktu Mulai (Terdekat)</option>
+                        <option value="price_low">Harga Terendah</option>
+                        <option value="price_high">Harga Tertinggi</option>
                     </select>
                 </div>
+            </div>
 
-                {{-- Grid --}}
-                @if($products->count())
-                <div class="row g-3">
-                    @foreach($products as $i => $product)
-                    <div class="col-6 col-md-4 col-lg-3 fade-up"
-                        style="transition-delay: {{ $i * 0.06 }}s">
-                        @include('partials.product-card', ['product' => $product])
+            <!-- Event Grid -->
+            <div class="row g-4">
+                @foreach($products as $product)
+                <div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                    <div class="event-card h-100">
+                        @include('partials.product-card-figma', ['product' => $product])
                     </div>
-                    @endforeach
                 </div>
+                @endforeach
+            </div>
 
-                <div class="mt-4 fade-up">
-                    {{ $products->links() }}
-                </div>
-                @else
-                <div class="text-center py-5 text-muted fade-up">
-                    <i class="bi bi-box fs-1"></i>
-                    <p class="mt-3">Produk tidak tersedia</p>
-                </div>
-                @endif
+            <!-- Pagination -->
+            <div class="mt-5 d-flex justify-content-center">
+                {{ $products->links() }}
+            </div>
 
-            </main>
-        </div>
+        </main>
     </div>
 </div>
-
-{{-- SCROLL OBSERVER --}}
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.fade-up')
-        .forEach(el => observer.observe(el));
-});
-</script>
-
 @endsection

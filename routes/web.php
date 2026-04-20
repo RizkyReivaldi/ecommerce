@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\TicketAdminController;
 
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\GoogleController;
@@ -20,6 +21,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\WishlistController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
@@ -40,11 +43,23 @@ route::get('dashhome', [HomeController::class, 'index'])
 Route::get('/search', [SearchController::class, 'index'])
     ->name('search');
 
+Route::get('/locale/{locale}', function ($locale) {
+    $available = ['id', 'en'];
 
+    if (!in_array($locale, $available)) {
+        abort(404);
+    }
+
+    session(['app_locale' => $locale]);
+
+    return redirect(url()->previous() ?: route('home'));
+})->name('locale.switch');
 
 Route::get('/tentang', function () {
     return view('tentang');
 });
+
+Route::view('/promo-indodana', 'pages.promo-indodana')->name('promo.indodana');
 
 Route::get('/sapa/{nama}', function ($nama) {
 
@@ -70,14 +85,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
         ->name('home');
 
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])
+        ->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::delete('/profile/avatar', [ProfileController::class, 'deleteAvatar'])->name('profile.avatar.destroy');
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
-        Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
 
-
+    // ================================================
+    // TICKETS ROUTES
+    // ================================================
+    Route::resource('tickets', TicketController::class);
+    Route::patch('tickets/{ticket}/close', [TicketController::class, 'close'])->name('tickets.close');
+    Route::post('tickets/{ticket}/reply', [TicketController::class, 'reply'])->name('tickets.reply');
 });
 
 // ========================================
@@ -116,6 +139,17 @@ Route::middleware(['auth', 'admin'])
         // - PUT    /admin/products/{id}     → update  (admin.products.update)
         // - DELETE /admin/products/{id}     → destroy (admin.products.destroy)
         Route::resource('reports', ReportController::class)->only(['index', 'sales']);
+
+        // ================================================
+        // ADMIN TICKET ROUTES
+        // ================================================
+        Route::get('/tickets/dashboard', [TicketAdminController::class, 'dashboard'])->name('tickets.dashboard');
+        Route::get('/tickets', [TicketAdminController::class, 'index'])->name('tickets.index');
+        Route::get('/tickets/{ticket}', [TicketAdminController::class, 'show'])->name('tickets.show');
+        Route::patch('/tickets/{ticket}', [TicketAdminController::class, 'update'])->name('tickets.update');
+        Route::post('/tickets/{ticket}/reply', [TicketAdminController::class, 'addReply'])->name('tickets.addReply');
+        Route::post('/tickets/bulk-update', [TicketAdminController::class, 'bulkUpdate'])->name('tickets.bulkUpdate');
+        Route::delete('/tickets/{ticket}', [TicketAdminController::class, 'destroy'])->name('tickets.destroy');
     });
 
 Route::controller(GoogleController::class)->group(function () {
@@ -161,6 +195,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('/wishlist/toggle/{product}', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
 
+    // Public event creation for authenticated users
+    Route::get('/events/create', [CatalogController::class, 'create'])->name('catalog.create');
+    Route::post('/events', [CatalogController::class, 'store'])->name('catalog.store');
+
     // Checkout
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
@@ -179,7 +217,6 @@ Route::middleware('auth')->group(function () {
         ->name('orders.success');
     Route::get('/orders/{order}/pending', [PaymentController::class, 'pending'])
         ->name('orders.pending');
-
 });
 
 
@@ -195,7 +232,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-      // Kategori
+    // Kategori
     Route::resource('categories', CategoryController::class)->except(['show']); // Kategori biasanya tidak butuh show detail page
 
     // Produk
@@ -300,6 +337,3 @@ Route::get('/test-email', function () {
 
     return "Email berhasil dikirim! Silakan cek dashboard Mailtrap Anda.";
 });
-
-
-

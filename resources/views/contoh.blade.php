@@ -50,7 +50,7 @@
 
 {{-- INCLUDE PARTIAL --}}
 @include('partials.header')
-@include('partials.product-card', ['product' => $product])
+@include('partials.product-card-figma', ['product' => $product])
 
 
 {{-- CSRF TOKEN (Wajib untuk form POST) --}}

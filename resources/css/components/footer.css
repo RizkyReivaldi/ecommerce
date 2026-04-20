@@ -1,0 +1,76 @@
+/* ======================================
+   FOOTER STYLES
+====================================== */
+
+/* ===== FOOTER (DAY MODE) ===== */
+.instax-footer {
+  padding-top: 3rem;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.98),
+    rgba(248,250,252,0.98)
+  );
+  border-top: 1px solid rgba(15,23,42,0.08);
+  box-shadow:
+    0 -12px 30px rgba(15,23,42,0.06),
+    0 -2px 6px rgba(15,23,42,0.04);
+  border-radius: 24px 24px 0 0;
+}
+
+.instax-footer,
+.instax-footer p,
+.instax-footer a,
+.instax-footer li,
+.instax-footer h5,
+.instax-footer h6 {
+  color: var(--text-main);
+}
+
+.instax-footer a {
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.instax-footer a:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.footer-text,
+.footer-copy {
+  color: var(--text-muted);
+}
+
+.footer-divider {
+  border-color: rgba(15,23,42,0.1);
+}
+
+.footer-social a {
+  font-size: 1.2rem;
+  margin-right: 12px;
+  display: inline-block;
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+.footer-social a:hover {
+  transform: translateY(-3px) scale(1.08);
+  opacity: 1;
+}
+
+/* ===== FOOTER (NIGHT MODE) ===== */
+.theme-wrapper.dark .instax-footer {
+  background: linear-gradient(
+    180deg,
+    rgba(30,41,59,0.98),
+    rgba(15,23,42,0.98)
+  );
+  border-top: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 -18px 40px rgba(0,0,0,0.6),
+    0 -4px 12px rgba(0,0,0,0.45);
+}
+
+.theme-wrapper.dark .footer-divider {
+  border-color: rgba(255,255,255,0.12);
+}

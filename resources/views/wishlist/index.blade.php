@@ -12,7 +12,7 @@
     <div class="row row-cols-2 row-cols-md-4 g-4">
         @foreach($products as $product)
         <div class="col">
-            <x-product-card :product="$product" />
+            <x-product-card-figma :product="$product" />
         </div>
         @endforeach
     </div>
