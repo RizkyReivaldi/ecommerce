@@ -73,6 +73,11 @@ class DashboardController extends Controller
             ->orderBy('date', 'asc') // Urutkan kronologis
             ->get();
 
-        return view('admin.dashboard', compact('stats', 'recentOrders', 'topProducts', 'revenueChart'));
+        $users = User::withCount('tickets')
+            ->orderByDesc('created_at')
+            ->take(8)
+            ->get();
+
+        return view('admin.dashboard', compact('stats', 'recentOrders', 'topProducts', 'revenueChart', 'users'));
     }
 }

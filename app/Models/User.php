@@ -4,10 +4,11 @@
 namespace App\Models;
 
 use App\Models\Cart;
+use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -76,6 +77,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Product::class, 'wishlists')
             ->withTimestamps();
+    }
+
+    /**
+     * User memiliki banyak ticket.
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
     }
 
     // ==================== HELPER METHODS ====================

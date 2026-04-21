@@ -60,6 +60,13 @@ Route::get('/tentang', function () {
 });
 
 Route::view('/promo-indodana', 'pages.promo-indodana')->name('promo.indodana');
+Route::view('/blog-home', 'pages.blog-home')->name('blog.home');
+Route::view('/loket-x', 'pages.loket-x')->name('blog.loketx');
+Route::view('/loket-edu', 'pages.loket-edu')->name('blog.loketedu');
+Route::view('/loket-news', 'pages.loket-news')->name('blog.loketnews');
+Route::view('/loket-screen', 'pages.loket-screen')->name('blog.loketscreen');
+Route::view('/loket-wiki', 'pages.loket-wiki')->name('blog.loketwiki');
+Route::view('/loket-event', 'pages.loket-event')->name('blog.loketevent');
 
 Route::get('/sapa/{nama}', function ($nama) {
 

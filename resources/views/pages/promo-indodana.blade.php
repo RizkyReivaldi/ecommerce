@@ -2,699 +2,648 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Promo Indodana PayLater - LOKET | Cashback & Diskon Tiket Event</title>
-  <meta name="description" content="Cashback & diskon tiket event, wahana, bioskop pakai Indodana PayLater di LOKET. Periode Januari 2026. Syarat & ketentuan berlaku.">
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promo Indodana - LOKET</title>
+  <meta name="description" content="Ada cashback buat beli tiket pakai Indodana PayLater di LOKET.">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: #f4f6fa;
-      font-family: system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      line-height: 1.5;
-      color: #1a2c3e;
-      padding: 2rem 1rem;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #fbfbfb;
+      color: #20344e;
+      line-height: 1.6;
     }
-
-    /* main container */
-    .loket-container {
-      max-width: 800px;
+    .topbar {
+      background: #12244d;
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .topbar-inner {
+      max-width: 1200px;
       margin: 0 auto;
-      background: #ffffff;
-      border-radius: 28px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 6px rgba(0, 0, 0, 0.03);
-      overflow: hidden;
-    }
-
-    /* typography & components */
-    .blog-header {
-      padding: 2rem 2rem 1rem 2rem;
-      border-bottom: 1px solid #eef2f8;
-    }
-
-    .top-badge-row {
+      padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      gap: 0.75rem;
+      gap: 12px;
     }
-
-    .loket-year-badge {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #2c7a4d;
-      background: #e8f3ec;
-      display: inline-block;
-      padding: 0.2rem 0.8rem;
-      border-radius: 30px;
-      letter-spacing: 0.3px;
+    .logo { font-weight: 800; font-size: 24px; letter-spacing: 0.3px; }
+    .menu { display: flex; gap: 16px; font-size: 13px; flex-wrap: wrap; }
+    .menu a { color: #dce7ff; text-decoration: none; }
+    .menu a:hover { color: #fff; }
+    .hero {
+      background: #12244d;
     }
-
-    .share-news-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
-
-    .bagikan-link {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #3f6b8c;
-      background: #f0f4f9;
-      padding: 0.25rem 1rem;
-      border-radius: 30px;
-      text-decoration: none;
-      transition: background 0.2s;
+    .hero-left {
+      padding: 60px 38px;
+      background: linear-gradient(140deg, #003899 0%, #0049cc 100%);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left::before,
+    .hero-left::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+    .hero-left::before {
+      width: 250px;
+      height: 250px;
+      right: -90px;
+      top: -90px;
+      background: rgba(255, 255, 255, 0.09);
+      filter: blur(6px);
+    }
+    .hero-left::after {
+      width: 220px;
+      height: 220px;
+      left: -70px;
+      bottom: -70px;
+      background: rgba(34, 137, 255, 0.22);
+      filter: blur(6px);
+    }
+    .hero-tag {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-    }
-
-    .bagikan-link:hover {
-      background: #e2eaf2;
-    }
-
-    .loket-news-badge {
-      font-size: 0.7rem;
-      font-weight: 600;
-      background: #eef2f8;
-      color: #2c5a7a;
-      padding: 0.25rem 0.9rem;
-      border-radius: 30px;
-    }
-
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 1.2;
-      color: #0b2b3f;
-      margin: 0.5rem 0 0.3rem;
-      letter-spacing: -0.3px;
-    }
-
-    .sk-caption {
-      font-size: 0.7rem;
-      color: #6c8eae;
-      margin-top: 0.25rem;
-      margin-bottom: 1rem;
-    }
-
-    .author-date {
-      font-size: 0.85rem;
-      color: #5e7c97;
-      border-left: 3px solid #cde0ec;
-      padding-left: 0.75rem;
-      margin-top: 0.75rem;
-    }
-
-    /* section styles - all vertical */
-    .promo-section {
-      padding: 1.8rem 2rem;
-      border-bottom: 1px solid #eef3f9;
-    }
-
-    .section-heading {
-      font-size: 1.55rem;
-      font-weight: 600;
-      color: #1e4a6e;
-      margin-bottom: 0.25rem;
-    }
-
-    .section-subhead {
-      font-size: 0.85rem;
-      color: #66809e;
-      margin-bottom: 1.5rem;
-      border-left: 3px solid #dce6f0;
-      padding-left: 0.8rem;
-    }
-
-    /* force vertical stacking */
-    .promo-grid,
-    .two-column-grid,
-    .related-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .event-card,
-    .promo-card,
-    .related-card {
-      width: 100%;
-      background: #ffffff;
-      border: 1px solid #e5edf4;
-      border-radius: 24px;
-      padding: 1.2rem 1.4rem;
-      transition: border 0.2s;
-    }
-
-    .event-card:hover,
-    .promo-card:hover {
-      border-color: #cbdde9;
-    }
-
-    .event-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #1c4d72;
-      margin-bottom: 0.5rem;
-    }
-
-    .event-bagikan {
-      display: inline-block;
-      font-size: 0.7rem;
-      background: #f0f4f9;
-      padding: 0.2rem 0.9rem;
-      border-radius: 30px;
-      color: #3f6b8c;
-      margin: 0.5rem 0 0.75rem;
-      text-decoration: none;
-    }
-
-    .card-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #1c4d72;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-desc {
-      font-size: 0.85rem;
-      color: #496f8f;
-      margin-bottom: 1rem;
-    }
-
-    .feature-list {
-      list-style: none;
-      margin: 0.75rem 0 0.5rem;
-    }
-
-    .feature-list li {
-      font-size: 0.8rem;
-      color: #2e577a;
-      margin-bottom: 0.45rem;
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-    }
-
-    .dot {
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      background-color: #89a9c7;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 0.6rem;
-    }
-
-    .badge-light {
-      background-color: #eef3fa;
-      color: #2f6b47;
-      font-size: 0.7rem;
-      font-weight: 500;
-      padding: 0.2rem 0.7rem;
-      border-radius: 20px;
-      display: inline-block;
-      margin-top: 0.5rem;
-    }
-
-    .terms-note {
-      font-size: 0.7rem;
-      color: #6e8eae;
-      border-top: 1px solid #ecf3f9;
-      margin-top: 1rem;
-      padding-top: 0.7rem;
-    }
-
-    /* ========== SMALLER CARDS (matching picture reference) ========== */
-    .big-cards-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin: 0.5rem 0 0.2rem;
-    }
-
-    .big-venue-card {
-      background: #ffffff;
-      border: 1px solid #e5edf4;
-      border-radius: 20px;
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    }
-
-    .big-venue-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
-      border-color: #cbdde9;
-    }
-
-    .card-img-top {
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 13px;
+      margin-bottom: 26px;
       position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      background-color: #eef2f6;
+      z-index: 1;
     }
-
-    .card-img-top img {
+    .hero h1 {
+      font-size: clamp(30px, 4vw, 60px);
+      line-height: 1.08;
+      color: #fff;
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-note {
+      margin-top: 26px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-right {
+      background: #0a1a3f;
+      padding: 28px;
+      color: #fff;
+    }
+    .hero-badges {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .hepi {
+      background: #ffd84d;
+      color: #17305a;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 24px;
+      font-weight: 800;
+      transform: rotate(-3deg);
+    }
+    .indodana {
+      background: #fff;
+      color: #2a415f;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .promo-badge {
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .promo-badge.green { background: linear-gradient(90deg, #4caf50, #388e3c); }
+    .promo-badge.blue { background: linear-gradient(90deg, #2f79ff, #1148b6); }
+    .promo-badge .title { font-size: 18px; font-weight: 800; line-height: 1.2; }
+    .promo-badge .sub { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+    .special {
+      margin-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      padding-top: 14px;
+      text-align: right;
+      font-size: 13px;
+    }
+    .special .label {
+      background: #ff3f3f;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+    .page {
+      max-width: 1100px;
+      margin: 34px auto 70px;
+      padding: 0 14px;
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 16px;
+    }
+    .share {
+      position: sticky;
+      top: 90px;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: #7a8ba1;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .share-btn {
+      width: 36px;
+      height: 36px;
+      display: inline-block;
+      border-radius: 999px;
+      text-align: center;
+      line-height: 36px;
+      font-weight: 700;
+      text-decoration: none;
+      color: #fff;
+      font-size: 13px;
+    }
+    .fb { background: #2f62d6; }
+    .tw { background: #1da1f2; }
+    .ln { background: #97a6ba; }
+    .article {
+      background: #fff;
+      border: 1px solid #e8edf4;
+      border-radius: 18px;
+      padding: 28px;
+    }
+    .news-tag {
+      color: #245ca5;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .article h1 {
+      font-size: clamp(28px, 3.6vw, 44px);
+      line-height: 1.2;
+      color: #152955;
+      margin-bottom: 8px;
+    }
+    .meta {
+      font-size: 14px;
+      color: #687d95;
+      border-bottom: 1px solid #edf2f8;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+    .article p { color: #415b78; margin-bottom: 12px; }
+    .article-banner {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid #e2eaf4;
+      margin-bottom: 14px;
       display: block;
     }
-
-    .card-badge {
-      position: absolute;
-      top: 0.6rem;
-      left: 0.6rem;
-      background-color: #dc3545;
-      color: white;
-      font-size: 0.65rem;
-      font-weight: 600;
-      padding: 0.2rem 0.7rem;
-      border-radius: 2rem;
-      letter-spacing: 0.2px;
-      z-index: 2;
+    .cta {
+      text-align: center;
+      margin: 20px 0 12px;
     }
-
-    .card-badge.green {
-      background-color: #1f6e43;
-    }
-
-    .card-badge.purple {
-      background-color: #6f42c1;
-    }
-
-    .card-body-big {
-      padding: 0.9rem 1rem 0.6rem 1rem;
-    }
-
-    .bagikan-mini {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.65rem;
-      font-weight: 500;
-      background: #f0f4f9;
-      padding: 0.15rem 0.7rem;
-      border-radius: 30px;
-      color: #3f6b8c;
-      margin-bottom: 0.5rem;
-      width: fit-content;
-    }
-
-    .venue-card-title {
-      font-size: 1.1rem;
+    .cta a {
+      display: inline-block;
+      background: #245ca5;
+      color: #fff;
+      text-decoration: none;
       font-weight: 700;
-      color: #1c4d72;
-      margin-bottom: 0.2rem;
+      padding: 11px 18px;
+      border-radius: 999px;
+    }
+    .section {
+      margin-top: 26px;
+      border: 1px solid #e4ecf6;
+      border-radius: 16px;
+      padding: 18px;
+      background: #fbfdff;
+    }
+    .section h2 {
+      font-size: 28px;
+      color: #152955;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .section h3 {
+      font-size: 21px;
+      color: #1b3f68;
+      margin: 16px 0 8px;
       line-height: 1.3;
     }
-
-    .venue-location-big {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.7rem;
-      color: #6c8eae;
-      margin-bottom: 0.4rem;
+    .btn-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
     }
-
-    .venue-description-big {
-      font-size: 0.75rem;
-      color: #2e577a;
-      line-height: 1.4;
-      margin-bottom: 0.6rem;
-    }
-
-    .action-link-big {
-      display: inline-block;
-      font-weight: 600;
-      font-size: 0.75rem;
-      color: #1f6e43;
-      background: #eef5ea;
-      padding: 0.25rem 0.9rem;
-      border-radius: 2rem;
+    .btn-mini {
+      text-align: center;
       text-decoration: none;
-      transition: all 0.2s;
-      margin: 0.2rem 0 0;
+      background: #245ca5;
+      color: #fff;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 12px;
     }
-
-    .action-link-big:hover {
-      background: #1f6e43;
-      color: white;
+    .section ol {
+      margin-left: 20px;
+      color: #445f7d;
+      font-size: 14px;
     }
-
-    .card-divider-light {
-      margin: 0.5rem 1rem 0 1rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    .section ol li { margin-bottom: 6px; }
+    .cinema {
+      background: #121824;
+      color: #ecf3ff;
     }
-
-    .card-footer-big {
-      padding: 0.6rem 1rem 0.8rem 1rem;
+    .cinema h2, .cinema h3 { color: #fff; }
+    .cinema h3 { color: #ffd55f; }
+    .cinema ol { color: #cad6ea; }
+    .cards2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 10px;
+    }
+    .card2 {
+      background: #fff;
+      border: 1px solid #e8eef6;
+      border-radius: 14px;
+      overflow: hidden;
       display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      flex-direction: column;
     }
-
-    .footer-icon-big {
-      width: 28px;
-      height: 28px;
-      background-color: #f0f4f9;
-      border-radius: 50%;
+    .img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #e8f0fb;
+    }
+    .card2 .txt { padding: 14px; }
+    .card2 h4 { color: #152955; font-size: 20px; margin-bottom: 6px; }
+    .card2 p { color: #58708d; font-size: 14px; }
+    .outline-btn {
+      margin-top: 12px;
+      border: 1px solid #245ca5;
+      color: #245ca5;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 10px;
+      text-align: center;
+      padding: 9px 10px;
+    }
+    .author-box {
+      margin-top: 18px;
+      border: 1px solid #e5ebf3;
+      border-radius: 14px;
+      background: #fff;
+      padding: 14px;
+    }
+    .related {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .rel {
+      border: 1px solid #e8edf4;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .rel .img { aspect-ratio: 4 / 3; }
+    .rel .txt { padding: 10px; }
+    .rel .date { font-size: 12px; color: #7a8ba1; margin-bottom: 4px; }
+    .rel h5 { font-size: 14px; line-height: 1.4; color: #1d3552; }
+    .loket-footer {
+      background: #ffffff;
+      border-top: 1px solid #e8edf4;
+      margin-top: 24px;
+      padding: 26px 0 20px;
+    }
+    .loket-footer-shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 14px;
+    }
+    .loket-footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .loket-footer h4 {
+      font-size: 15px;
+      color: #1d3552;
+      margin-bottom: 10px;
+      font-weight: 800;
+    }
+    .loket-footer ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+    }
+    .loket-footer a {
+      font-size: 13px;
+      color: #5f7088;
+      text-decoration: none;
+    }
+    .loket-footer a:hover {
+      color: #245ca5;
+    }
+    .loket-footer-meta {
+      border-top: 1px solid #edf2f8;
+      margin-top: 16px;
+      padding-top: 12px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      color: #2c7a4d;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: #7a8ba1;
     }
-
-    .footer-text-big {
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: #4a6f8f;
+    .loket-footer-meta-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
-
-    .footer-text-big strong {
-      color: #1c4d72;
-      font-weight: 700;
+    .loket-footer-meta a {
+      color: #5f7088;
+      text-decoration: none;
     }
-
-    /* hide old venue row */
-    .venue-row {
-      display: none;
+    @media (max-width: 1024px) {
+      .page { grid-template-columns: 1fr; }
+      .share { display: none; }
     }
-
-    .cta-text {
-      background: #f3f9fe;
-      border-radius: 20px;
-      padding: 1rem 1.2rem;
-      text-align: center;
-      margin: 1rem 0 0.5rem;
-      font-size: 0.85rem;
-      color: #1f4e6e;
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
     }
-
-    .author-bio {
-      background: #fafdff;
-      border-radius: 20px;
-      border: 1px solid #eaf0f6;
-      padding: 1.2rem;
-      margin: 1rem 0;
-    }
-
-    .author-name {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #1e4a6e;
-    }
-
-    .author-desc {
-      font-size: 0.75rem;
-      color: #54718f;
-      margin-top: 0.3rem;
-    }
-
-    .article-related {
-      margin-top: 1.5rem;
-    }
-
-    .related-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #1e4a6e;
-      margin-bottom: 1rem;
-    }
-
-    .related-card h4 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #1c4d72;
-      margin-bottom: 0.3rem;
-    }
-
-    .related-date {
-      font-size: 0.7rem;
-      color: #6e8eae;
-      margin-top: 0.4rem;
-    }
-
-    .footer-note {
-      padding: 1rem 2rem 1.8rem;
-      font-size: 0.7rem;
-      color: #819bb9;
-      text-align: center;
-      border-top: 1px solid #eef3f9;
-    }
-
-    @media (max-width: 700px) {
-      body {
-        padding: 1rem;
-      }
-      .blog-header, .promo-section, .footer-note {
-        padding-left: 1.2rem;
-        padding-right: 1.2rem;
-      }
-      h1 {
-        font-size: 1.6rem;
-      }
-      .venue-card-title {
-        font-size: 1rem;
-      }
-      .card-body-big {
-        padding: 0.8rem;
-      }
-      .card-footer-big {
-        padding: 0.5rem 0.8rem 0.7rem;
-      }
+    @media (max-width: 760px) {
+      .menu { display: none; }
+      .article { padding: 18px; }
+      .section h2 { font-size: 24px; }
+      .section h3 { font-size: 19px; }
+      .btn-row, .cards2, .related { grid-template-columns: 1fr; }
+      .loket-footer-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-<div class="loket-container">
-  <!-- header -->
-  <div class="blog-header">
-    <div class="top-badge-row">
-      <div class="loket-year-badge">LOKET 12 Tahun</div>
-      <div class="share-news-row">
-        <a href="#" class="bagikan-link">Bagikan</a>
-        <span class="loket-news-badge">LOKET NEWS</span>
+@include('partials.promo-navbar')
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-tag"><strong>LOKET</strong><span>12 Tahun</span></div>
+      <h1>ADA CASHBACK BUAT BELI TIKET PAKAI INDODANA PAYLATER!</h1>
+      <div class="hero-note">*S&amp;K berlaku</div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-badges">
+        <div class="hepi">HEPI!</div>
+        <div class="indodana">Indodana PayLater</div>
+      </div>
+      <div class="promo-badge green">
+        <div class="title">DISKON EVENT &amp; WAHANA S.D Rp150rb</div>
+        <div class="sub">Min. transaksi Rp1jt</div>
+      </div>
+      <div class="promo-badge blue">
+        <div class="title">CICILAN 0%</div>
+        <div class="sub">Min. transaksi Rp2jt, tenor 3 &amp; 6 bulan</div>
+      </div>
+      <div class="promo-badge green">
+        <div class="title">DISKON EVENT &amp; WAHANA S.D Rp15rb</div>
+        <div class="sub">Min. transaksi Rp150rb</div>
+      </div>
+      <div class="special">
+        <span class="label">PROMO SPESIAL</span> 90's Intimate - Diskon Rp150rb
       </div>
     </div>
-    <h1>ADA CASHBACK BUAT BELI TIKET PAKAI INDODANA PAYLATER!</h1>
-    <div class="sk-caption">S&K berlaku</div>
-    <div class="author-date">03 Nov 2025 - Winda Paramita</div>
   </div>
+</section>
 
-  <!-- 90's intimate -->
-  <div class="promo-section">
-    <div class="two-column-grid">
-      <div class="event-card">
-        <div class="event-title">Beli Tiket 90's Intimate 2nd Edition Jakarta</div>
-        <a href="#" class="event-bagikan">Bagikan</a>
-        <div style="font-size: 0.8rem; color: #2e577a; margin-top: 0.3rem;">Diskon hingga Rp150.000</div>
-        <div style="font-size: 0.75rem; color: #6c8eae; margin-top: 0.5rem;">Min. transaksi Rp1.000.000</div>
-      </div>
-      <div class="event-card">
-        <div class="event-title">90's Intimate 2nd Edition Solo</div>
-        <a href="#" class="event-bagikan">Bagikan</a>
-        <div style="font-size: 0.8rem; color: #2e577a; margin-top: 0.3rem;">Diskon spesial Rp150.000</div>
-        <div style="font-size: 0.75rem; color: #6c8eae; margin-top: 0.5rem;">Berlaku hingga 7 Februari 2026</div>
-      </div>
-    </div>
-    <div class="section-subhead" style="margin-top: 1rem;">Promo Tiket 90's Intimate 2nd Edition Jakarta & Solo Indodana PayLater</div>
-  </div>
+<main class="page">
+  <aside class="share">
+    <span>Bagikan</span>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.loket.com/blog/promo-indodana" target="_blank" rel="noopener noreferrer" class="share-btn fb">f</a>
+    <a href="https://x.com/intent/post?url=https://www.loket.com/blog/promo-indodana&text=Ada%20Cashback%20Buat%20Beli%20Tiket%20Pakai%20Indodana%20PayLater!" target="_blank" rel="noopener noreferrer" class="share-btn tw">t</a>
+    <a href="https://www.loket.com/blog/promo-indodana" target="_blank" rel="noopener noreferrer" class="share-btn ln">ln</a>
+  </aside>
 
-  <!-- Promo Event & Wahana -->
-  <div class="promo-section">
-    <h2 class="section-heading">Promo Beli Tiket Event & Wahana di LOKET</h2>
-    <div class="promo-grid">
-      <div class="promo-card">
-        <div class="card-title">Diskon Rp150ribu Pakai Indodana PayLater</div>
-        <div class="card-desc">Nikmati potongan besar untuk tiket event & wahana favorit.</div>
-        <ul class="feature-list">
-          <li><span class="dot"></span> Minimal transaksi Rp1.000.000</li>
-          <li><span class="dot"></span> Periode 1–31 Januari 2026</li>
-          <li><span class="dot"></span> Semua tenor Indodana PayLater</li>
-          <li><span class="dot"></span> Tidak dapat digabung promo lain</li>
+  <article class="article">
+    <div class="news-tag">LOKET NEWS</div>
+    <h1>Ada Cashback Buat Beli Tiket Pakai Indodana PayLater!</h1>
+    <div class="meta">03 Nov 2025 - Winda Paramita</div>
+    <img class="article-banner" src="{{ asset('images/promo-indodana-hero.svg') }}" alt="Banner promo Indodana">
+
+    <p>
+      Kabar gembira buat kamu yang suka nonton konser, main ke wahana, atau nonton bioskop.
+      Sekarang beli tiket di LOKET bisa lebih hemat pakai <strong>Indodana PayLater</strong>.
+    </p>
+    <p>
+      Ada diskon sampai Rp150.000 untuk event dan wahana, promo bioskop LOKET Screen,
+      dan cicilan 0% tenor 3 serta 6 bulan.
+    </p>
+    <div class="cta"><a href="https://www.loket.com/event" target="_blank" rel="noopener noreferrer">Beli tiket di sini</a></div>
+
+    <section class="section">
+      <h2>Promo Spesial 90's Intimate 2nd Edition</h2>
+      <div class="btn-row">
+        <a href="https://www.loket.com/event" target="_blank" rel="noopener noreferrer" class="btn-mini">Beli Tiket 90's Intimate Jakarta</a>
+        <a href="https://www.loket.com/event" target="_blank" rel="noopener noreferrer" class="btn-mini">Beli Tiket 90's Intimate Solo</a>
+      </div>
+      <h3>Syarat &amp; Ketentuan</h3>
+      <ol>
+        <li>Diskon Rp150.000 dengan minimum transaksi Rp1.000.000.</li>
+        <li>Berlaku untuk pembayaran menggunakan Indodana PayLater.</li>
+        <li>Berlaku untuk 90's Intimate 2nd Edition Jakarta dan Solo.</li>
+        <li>Tidak dapat digabungkan dengan promo lain.</li>
+        <li>Kuota promo terbatas.</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Promo Beli Tiket Event &amp; Wahana di LOKET</h2>
+      <h3>Diskon Rp150ribu Pakai Indodana PayLater</h3>
+      <ol>
+        <li>Diskon Rp150.000, minimum transaksi Rp1.000.000.</li>
+        <li>Berlaku untuk pembelian event dan wahana.</li>
+        <li>Periode promo 1-31 Januari 2026.</li>
+      </ol>
+
+      <h3>Diskon Rp15ribu ke Beragam Event &amp; Wahana</h3>
+      <ol>
+        <li>Diskon Rp15.000, minimum transaksi Rp150.000.</li>
+        <li>Berlaku untuk pengguna baru.</li>
+        <li>Tenor 3, 6, dan 12 bulan.</li>
+      </ol>
+
+      <h3>Promo Cicilan 0% Untuk Tenor 3 Bulan dan 6 Bulan</h3>
+      <ol>
+        <li>Minimum transaksi Rp2.000.000.</li>
+        <li>Khusus pembayaran Indodana PayLater.</li>
+        <li>Kuota promo terbatas.</li>
+      </ol>
+    </section>
+
+    <section class="section cinema">
+      <h2>Promo Beli Tiket Bioskop di LOKET Screen</h2>
+      <h3>Baru! Diskon hingga Rp25ribu Bayar Pakai Indodana PayLater</h3>
+      <ol>
+        <li>Diskon Rp25ribu untuk pengguna baru.</li>
+        <li>Diskon Rp10ribu untuk pengguna setia.</li>
+        <li>Minimum transaksi Rp50.000.</li>
+        <li>Periode promo 1-31 Januari 2026.</li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2>Rekomendasi Wahana Paling Keren!</h2>
+      <div class="cards2">
+        <div class="card2">
+          <img class="img" src="{{ asset('images/promo-wahoo.svg') }}" alt="Wahoo Waterworld">
+          <div class="txt">
+            <h4>Wahoo Waterworld</h4>
+            <p>Wahana air kelas internasional yang ada di Bandung, Jawa Barat.</p>
+            <div class="outline-btn">SIAP-SIAP BUAT BERENANG SERU DI SINI</div>
+          </div>
+        </div>
+        <div class="card2">
+          <img class="img" src="{{ asset('images/promo-saloka.svg') }}" alt="Saloka Theme Park">
+          <div class="txt">
+            <h4>Saloka Theme Park</h4>
+            <p>Taman rekreasi terbaik &amp; terbesar se-Jawa Tengah.</p>
+            <div class="outline-btn">JADWALKAN LIBURAN KE SALOKA THEME PARK</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Penulis</h2>
+      <div class="author-box">
+        <strong>Winda Paramita</strong>
+        <p>Content Writer di LOKET yang membahas event, konser, dan promo.</p>
+      </div>
+
+      <h3>Artikel Terkait</h3>
+      <div class="related">
+        <div class="rel">
+          <img class="img" src="{{ asset('images/promo-related.svg') }}" alt="Artikel 1">
+          <div class="txt">
+            <div class="date">17 Apr 2026</div>
+            <h5>JENO &amp; JAEMIN ke Indo, Ini Harga Tiket Fanmeeting NCT JNJM 2026</h5>
+          </div>
+        </div>
+        <div class="rel">
+          <img class="img" src="{{ asset('images/promo-related.svg') }}" alt="Artikel 2">
+          <div class="txt">
+            <div class="date">01 Apr 2026</div>
+            <h5>Beragam Diskon &amp; Cashback Nonton Bioskop di LOKET Screen</h5>
+          </div>
+        </div>
+        <div class="rel">
+          <img class="img" src="{{ asset('images/promo-related.svg') }}" alt="Artikel 3">
+          <div class="txt">
+            <div class="date">27 Mar 2026</div>
+            <h5>Ditunggu-tunggu, Ini Harga Tiket Konser EXO Jakarta 2026</h5>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+</main>
+
+<footer class="loket-footer">
+  <div class="loket-footer-shell">
+    <div class="loket-footer-grid">
+      <section>
+        <h4>Tentang Loket</h4>
+        <ul>
+          <li><a href="#">Biaya</a></li>
+          <li><a href="{{ route('catalog.index') }}">Lihat Event</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Syarat dan Ketentuan</a></li>
+          <li><a href="#">Laporan Kesalahan Sistem</a></li>
         </ul>
-        <div class="badge-light">Eksklusif Indodana</div>
-      </div>
-      <div class="promo-card">
-        <div class="card-title">Diskon Rp15ribu ke Beragam Event & Wahana Pakai Indodana PayLater!</div>
-        <div class="card-desc">Khusus pengguna baru Indodana PayLater.</div>
-        <ul class="feature-list">
-          <li><span class="dot"></span> Minimal transaksi Rp150.000</li>
-          <li><span class="dot"></span> Periode 1–31 Januari 2026</li>
-          <li><span class="dot"></span> 1 kali per pengguna, kuota terbatas</li>
+      </section>
+      <section>
+        <h4>Rayakan Eventmu</h4>
+        <ul>
+          <li><a href="#">Cara Mempersiapkan Event</a></li>
+          <li><a href="#">Cara Membuat Event Lomba</a></li>
+          <li><a href="#">Cara Mempublikasikan Event</a></li>
+          <li><a href="#">Cara Membuat Event Musik</a></li>
+          <li><a href="#">Cara Mengelola Event</a></li>
+          <li><a href="#">Cara Membuat Konsep Acara yang Menarik</a></li>
+          <li><a href="#">Cara Membuat Event di Co-Working Space</a></li>
         </ul>
-      </div>
-      <div class="promo-card">
-        <div class="card-title">Promo Cicilan 0% Untuk Tenor 3 Bulan dan 6 Bulan</div>
-        <div class="card-desc">Bunga 0% untuk pembelian tiket event & wahana di LOKET.</div>
-        <ul class="feature-list">
-          <li><span class="dot"></span> Minimal transaksi Rp2.000.000</li>
-          <li><span class="dot"></span> Periode 1–31 Januari 2026</li>
-          <li><span class="dot"></span> Tidak dapat digabung promo lain</li>
-          <li><span class="dot"></span> 1x per pengguna, kuota terbatas</li>
+      </section>
+      <section>
+        <h4>Lokasi Event</h4>
+        <ul>
+          <li><a href="#">Jakarta</a></li>
+          <li><a href="#">Bandung</a></li>
+          <li><a href="#">Yogyakarta</a></li>
+          <li><a href="#">Surabaya</a></li>
+          <li><a href="#">Solo</a></li>
+          <li><a href="#">Medan</a></li>
+          <li><a href="#">Bali</a></li>
+          <li><a href="#">Semua Kota</a></li>
         </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Promo Bioskop -->
-  <div class="promo-section">
-    <h2 class="section-heading">Promo Beli Tiket Bioskop di LOKET Screen</h2>
-    <div class="section-subhead">Baru! Diskon hingga Rp25ribu Bayar Pakai Indodana PayLater</div>
-    <div class="promo-grid">
-      <div class="promo-card">
-        <div class="card-title">Diskon Rp25.000 (Pengguna Baru)</div>
-        <div class="card-desc">Minimal transaksi Rp50.000. Berlaku di seluruh bioskop LOKET Screen.</div>
-        <ul class="feature-list">
-          <li><span class="dot"></span> Periode 1–31 Januari 2026, mulai pukul 10.00 WIB</li>
-          <li><span class="dot"></span> Eksklusif Indodana PayLater</li>
-          <li><span class="dot"></span> Tidak dapat digabung dengan promo lain</li>
+      </section>
+      <section>
+        <h4>Inspirasi Event</h4>
+        <ul>
+          <li><a href="#">Festival</a></li>
+          <li><a href="#">Konser</a></li>
+          <li><a href="#">Olahraga</a></li>
+          <li><a href="#">Workshop &amp; Seminar</a></li>
+          <li><a href="#">Teater &amp; Drama</a></li>
+          <li><a href="#">Atraksi</a></li>
+          <li><a href="#">Semua Kategori</a></li>
         </ul>
-        <div class="terms-note">Kuota terbatas, 1x per transaksi.</div>
-      </div>
-      <div class="promo-card">
-        <div class="card-title">Diskon Rp10.000 (Semua Pengguna)</div>
-        <div class="card-desc">Untuk pelanggan Indodana PayLater yang loyal.</div>
-        <ul class="feature-list">
-          <li><span class="dot"></span> Minimal transaksi Rp50.000</li>
-          <li><span class="dot"></span> Periode 1–31 Januari 2026</li>
-          <li><span class="dot"></span> Berlaku semua tenor Indodana</li>
-        </ul>
+      </section>
+    </div>
+
+    <div class="loket-footer-meta">
+      <div>© Loket (PT Global Loket Sejahtera)</div>
+      <div class="loket-footer-meta-links">
+        <a href="#">Tentang Kami</a>
+        <a href="{{ route('blog.home') }}">Blog</a>
+        <a href="#">Karir</a>
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Kebijakan Cookie</a>
+        <a href="#">Hubungi Kami</a>
       </div>
     </div>
   </div>
-
-  <!-- Rekomendasi Wahana Paling Keren! - smaller cards as requested -->
-  <div class="promo-section">
-    <h2 class="section-heading">Rekomendasi Wahana Paling Keren!</h2>
-    <div class="big-cards-wrapper">
-      
-      <!-- Wahoo Waterworld (compact) -->
-      <div class="big-venue-card">
-        <div class="card-img-top">
-          <img src="https://placehold.co/800x450/2c7a4d/white?text=Wahoo+Waterworld" 
-               alt="Wahoo Waterworld Bandung"
-               onerror="this.src='https://placehold.co/800x450/e0e7ef/2c3e50?text=Wahoo+Park'">
-          <span class="card-badge green">Populer</span>
-        </div>
-        <div class="card-body-big">
-          <div class="bagikan-mini"><i class="bi bi-share-fill"></i> Bagikan</div>
-          <div class="venue-card-title">Wahoo Waterworld</div>
-          <div class="venue-location-big"><i class="bi bi-geo-alt-fill"></i> Bandung, Jawa Barat</div>
-          <div class="venue-description-big">Wahana air kelas internasional yang ada di Bandung, Jawa Barat! Siap-siap buat pengalaman berenang seru.</div>
-          <a href="#" class="action-link-big">SIAP-SIAP BUAT BERENANG SERU DI SINI <i class="bi bi-arrow-right-short"></i></a>
-        </div>
-        <div class="card-divider-light"></div>
-        <div class="card-footer-big">
-          <div class="footer-icon-big"><i class="bi bi-water"></i></div>
-          <div class="footer-text-big"><strong>Wahana Air Premium</strong> • Tiket mulai Rp85.000</div>
-        </div>
-      </div>
-
-      <!-- Saloka Theme Park (compact) -->
-      <div class="big-venue-card">
-        <div class="card-img-top">
-          <img src="https://placehold.co/800x450/1f6e43/white?text=Saloka+Theme+Park" 
-               alt="Saloka Theme Park Jawa Tengah"
-               onerror="this.src='https://placehold.co/800x450/e0e7ef/2c3e50?text=Saloka+Park'">
-          <span class="card-badge green">Terlaris</span>
-        </div>
-        <div class="card-body-big">
-          <div class="bagikan-mini"><i class="bi bi-share-fill"></i> Bagikan</div>
-          <div class="venue-card-title">Saloka Theme Park</div>
-          <div class="venue-location-big"><i class="bi bi-geo-alt-fill"></i> Jawa Tengah</div>
-          <div class="venue-description-big">Taman rekreasi terbaik & terbesar se-Jawa Tengah! Wahana seru, atraksi budaya, promo spesial Indodana.</div>
-          <a href="#" class="action-link-big">JADWALKAN LIBURAN KE SALOKA THEME PARK <i class="bi bi-arrow-right-short"></i></a>
-        </div>
-        <div class="card-divider-light"></div>
-        <div class="card-footer-big">
-          <div class="footer-icon-big"><i class="bi bi-tree-fill"></i></div>
-          <div class="footer-text-big"><strong>Taman Hiburan Keluarga</strong> • Cashback hingga Rp150rb</div>
-        </div>
-      </div>
-
-      <!-- Futari no Kimochi no Hon! (compact) -->
-      <div class="big-venue-card">
-        <div class="card-img-top">
-          <img src="https://placehold.co/800x450/6f42c1/white?text=Futari+no+Kimochi+no+Hon" 
-               alt="Futari no Kimochi no Hon - Anime Event"
-               onerror="this.src='https://placehold.co/800x450/e0e7ef/4a2c6e?text=Anime+Event'">
-          <span class="card-badge purple">Event Spesial</span>
-        </div>
-        <div class="card-body-big">
-          <div class="bagikan-mini"><i class="bi bi-share-fill"></i> Bagikan</div>
-          <div class="venue-card-title">Futari no Kimochi no Hon!</div>
-          <div class="venue-location-big"><i class="bi bi-calendar-event"></i> Jakarta Convention Center • 12-13 Juni 2026</div>
-          <div class="venue-description-big">Yasuna (CV: Chinatsu Akasaki), Soonya (CV: Yuki Akiyama) — penampilan eksklusif, meet & greet.</div>
-          <div style="font-size: 0.7rem; color: #4a6f8f; margin: 0.2rem 0;"><i class="bi bi-mic"></i> Seiyuu: Chinatsu Akasaki & Yuki Akiyama</div>
-          <div style="font-weight: 700; font-size: 0.85rem; color: #1c4d72; margin: 0.2rem 0;">Tiket mulai Rp180.000</div>
-          <a href="#" class="action-link-big">PESAN TIKET EVENT <i class="bi bi-ticket-perforated"></i></a>
-        </div>
-        <div class="card-divider-light"></div>
-        <div class="card-footer-big">
-          <div class="footer-icon-big"><i class="bi bi-star-fill"></i></div>
-          <div class="footer-text-big"><strong>Official Anime Event</strong> • Diskon 15% untuk Indodana</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="promo-section" style="border-bottom: none;">
-    <div class="cta-text">
-      Yuk, cek event dan wahana seru lainnya yang wajib kamu datang! Pakai Indodana di sini!
-    </div>
-  </div>
-
-  <!-- Author + Artikel Terkait -->
-  <div class="promo-section" style="border-bottom: none; padding-top: 0;">
-    <div class="author-bio">
-      <div class="author-name">Winda Paramita</div>
-      <div class="author-desc">Winda is a writer at LOKET & LOKET Screen. Her writing consists of events, concerts, and films. With more than 3 years in this field, worry not, she will take you to an interesting journey ahead!</div>
-    </div>
-
-    <div class="article-related">
-      <div class="related-title">Artikel Terkait</div>
-      <div class="related-grid">
-        <div class="related-card">
-          <h4>JENO & JAEMIN ke Indo, Ini Harga Tiket Fanmeeting NCT JNJM 2026</h4>
-          <div class="related-date">Tiket akan mulai dijual pada 29 April 2026, cek harga tiketnya di sini!<br>17 Apr 2026 - Nandita Alfahira</div>
-        </div>
-        <div class="related-card">
-          <h4>Beragam Diskon & Cashback Nonton Bioskop di LOKET Screen</h4>
-          <div class="related-date">Ada banyak promo bioskop spesial buat nonton bioskop di bulan Maret!<br>01 Apr 2026 - Nandita Alfahira</div>
-        </div>
-        <div class="related-card">
-          <h4>Ditunggu-tunggu, Ini Harga Tiket Konser EXO Jakarta 2026</h4>
-          <div class="related-date">Tambah hari! Konser akan digelar 2 hari 6-7 Juni 2026, cek detail harga tiket konser EXO Jakarta di sini!<br>27 Mar 2026 - Nandita Alfahira</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer disclaimer -->
-  <div class="footer-note">
-    LOKET berhak membatalkan promo jika terjadi indikasi kecurangan atau pelanggaran ketentuan.<br>
-    Promo tidak berlaku untuk pembelian tiket pesawat, hotel, atau produk non-event tertentu. Seluruh promo tidak dapat ditukar menjadi uang tunai.<br>
-    Refund pembelian tiket akan mengakibatkan promo hangus (cashback tidak diberikan atau ditarik kembali).<br>
-    Kuota promo bersifat terbatas dan dapat berubah sewaktu-waktu. Periode promo dapat diperpanjang atau dihentikan lebih awal berdasarkan kebijakan LOKET dan Indodana.
-  </div>
-</div>
+</footer>
 </body>
 </html>

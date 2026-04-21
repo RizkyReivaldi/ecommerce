@@ -122,114 +122,87 @@
                 <div class="card-body p-4">
                     <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
                         <div>
-                            <h1 class="h3 fw-bold mb-1">Dashboard</h1>
-                            <p class="text-muted mb-0">Silakan cek status ticket, progress profil, dan fungsi penting di sini.</p>
+                            <h1 class="h3 fw-bold mb-1">Event saya</h1>
+                            <p class="text-muted mb-0">Kelola tiket dan event Anda dalam satu tampilan.</p>
                         </div>
-                        <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center gap-2">
                             <a href="{{ route('tickets.create') }}" class="btn btn-primary rounded-pill px-4 py-2">
-                                <i class="bi bi-plus-circle me-2"></i> Buat Ticket Baru
+                                <i class="bi bi-calendar-plus me-2"></i> Buat event
                             </a>
                             <div class="profile-pill px-3 py-2 fw-semibold">{{ $user->name }}</div>
                         </div>
                     </div>
 
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-4">
-                            <div class="card task-card rounded-4 p-4 h-100">
-                                <h6 class="fw-semibold mb-3">Verifikasi Nomor PonselMu</h6>
-                                <p class="text-muted mb-3">Pastikan nomor telepon aktif untuk notifikasi instant.</p>
-                                <a href="{{ route('profile.edit') }}" class="btn btn-outline-primary btn-sm rounded-pill">Verifikasi</a>
-                            </div>
+                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 mb-4">
+                        <div class="btn-group" role="group" aria-label="Event tabs">
+                            <button type="button" class="btn btn-outline-primary active">Event aktif</button>
+                            <button type="button" class="btn btn-outline-secondary">Event lalu</button>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card task-card rounded-4 p-4 h-100">
-                                <h6 class="fw-semibold mb-3">Lengkapi Informasi Dasar</h6>
-                                <p class="text-muted mb-3">Isi data profil agar dukungan lebih cepat.</p>
-                                <a href="{{ route('profile.edit') }}" class="btn btn-outline-primary btn-sm rounded-pill">Verifikasi</a>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card task-card rounded-4 p-4 h-100">
-                                <h6 class="fw-semibold mb-3">Lengkapi Informasi Legal</h6>
-                                <p class="text-muted mb-3">Pastikan dokumen legal terunggah agar proses layanan lancar.</p>
-                                <a href="{{ route('profile.edit') }}" class="btn btn-outline-primary btn-sm rounded-pill">Verifikasi</a>
-                            </div>
+                        <div>
+                            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">{{ $stats['open_tickets'] }} aktif</span>
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2">{{ $stats['resolved_tickets'] }} selesai</span>
                         </div>
                     </div>
 
                     <div class="row g-3 mb-4">
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="metric-box p-4 h-100">
-                                <small class="text-uppercase text-muted">Ticket Aktif</small>
-                                <h3 class="fw-bold mb-1">{{ $stats['open_tickets'] }}</h3>
-                                <p class="text-muted mb-0">Saat ini sedang diproses.</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="metric-box p-4 h-100">
-                                <small class="text-uppercase text-muted">Ticket Selesai</small>
-                                <h3 class="fw-bold mb-1">{{ $stats['resolved_tickets'] }}</h3>
-                                <p class="text-muted mb-0">Ticket yang sudah terjawab.</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="metric-box p-4 h-100">
-                                <small class="text-uppercase text-muted">Total Ticket</small>
-                                <h3 class="fw-bold mb-1">{{ $stats['total_tickets'] }}</h3>
-                                <p class="text-muted mb-0">Semua ticket Anda.</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="metric-box p-4 h-100">
-                                <small class="text-uppercase text-muted">Ticket Darurat</small>
-                                <h3 class="fw-bold mb-1">{{ $stats['urgent_tickets'] }}</h3>
-                                <p class="text-muted mb-0">Urgensi tinggi yang butuh respon cepat.</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="metric-box p-4 h-100">
-                                <small class="text-uppercase text-muted">Profil Lengkap</small>
-                                <h3 class="fw-bold mb-1">80%</h3>
-                                <p class="text-muted mb-0">Lengkapi profil agar fitur optimal.</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="metric-box p-4 h-100">
-                                <small class="text-uppercase text-muted">Shortcut</small>
-                                <h3 class="fw-bold mb-1">3 Aksi</h3>
-                                <p class="text-muted mb-0">Akses cepat ke fitur favorit.</p>
-                            </div>
-                        </div>
+                        @if($recentTickets->isEmpty())
+                            @foreach(range(1, 3) as $index)
+                                <div class="col-md-6 col-xl-4">
+                                    <div class="card rounded-4 border-0 h-100 bg-light" style="min-height: 180px;"></div>
+                                </div>
+                            @endforeach
+                        @else
+                            @foreach($recentTickets->take(3) as $ticket)
+                                <div class="col-md-6 col-xl-4">
+                                    <div class="card rounded-4 border-0 h-100 p-4 event-card">
+                                        <div class="d-flex align-items-start justify-content-between mb-3">
+                                            <div>
+                                                <div class="text-muted">{{ $ticket->created_at->format('d M Y') }}</div>
+                                                <h5 class="fw-semibold mt-2">{{ Str::limit($ticket->title, 48) }}</h5>
+                                            </div>
+                                            <span class="badge {{ $ticket->status_badge[0] }} rounded-pill">{{ $ticket->status_badge[1] }}</span>
+                                        </div>
+                                        <p class="text-muted mb-3">{{ Str::limit($ticket->description, 90) }}</p>
+                                        <a href="{{ route('tickets.show', $ticket) }}" class="stretched-link text-decoration-none fw-semibold">Lihat detail →</a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
 
                     <div class="card border-0 shadow-sm rounded-4">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div>
-                                    <h5 class="fw-semibold mb-1">Ticket Terbaru</h5>
-                                    <p class="text-muted mb-0">Ringkasan ticket paling terbaru dari akun Anda.</p>
+                                    <h5 class="fw-semibold mb-1">Ringkasan Event</h5>
+                                    <p class="text-muted mb-0">Pantau progress event dan ticket terbaru Anda.</p>
                                 </div>
                                 <a href="{{ route('tickets.index') }}" class="text-decoration-none fw-semibold">Lihat Semua</a>
                             </div>
 
-                            @if($recentTickets->isEmpty())
-                                <div class="text-center py-5">
-                                    <i class="bi bi-inbox fs-1 text-muted"></i>
-                                    <p class="text-muted mt-3">Belum ada ticket. Buat ticket baru untuk mulai mendapatkan bantuan.</p>
+                            <div class="row g-3">
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="metric-box p-4 h-100">
+                                        <small class="text-uppercase text-muted">Event aktif</small>
+                                        <h3 class="fw-bold mb-1">{{ $stats['open_tickets'] }}</h3>
+                                        <p class="text-muted mb-0">Sedang berjalan dan menunggu tindakan.</p>
+                                    </div>
                                 </div>
-                            @else
-                                <div class="list-group list-group-flush">
-                                    @foreach($recentTickets as $ticket)
-                                        <a href="{{ route('tickets.show', $ticket) }}" class="list-group-item list-group-item-action dashboard-ticket-item d-flex justify-content-between align-items-center px-3 py-4 rounded-4 mb-2 border-0 bg-white shadow-sm">
-                                            <div>
-                                                <div class="fw-semibold">{{ Str::limit($ticket->title, 60) }}</div>
-                                                <small class="text-muted">{{ $ticket->ticket_number }} · {{ $ticket->created_at->format('d M Y') }}</small>
-                                            </div>
-                                            <span class="badge {{ $ticket->status_badge[0] }} rounded-pill">{{ $ticket->status_badge[1] }}</span>
-                                        </a>
-                                    @endforeach
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="metric-box p-4 h-100">
+                                        <small class="text-uppercase text-muted">Event selesai</small>
+                                        <h3 class="fw-bold mb-1">{{ $stats['resolved_tickets'] }}</h3>
+                                        <p class="text-muted mb-0">Sudah ditutup dan terjawab.</p>
+                                    </div>
                                 </div>
-                            @endif
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="metric-box p-4 h-100">
+                                        <small class="text-uppercase text-muted">Total event</small>
+                                        <h3 class="fw-bold mb-1">{{ $stats['total_tickets'] }}</h3>
+                                        <p class="text-muted mb-0">Semua tiket event Anda.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
