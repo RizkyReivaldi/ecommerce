@@ -13,7 +13,30 @@
       color: #20344e;
       line-height: 1.6;
     }
-   
+    .topbar {
+      background: #12244d;
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo { font-weight: 800; font-size: 24px; letter-spacing: 0.3px; }
+    .menu { display: flex; gap: 16px; font-size: 13px; flex-wrap: wrap; }
+    .menu a { color: #dce7ff; text-decoration: none; }
+    .menu a:hover { color: #fff; }
+    .hero {
+      background: #12244d;
+    }
     .hero-inner {
       max-width: 1200px;
       margin: 0 auto;
@@ -393,7 +416,6 @@
 </head>
 <body>
 @include('partials.promo-navbar')
-@include('partials.footer')
 
 <section class="hero">
   <div class="hero-inner">
@@ -557,71 +579,6 @@
     </section>
   </article>
 </main>
-
-<footer class="loket-footer">
-  <div class="loket-footer-shell">
-    <div class="loket-footer-grid">
-      <section>
-        <h4>Tentang Loket</h4>
-        <ul>
-          <li><a href="#">Biaya</a></li>
-          <li><a href="{{ route('catalog.index') }}">Lihat Event</a></li>
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Syarat dan Ketentuan</a></li>
-          <li><a href="#">Laporan Kesalahan Sistem</a></li>
-        </ul>
-      </section>
-      <section>
-        <h4>Rayakan Eventmu</h4>
-        <ul>
-          <li><a href="#">Cara Mempersiapkan Event</a></li>
-          <li><a href="#">Cara Membuat Event Lomba</a></li>
-          <li><a href="#">Cara Mempublikasikan Event</a></li>
-          <li><a href="#">Cara Membuat Event Musik</a></li>
-          <li><a href="#">Cara Mengelola Event</a></li>
-          <li><a href="#">Cara Membuat Konsep Acara yang Menarik</a></li>
-          <li><a href="#">Cara Membuat Event di Co-Working Space</a></li>
-        </ul>
-      </section>
-      <section>
-        <h4>Lokasi Event</h4>
-        <ul>
-          <li><a href="#">Jakarta</a></li>
-          <li><a href="#">Bandung</a></li>
-          <li><a href="#">Yogyakarta</a></li>
-          <li><a href="#">Surabaya</a></li>
-          <li><a href="#">Solo</a></li>
-          <li><a href="#">Medan</a></li>
-          <li><a href="#">Bali</a></li>
-          <li><a href="#">Semua Kota</a></li>
-        </ul>
-      </section>
-      <section>
-        <h4>Inspirasi Event</h4>
-        <ul>
-          <li><a href="#">Festival</a></li>
-          <li><a href="#">Konser</a></li>
-          <li><a href="#">Olahraga</a></li>
-          <li><a href="#">Workshop &amp; Seminar</a></li>
-          <li><a href="#">Teater &amp; Drama</a></li>
-          <li><a href="#">Atraksi</a></li>
-          <li><a href="#">Semua Kategori</a></li>
-        </ul>
-      </section>
-    </div>
-
-    <div class="loket-footer-meta">
-      <div>© Loket (PT Global Loket Sejahtera)</div>
-      <div class="loket-footer-meta-links">
-        <a href="#">Tentang Kami</a>
-        <a href="{{ route('blog.home') }}">Blog</a>
-        <a href="#">Karir</a>
-        <a href="#">Kebijakan Privasi</a>
-        <a href="#">Kebijakan Cookie</a>
-        <a href="#">Hubungi Kami</a>
-      </div>
-    </div>
-  </div>
-</footer>
+@include('partials.footer')
 </body>
 </html>

@@ -60,6 +60,7 @@
 @import "pages/hero.css";
 @import "pages/catalog.css";
 @import "pages/product-detail.css";
+@import './pages/pricing.css';
 
 /* ======================================
    3. BASE STYLES

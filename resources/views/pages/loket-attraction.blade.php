@@ -359,12 +359,7 @@
         {{-- 2. Featured Events (Scroll) --}}
         <section class="py-4">
             <div class="container">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold mb-0">✨ Featured Events</h4>
-                    <a href="#" class="text-primary fw-semibold text-decoration-none">See more →</a>
-                </div>
-                <div class="d-flex gap-4 overflow-auto pb-2 loket-scroll">
-                    <!-- event cards simulated -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/29/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Jakarta Fair 2025</h6><div class="loket-date">10 Apr 2025</div><div class="loket-price">Rp125.000</div><div class="loket-organizer">Loket Official</div></div></div>
                     <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/96/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">DWP 2025 Djakarta Warehouse</h6><div class="loket-date">12 Des 2025</div><div class="loket-price">Rp850.000</div><div class="loket-organizer">Ismaya Live</div></div></div>
                     <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/22/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">We The Fest 2025</h6><div class="loket-date">20 Jul 2025</div><div class="loket-price">Rp1.200.000</div><div class="loket-organizer">WTF Production</div></div></div>
@@ -373,177 +368,39 @@
                 </div>
             </div>
         </section>  
-
-        {{-- 3. PROMO BANNER (Loket Creator style) --}}
-        <section class="py-3">
-            <div class="container">
-                <div class="loket-promo-banner d-flex align-items-center justify-content-between flex-wrap">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="loket-promo-logo">LOKET<span>Creator</span></div>
-                        <div class="loket-pill">Biaya Komisi</div>
-                    </div>
-                    <div class="loket-promo-center text-center">
-                        <div class="loket-big">1,2%</div>
-                        <small class="text-secondary">Sudah termasuk PPN</small>
-                    </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="loket-pill">Semua event creator</div>
-                        <div class="loket-hashtag">#PASTIBISA</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        {{-- 4. LOKET Screen (Poster style) --}}
-        <section class="py-5">
-            <div class="container">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="d-flex align-items-center gap-2">
-                        <h4 class="fw-bold mb-0">LOKET Screen</h4>
-                        <span class="badge bg-warning text-dark">NEW</span>
-                    </div>
-                    <a href="#" class="text-primary fw-semibold text-decoration-none">See more →</a>
-                </div>
-                <div class="d-flex gap-4 overflow-auto pb-2 loket-scroll">
-                    <div class="loket-poster-card"><img src="https://picsum.photos/id/106/300/400" alt="poster"></div>
-                    <div class="loket-poster-card"><img src="https://picsum.photos/id/13/300/400" alt="poster"></div>
-                    <div class="loket-poster-card"><img src="https://picsum.photos/id/26/300/400" alt="poster"></div>
-                    <div class="loket-poster-card"><img src="https://picsum.photos/id/55/300/400" alt="poster"></div>
-                    <div class="loket-poster-card"><img src="https://picsum.photos/id/66/300/400" alt="poster"></div>
-                    <div class="loket-poster-card"><img src="https://picsum.photos/id/77/300/400" alt="poster"></div>
-                </div>
-            </div>
-        </section>
-
-        {{-- 5. TOP 3 BEST SELLER (Ranking) --}}
-        <section class="py-5" style="background: linear-gradient(105deg, #102a54, #0b1f44);">
-            <div class="container">
-                <div class="d-flex justify-content-between align-items-center gap-4 flex-wrap">
-                    <div class="top-rank-item d-flex align-items-center gap-3"><div class="rank-number">1</div><div class="rank-banner"><img src="https://picsum.photos/id/20/400/150" alt="rank1"></div></div>
-                    <div class="top-rank-item d-flex align-items-center gap-3"><div class="rank-number">2</div><div class="rank-banner"><img src="https://picsum.photos/id/36/400/150" alt="rank2"></div></div>
-                    <div class="top-rank-item d-flex align-items-center gap-3"><div class="rank-number">3</div><div class="rank-banner"><img src="https://picsum.photos/id/47/400/150" alt="rank3"></div></div>
-                </div>
-            </div>
-        </section>
-
-        {{-- 6. Event Categories Grid --}}
-        <section id="kategori-populer" class="py-5">
-            <div class="container">
-                <h5 class="fw-bold mb-4">Event Categories</h5>
-                <div class="row g-3">
-                    <div class="col-6 col-md-3 col-lg-2"><a href="#" class="category-card"><div class="category-img"><img src="https://picsum.photos/id/30/100/100"></div><div class="category-name">Konser</div></a></div>
-                    <div class="col-6 col-md-3 col-lg-2"><a href="#" class="category-card"><div class="category-img"><img src="https://picsum.photos/id/24/100/100"></div><div class="category-name">Festival</div></a></div>
-                    <div class="col-6 col-md-3 col-lg-2"><a href="#" class="category-card"><div class="category-img"><img src="https://picsum.photos/id/91/100/100"></div><div class="category-name">Seminar</div></a></div>
-                    <div class="col-6 col-md-3 col-lg-2"><a href="#" class="category-card"><div class="category-img"><img src="https://picsum.photos/id/119/100/100"></div><div class="category-name">Olahraga</div></a></div>
-                    <div class="col-6 col-md-3 col-lg-2"><a href="#" class="category-card"><div class="category-img"><img src="https://picsum.photos/id/2/100/100"></div><div class="category-name">Teater</div></a></div>
-                    <div class="col-6 col-md-3 col-lg-2"><a href="#" class="category-card"><div class="category-img"><img src="https://picsum.photos/id/1/100/100"></div><div class="category-name">Pameran</div></a></div>
-                </div>
-            </div>
-        </section>
-
-        {{-- 7. Additional Featured Events Section (second block) --}}
         <section class="py-4">
             <div class="container">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h4 class="fw-bold mb-0">🎟️ Rekomendasi untukmu</h4>
-                    <a href="#" class="text-primary fw-semibold text-decoration-none">See more →</a>
-                </div>
-                <div class="d-flex gap-4 overflow-auto pb-2 loket-scroll">
-                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/98/400/200" alt="rec"></div><div class="p-3"><h6 class="loket-title">Soundrenaline 2025</h6><div class="loket-date">3 Okt 2025</div><div class="loket-price">Rp499.000</div><div class="loket-organizer">Soundrenaline</div></div></div>
-                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/145/400/200" alt="rec"></div><div class="p-3"><h6 class="loket-title">Comic Con Indonesia</h6><div class="loket-date">22-23 Nov 2025</div><div class="loket-price">Rp150.000</div><div class="loket-organizer">Nexus</div></div></div>
-                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/89/400/200" alt="rec"></div><div class="p-3"><h6 class="loket-title">Art Jakarta 2025</h6><div class="loket-date">12 Sep 2025</div><div class="loket-price">Rp85.000</div><div class="loket-organizer">Art Jakarta</div></div></div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/29/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Jakarta Fair 2025</h6><div class="loket-date">10 Apr 2025</div><div class="loket-price">Rp125.000</div><div class="loket-organizer">Loket Official</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/96/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">DWP 2025 Djakarta Warehouse</h6><div class="loket-date">12 Des 2025</div><div class="loket-price">Rp850.000</div><div class="loket-organizer">Ismaya Live</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/22/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">We The Fest 2025</h6><div class="loket-date">20 Jul 2025</div><div class="loket-price">Rp1.200.000</div><div class="loket-organizer">WTF Production</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/169/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Pestapora 2025</h6><div class="loket-date">5 Sep 2025</div><div class="loket-price">Rp350.000</div><div class="loket-organizer">Pestapora</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/42/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Bali Blues Festival</h6><div class="loket-date">28 Jun 2025</div><div class="loket-price">Rp275.000</div><div class="loket-organizer">Bali Events</div></div></div>
                 </div>
             </div>
-        </section>
-
-        {{-- 8. Creator Favorite (logo circle) --}}
-        <section class="py-5">
+        </section>  
+        <section class="py-4">
             <div class="container">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="fw-bold mb-0">Creator Favorite</h5>
-                </div>
-                <div class="d-flex gap-4 overflow-auto pb-2 creator-scroll">
-                    <div class="creator-logo-card"><div class="creator-logo"><img src="https://picsum.photos/id/64/100/100"></div><div class="creator-name">Loket Origin</div></div>
-                    <div class="creator-logo-card"><div class="creator-logo"><img src="https://picsum.photos/id/82/100/100"></div><div class="creator-name">Ismaya Live</div></div>
-                    <div class="creator-logo-card"><div class="creator-logo"><img src="https://picsum.photos/id/86/100/100"></div><div class="creator-name">Rajawali</div></div>
-                    <div class="creator-logo-card"><div class="creator-logo"><img src="https://picsum.photos/id/123/100/100"></div><div class="creator-name">Miles Music</div></div>
-                    <div class="creator-logo-card"><div class="creator-logo"><img src="https://picsum.photos/id/168/100/100"></div><div class="creator-name">JOOX Event</div></div>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/29/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Jakarta Fair 2025</h6><div class="loket-date">10 Apr 2025</div><div class="loket-price">Rp125.000</div><div class="loket-organizer">Loket Official</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/96/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">DWP 2025 Djakarta Warehouse</h6><div class="loket-date">12 Des 2025</div><div class="loket-price">Rp850.000</div><div class="loket-organizer">Ismaya Live</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/22/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">We The Fest 2025</h6><div class="loket-date">20 Jul 2025</div><div class="loket-price">Rp1.200.000</div><div class="loket-organizer">WTF Production</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/169/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Pestapora 2025</h6><div class="loket-date">5 Sep 2025</div><div class="loket-price">Rp350.000</div><div class="loket-organizer">Pestapora</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/42/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Bali Blues Festival</h6><div class="loket-date">28 Jun 2025</div><div class="loket-price">Rp275.000</div><div class="loket-organizer">Bali Events</div></div></div>
                 </div>
             </div>
-        </section>
-
-        {{-- 9. Featured Products Slider (carousel style) --}}
-        <section class="py-5 section-soft">
+        </section>  
+        <section class="py-4">
             <div class="container">
-                <div class="mb-4">
-                    <h2 class="mb-1">Produk Unggulan</h2>
-                    <p class="text-muted">Koleksi event terlaris dan rating tertinggi</p>
-                </div>
-                <div id="featuredSlider" class="carousel slide position-relative px-md-5" data-bs-ride="false">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="d-flex gap-4 overflow-auto pb-2 product-scroll">
-                                <div style="min-width: 220px;"><div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/40/300/180"></div><div class="p-3"><h6 class="loket-title">Konser Tulus</h6><div class="loket-price">Rp325.000</div><div class="loket-organizer">Tulus Co</div></div></div></div>
-                                <div style="min-width: 220px;"><div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/38/300/180"></div><div class="p-3"><h6 class="loket-title">Sheila On 7</h6><div class="loket-price">Rp250.000</div><div class="loket-organizer">Seven Music</div></div></div></div>
-                                <div style="min-width: 220px;"><div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/95/300/180"></div><div class="p-3"><h6 class="loket-title">Lomba Masak</h6><div class="loket-price">Rp75.000</div><div class="loket-organizer">Food Fest</div></div></div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev custom-slider-btn" type="button" data-bs-target="#featuredSlider" data-bs-slide="prev"><i class="bi bi-chevron-left"></i></button>
-                    <button class="carousel-control-next custom-slider-btn" type="button" data-bs-target="#featuredSlider" data-bs-slide="next"><i class="bi bi-chevron-right"></i></button>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/29/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Jakarta Fair 2025</h6><div class="loket-date">10 Apr 2025</div><div class="loket-price">Rp125.000</div><div class="loket-organizer">Loket Official</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/96/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">DWP 2025 Djakarta Warehouse</h6><div class="loket-date">12 Des 2025</div><div class="loket-price">Rp850.000</div><div class="loket-organizer">Ismaya Live</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/22/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">We The Fest 2025</h6><div class="loket-date">20 Jul 2025</div><div class="loket-price">Rp1.200.000</div><div class="loket-organizer">WTF Production</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/169/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Pestapora 2025</h6><div class="loket-date">5 Sep 2025</div><div class="loket-price">Rp350.000</div><div class="loket-organizer">Pestapora</div></div></div>
+                    <div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/42/400/200" alt="event"></div><div class="p-3"><h6 class="loket-title">Bali Blues Festival</h6><div class="loket-date">28 Jun 2025</div><div class="loket-price">Rp275.000</div><div class="loket-organizer">Bali Events</div></div></div>
                 </div>
             </div>
-        </section>
-
-        {{-- 10. Latest Products Slider --}}
-        <section class="py-5">
-            <div class="container">
-                <div class="mb-4">
-                    <h2 class="mb-1">🔥 Produk Terbaru</h2>
-                    <p class="text-muted">Event terbaru yang siap menghiburmu</p>
-                </div>
-                <div id="latestSlider" class="carousel slide position-relative px-md-5" data-bs-ride="false">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="d-flex gap-4 overflow-auto pb-2 product-scroll">
-                                <div style="min-width: 220px;"><div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/155/300/180"></div><div class="p-3"><h6 class="loket-title">Fun Run 2025</h6><div class="loket-price">Rp90.000</div></div></div></div>
-                                <div style="min-width: 220px;"><div class="loket-card"><div class="loket-img-wrapper"><img src="https://picsum.photos/id/163/300/180"></div><div class="p-3"><h6 class="loket-title">Yogyakarta Jazz</h6><div class="loket-price">Rp185.000</div></div></div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev custom-slider-btn" type="button" data-bs-target="#latestSlider" data-bs-slide="prev"><i class="bi bi-chevron-left"></i></button>
-                    <button class="carousel-control-next custom-slider-btn" type="button" data-bs-target="#latestSlider" data-bs-slide="next"><i class="bi bi-chevron-right"></i></button>
-                </div>
-            </div>
-        </section>
-
-        {{-- 11. Support & Ticketing Section --}}
-        <section class="py-5" style="background: linear-gradient(135deg, #0d6efd, #0a58ca);">
-            <div class="container">
-                <div class="row align-items-center g-4">
-                    <div class="col-lg-6">
-                        <div class="text-white">
-                            <h2 class="fw-bold mb-3">Butuh Bantuan?</h2>
-                            <p class="lead mb-3">Tim support kami siap membantu Anda 24/7. Buat ticket support dan dapatkan respons cepat.</p>
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-2"><i class="bi bi-check-circle me-2"></i> Respon cepat dari tim support profesional</li>
-                                <li class="mb-2"><i class="bi bi-check-circle me-2"></i> Tracking ticket komprehensif</li>
-                                <li class="mb-2"><i class="bi bi-check-circle me-2"></i> Kategori prioritas penanganan</li>
-                            </ul>
-                            <div class="d-flex gap-2 flex-wrap">
-                                <a href="#" class="btn btn-light btn-lg rounded-pill"><i class="bi bi-list-check"></i> View My Tickets</a>
-                                <a href="#" class="btn btn-outline-light btn-lg rounded-pill"><i class="bi bi-plus-circle"></i> Create New Ticket</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="support-illustration p-5 text-center">
-                            <i class="bi bi-headset" style="font-size: 80px; color: rgba(255,255,255,0.3);"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </section>  
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

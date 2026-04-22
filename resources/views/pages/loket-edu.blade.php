@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.clean')
 
 @section('title', 'LOKET X')
 
@@ -214,56 +214,8 @@
                 <div class="loket-x-meta">22 Des 2023 - Winda Paramita</div>
             </article>
         </div>
-
-        <footer class="loket-x-footer">
-            <section>
-                <h3>Tentang Loket</h3>
-                <ul>
-                    <li><a href="#">Biaya</a></li>
-                    <li><a href="{{ route('catalog.index') }}">Lihat Event</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Syarat dan Ketentuan</a></li>
-                    <li><a href="#">Laporan Kesalahan Sistem</a></li>
-                </ul>
-            </section>
-            <section>
-                <h3>Rayakan Eventmu</h3>
-                <ul>
-                    <li><a href="#">Cara Mempersiapkan Event</a></li>
-                    <li><a href="#">Cara Membuat Event Lomba</a></li>
-                    <li><a href="#">Cara Mempublikasikan Event</a></li>
-                    <li><a href="#">Cara Membuat Event Musik</a></li>
-                    <li><a href="#">Cara Mengelola Event</a></li>
-                    <li><a href="#">Cara Membuat Konsep Acara yang Menarik</a></li>
-                    <li><a href="#">Cara Membuat Event di Co-Working Space</a></li>
-                </ul>
-            </section>
-            <section>
-                <h3>Lokasi Event</h3>
-                <ul>
-                    <li><a href="#">Jakarta</a></li>
-                    <li><a href="#">Bandung</a></li>
-                    <li><a href="#">Yogyakarta</a></li>
-                    <li><a href="#">Surabaya</a></li>
-                    <li><a href="#">Solo</a></li>
-                    <li><a href="#">Medan</a></li>
-                    <li><a href="#">Bali</a></li>
-                    <li><a href="#">Semua Kota</a></li>
-                </ul>
-            </section>
-            <section>
-                <h3>Inspirasi Event</h3>
-                <ul>
-                    <li><a href="#">Festival</a></li>
-                    <li><a href="#">Konser</a></li>
-                    <li><a href="#">Olahraga</a></li>
-                    <li><a href="#">Workshop &amp; Seminar</a></li>
-                    <li><a href="#">Teater &amp; Drama</a></li>
-                    <li><a href="#">Atraksi</a></li>
-                    <li><a href="#">Semua Kategori</a></li>
-                </ul>
-            </section>
-        </footer>
+        @include('partials.footer')
+       
         <div class="loket-x-copy">&copy; Loket (PT Global Loket Sejahtera)</div>
     </div>
 </section>

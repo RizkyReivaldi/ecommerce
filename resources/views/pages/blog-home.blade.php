@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.clean')
 
 @section('title', 'Blog Home')
 
@@ -267,20 +267,11 @@
 @endpush
 
 @section('content')
+@include('partials.promo-navbar')
+
 <section class="loket-blog-page">
     <div class="loket-blog-shell">
-        <header class="loket-blog-head">
-            <h1 class="loket-blog-title">Loket Blog</h1>
-            <nav class="loket-blog-tabs" aria-label="Blog category">
-                <a class="loket-blog-tab active" href="{{ route('blog.home') }}">Blog Home</a>
-                <a class="loket-blog-tab" href="#">LOKET X</a>
-                <a class="loket-blog-tab" href="#">LOKET Edu</a>
-                <a class="loket-blog-tab" href="#">LOKET News</a>
-                <a class="loket-blog-tab" href="#">LOKET Screen</a>
-                <a class="loket-blog-tab" href="#">LOKET Wiki</a>
-                <a class="loket-blog-tab" href="#">LOKET Event</a>
-            </nav>
-        </header>
+        
 
         <div class="loket-main-grid">
             <main>
@@ -369,54 +360,8 @@
             </aside>
         </div>
 
-        <footer class="loket-footer-links">
-            <section class="loket-footer-group">
-                <h3>Lokasi Event</h3>
-                <ul>
-                    <li><a href="#">Jakarta</a></li>
-                    <li><a href="#">Bandung</a></li>
-                    <li><a href="#">Yogyakarta</a></li>
-                    <li><a href="#">Surabaya</a></li>
-                    <li><a href="#">Solo</a></li>
-                    <li><a href="#">Medan</a></li>
-                    <li><a href="#">Bali</a></li>
-                    <li><a href="#">Semua Kota</a></li>
-                </ul>
-            </section>
-            <section class="loket-footer-group">
-                <h3>Inspirasi Event</h3>
-                <ul>
-                    <li><a href="#">Festival</a></li>
-                    <li><a href="#">Konser</a></li>
-                    <li><a href="#">Olahraga</a></li>
-                    <li><a href="#">Workshop &amp; Seminar</a></li>
-                    <li><a href="#">Teater &amp; Drama</a></li>
-                    <li><a href="#">Atraksi</a></li>
-                    <li><a href="#">Semua Kategori</a></li>
-                </ul>
-            </section>
-            <section class="loket-footer-group">
-                <h3>Ikuti Kami</h3>
-                <ul>
-                    <li><a href="#">Tentang Kami</a></li>
-                    <li><a href="{{ route('blog.home') }}">Blog</a></li>
-                    <li><a href="#">Karir</a></li>
-                    <li><a href="#">Kebijakan Privasi</a></li>
-                    <li><a href="#">Kebijakan Cookie</a></li>
-                    <li><a href="#">Hubungi Kami</a></li>
-                </ul>
-            </section>
-            <section class="loket-footer-group">
-                <h3>Keamanan dan Privasi</h3>
-                <ul>
-                    <li><a href="#">ISO 27001</a></li>
-                </ul>
-            </section>
-        </footer>
-
-        <div class="loket-copyright">
-            &copy; Loket (PT Global Loket Sejahtera)
-        </div>
+        @include('partials.footer')
+        
     </div>
 </section>
 @endsection

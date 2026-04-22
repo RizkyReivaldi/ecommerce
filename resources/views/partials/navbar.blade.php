@@ -15,11 +15,11 @@
 <div class="top-strip d-none d-lg-flex justify-content-end align-items-center px-4 py-1" style="background-color: #1b40a0; gap: 25px;">
     <div class="d-flex gap-4 align-items-center">
         <a href="{{ route('catalog.create') }}" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('Mulai Jadi Event Creator') }}</a>
-        <a href="{{ route('promo.indodana') }}" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('Biaya') }}</a>
+        <a href="{{ route('pricing') }}" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('Biaya') }}</a>
         <a href="{{ route('blog.home') }}" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('Blog') }}</a>
-        <a href="pages.loket-x" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('LOKET X') }}</a>
-        <a href="pages.loket-screen" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('LOKET Screen') }}</a>
-        <a href="pages.loket-plus" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('LOKET Plus') }}</a>
+        <a href="{{ route('pages.loket-plus') }}" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('LOKET X') }}</a>
+        <a href="{{ route('pages.loket-screen') }}" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('LOKET Screen') }}</a>
+        <a href="{{ route('pages.loket-plus') }}" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('LOKET Plus') }}</a>
         <a href="#" style="color: white; text-decoration: none; font-size: 11px; font-weight: 500;">{{ __('Pusat Bantuan') }}</a>
         
         <div class="dropdown lang-dropdown">
@@ -88,10 +88,10 @@
 
                 <div class="d-flex flex-wrap gap-3" style="font-size: 0.8rem; margin-left: 5px;">
                     <a href="{{ route('promo.indodana') }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">#Promo_Indodana</a>
-                    <a href="{{ route('catalog.index', ['q' => 'LOKET Plus']) }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">#LOKETPlus</a>
-                    <a href="{{ route('catalog.index', ['q' => 'LOKET Screen']) }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">#LOKETScreen</a>
-                    <a href="{{ route('catalog.index', ['q' => 'Promo']) }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">#LOKET_Promo</a>
-                    <a href="{{ route('catalog.index', ['q' => 'Attraction']) }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">#LoketAttraction</a>
+                    <a href="{{ route('pages.loket-plus') }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">#LOKETPlus</a>
+                    <a href="{{ route('pages.loket-screen') }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">#LOKETScreen</a>
+                    <a href="{{ route('pages.loket-promo') }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">#LOKET_Promo</a>
+                    <a href="{{ route('pages.loket-attraction') }}" style="color: rgba(255,255,255,0.7); text-decoration: none;">#LoketAttraction</a>
                 </div>
             </div>
             <ul class="navbar-nav ms-auto align-items-center gap-2">

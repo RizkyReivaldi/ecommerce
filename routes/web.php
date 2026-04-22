@@ -59,14 +59,39 @@ Route::get('/tentang', function () {
     return view('tentang');
 });
 
+
+
+
+
 Route::view('/promo-indodana', 'pages.promo-indodana')->name('promo.indodana');
 Route::view('/blog-home', 'pages.blog-home')->name('blog.home');
-Route::view('/loket-x', 'pages.loket-x')->name('blog.loketx');
-Route::view('/loket-edu', 'pages.loket-edu')->name('blog.loketedu');
-Route::view('/loket-news', 'pages.loket-news')->name('blog.loketnews');
-Route::view('/loket-screen', 'pages.loket-screen')->name('blog.loketscreen');
-Route::view('/loket-wiki', 'pages.loket-wiki')->name('blog.loketwiki');
-Route::view('/loket-event', 'pages.loket-event')->name('blog.loketevent');
+Route::view('/loket-x', 'pages.loket-x')->name('pages.loket-x');
+Route::view('/loket-edu', 'pages.loket-edu')->name('pages.loket-edu');
+Route::view('/loket-news', 'pages.loket-news')->name('pages.loket-news');
+Route::view('/loket-screen', 'pages.loket-screen')->name('pages.loket-screen');
+Route::view('/loket-wiki', 'pages.loket-wiki')->name('pages.loket-wiki');
+Route::view('/loket-event', 'pages.loket-event')->name('pages.loket-event');
+Route::view('/loket-plus', 'pages.loket-plus')->name('pages.loket-plus');
+route::view('/loket-promo', 'pages.loket-promo')->name('pages.loket-promo');
+route::view('/loketattraction', 'pages.loket-attraction')->name('pages.loket-attraction');
+Route::view('/pricing', 'checkout.pricing')->name('pricing');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Route::get('/sapa/{nama}', function ($nama) {
 
@@ -102,6 +127,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
 
+
     // ================================================
     // TICKETS ROUTES
     // ================================================
@@ -114,7 +140,7 @@ Route::middleware('auth')->group(function () {
 // FILE: routes/web.php (tambahan untuk admin)
 // ========================================
 
-// ================================================
+// ================================================A
 // ROUTE KHUSUS ADMIN
 // ================================================
 // middleware(['auth', 'admin']) = Harus login DAN harus admin
