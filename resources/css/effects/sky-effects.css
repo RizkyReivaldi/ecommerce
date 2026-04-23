@@ -1,0 +1,164 @@
+/* ======================================
+   SKY EFFECTS & ANIMATED BACKGROUND
+====================================== */
+
+#sky-effects {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#starfield {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ================= SKY LAYERS ================= */
+
+.sky-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.8s ease;
+}
+
+.sky-layer.active {
+  opacity: 1;
+}
+
+.sky-day {
+  background: linear-gradient(180deg, #7dd3fc, #38bdf8, #bae6fd);
+}
+
+.sky-sunset {
+  background: linear-gradient(180deg, #fca5a5, #fb7185, #93c5fd);
+}
+
+.sky-night {
+  background: linear-gradient(180deg, #020617, #020617);
+}
+
+/* ================= SUN RAYS ================= */
+
+.sun-rays {
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(
+    rgba(255,255,255,.18),
+    transparent 40%,
+    rgba(255,255,255,.08),
+    transparent 70%
+  );
+  animation: sunSpin 80s linear infinite;
+  opacity: 0;
+}
+
+.sky-day.active .sun-rays,
+.sky-sunset.active .sun-rays {
+  opacity: 1;
+}
+
+/* ================= CLOUDS (PARALLAX) ================= */
+
+.cloud-layer {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat-x;
+  opacity: .6;
+  background-image: url(white-vector-realistic-cloud-set-260nw-2605554037.webp);
+}
+
+.clouds-back {
+  animation: cloudMove 220s linear infinite;
+  opacity: .25;
+}
+
+.clouds-mid {
+  animation: cloudMove 150s linear infinite;
+  opacity: .4;
+}
+
+.clouds-front {
+  animation: cloudMove 90s linear infinite;
+  opacity: .6;
+}
+
+.theme-wrapper.dark .cloud-layer {
+  opacity: 0;
+}
+
+/* ================= STARS ================= */
+
+.stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 70% 40%, #fff, transparent),
+    radial-gradient(1px 1px at 50% 80%, #fff, transparent),
+    radial-gradient(2px 2px at 80% 20%, #fff, transparent);
+  opacity: 0;
+  animation: twinkle 6s infinite alternate;
+}
+
+.theme-wrapper.dark .stars {
+  opacity: 1;
+}
+
+/* ================= NEBULA ================= */
+
+.nebula {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(170,120,255,.2), transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(80,160,255,.15), transparent 65%);
+  opacity: 0;
+  animation: nebulaMove 60s ease-in-out infinite alternate;
+}
+
+.theme-wrapper.dark .nebula {
+  opacity: 1;
+}
+
+/* ================= MOON ================= */
+
+.moon {
+  position: absolute;
+  top: 80px;
+  left: 70%;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff, #ddd);
+  box-shadow: 0 0 30px rgba(255,255,255,.6);
+  opacity: 0;
+  cursor: grab;
+  z-index: 5;
+  transition: opacity 1s, box-shadow .2s;
+}
+
+.theme-wrapper.dark .moon {
+  opacity: 1;
+}
+
+.moon.dragging {
+  cursor: grabbing;
+  box-shadow: 0 0 50px rgba(255,255,255,.9);
+}
+
+/* ================= SHOOTING STAR ================= */
+
+.shooting-star {
+  position: absolute;
+  width: 140px;
+  height: 2px;
+  background: linear-gradient(90deg, white, transparent);
+  transform: rotate(-30deg);
+  animation: shoot 1.4s ease-out forwards;
+  pointer-events: none;
+}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="675" viewBox="0 0 900 675" role="img" aria-label="Related Article">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f3d66"/>
+      <stop offset="100%" stop-color="#2f79ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="675" fill="url(#bg)"/>
+  <circle cx="760" cy="120" r="120" fill="#ffffff" opacity="0.15"/>
+  <circle cx="120" cy="560" r="140" fill="#ffffff" opacity="0.08"/>
+  <rect x="90" y="210" width="720" height="260" rx="20" fill="#ffffff" opacity="0.92"/>
+  <text x="130" y="300" fill="#19395f" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="800">LOKET NEWS</text>
+  <text x="130" y="365" fill="#2f5e8d" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700">Artikel Terkait Promo &amp; Event</text>
+</svg>

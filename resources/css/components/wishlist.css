@@ -1,0 +1,88 @@
+/* ======================================
+   WISHLIST BUTTON & INTERACTIONS
+====================================== */
+
+/* ===== WISHLIST BUTTON ===== */
+.wishlist-btn {
+  z-index: 3;
+  background: none !important;
+  border: none !important;
+  padding: 0.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wishlist-btn i {
+  font-size: 1.25rem;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  transition: transform .15s ease, color .15s ease;
+}
+
+.theme-wrapper.dark .wishlist-btn i {
+  color: #ff6b6b;
+}
+
+.wishlist-btn:hover i {
+  transform: scale(1.15);
+}
+
+.wishlist-btn i.active {
+  color: #ff4d6d;
+}
+
+.wishlist-btn i.pop {
+  animation: heart-pop .35s ease;
+}
+
+/* ===== PRODUCT INTERACTIONS ===== */
+.product-media {
+  position: relative;
+}
+
+.product-link {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.qty-input {
+  width: 48px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* ===== PRODUCT CARD PRICE FIX ===== */
+.product-card .product-price,
+.product-card .price,
+.product-card .fw-bold {
+  transition: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.product-card:hover .product-price,
+.product-card:hover .price,
+.product-card:hover .fw-bold {
+  transform: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.product-card {
+  will-change: auto;
+}
+
+.product-card .text-primary {
+  text-shadow: none !important;
+}

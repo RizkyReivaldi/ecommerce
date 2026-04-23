@@ -1,0 +1,13 @@
+/* ======================================
+   CSS VARIABLES & ROOT CONFIGURATION
+====================================== */
+
+:root {
+  --text-main: #0f172a;
+  --text-muted: #475569;
+}
+
+.theme-wrapper.dark {
+  --text-main: #ffffff;
+  --text-muted: #cbd5f5;
+}

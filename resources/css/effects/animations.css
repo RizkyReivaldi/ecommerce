@@ -1,0 +1,105 @@
+/* ======================================
+   ANIMATIONS & KEYFRAMES
+====================================== */
+
+/* ================= SKY EFFECTS ================= */
+@keyframes sunSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cloudMove {
+  from { background-position-x: 0; }
+  to   { background-position-x: -2000px; }
+}
+
+@keyframes twinkle {
+  from { opacity: .5; }
+  to   { opacity: 1; }
+}
+
+@keyframes nebulaMove {
+  from { transform: translateX(-20px); }
+  to   { transform: translateX(20px); }
+}
+
+@keyframes shoot {
+  to {
+    transform: translate(600px, 300px) rotate(-30deg);
+    opacity: 0;
+  }
+}
+
+/* ================= DISCOUNT BADGE GLOW ================= */
+@keyframes discount-glow {
+  0% {
+    box-shadow: 0 0 0 rgba(239,68,68,0.6);
+  }
+  50% {
+    box-shadow:
+      0 0 18px rgba(239,68,68,0.9),
+      0 0 32px rgba(249,115,22,0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(239,68,68,0.6);
+  }
+}
+
+@keyframes discount-glow-night {
+  0% {
+    box-shadow: 0 0 0 rgba(251,113,133,0.7);
+  }
+  50% {
+    box-shadow:
+      0 0 22px rgba(251,113,133,1),
+      0 0 42px rgba(249,115,22,0.8);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(251,113,133,0.7);
+  }
+}
+
+/* ================= PRICE PULSE ANIMATION ================= */
+@keyframes price-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 6px 16px rgba(15,23,42,0.08);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 12px 30px rgba(34,197,94,0.35);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 6px 16px rgba(15,23,42,0.08);
+  }
+}
+
+@keyframes price-pulse-night {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow:
+      0 0 28px rgba(34,197,94,0.7),
+      0 0 48px rgba(34,197,94,0.5);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  }
+}
+
+/* ================= HEART POP ANIMATION ================= */
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+@keyframes heart-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}

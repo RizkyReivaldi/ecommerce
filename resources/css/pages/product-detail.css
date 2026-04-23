@@ -1,0 +1,36 @@
+/* ======================================
+   PRODUCT DETAIL PAGE
+====================================== */
+
+.theme-wrapper.dark .product-title {
+  color: #ffffff !important;
+}
+
+.theme-wrapper.dark .instax-breadcrumb,
+.theme-wrapper.dark .instax-breadcrumb a {
+  color: #d0d0d0 !important;
+}
+
+.theme-wrapper.dark .product-desc {
+  color: #eaeaea !important;
+}
+
+.theme-wrapper.dark .meta-info {
+  color: #d6d6d6 !important;
+}
+
+.theme-wrapper.dark .qty-label {
+  color: #ffffff !important;
+}
+
+/* ===== FLY TO CART ANIMATION ===== */
+.fly-img {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform .7s cubic-bezier(.4,0,.2,1), opacity .7s;
+}
