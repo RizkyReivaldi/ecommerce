@@ -19,11 +19,7 @@
         </div>
 
         {{-- Title --}}
-        <div class="mt-2">
-            <small class="fw-semibold text-dark d-block" style="line-height:1.3;">
-                {{ Str::limit($product->name, 30) }}
-            </small>
-        </div>
+        
 
     </a>
 </div>

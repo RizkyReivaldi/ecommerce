@@ -3,6 +3,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,9 @@ class StoreProductRequest extends FormRequest
             'description' => ['nullable', 'string'],
 
             // Harga minimal 1000 rupiah
-            'price' => ['required', 'numeric', 'min:1000'],
+            'price' => ['nullable', 'numeric', 'min:0'],
+
+            'slug' => ['nullable', 'string', 'max:255', 'unique:products,slug'],
 
             // Harga diskon (opsional), tapi jika diisi:
             // 1. Harus numeric
@@ -38,7 +41,7 @@ class StoreProductRequest extends FormRequest
             // 3. Harus KURANG DARI ('lt' = less than) harga asli (price)
             'discount_price' => ['nullable', 'numeric', 'min:0', 'lt:price'],
 
-            'stock' => ['required', 'integer', 'min:0'],
+            'stock' => ['nullable', 'integer', 'min:0'],
             'weight' => ['required', 'integer', 'min:1'], // Berat minimal 1 gram
 
             'is_active' => ['boolean'],
@@ -55,7 +58,27 @@ class StoreProductRequest extends FormRequest
                 'image', // Harus berupa file gambar
                 'mimes:jpg,png,webp', // Ekstensi yang diperbolehkan
                 'max:2048' // Maksimal 2MB per file (2048 KB)
+
+                
             ],
+            // EVENT FIELDS (add below your current rules)
+
+            'start_date' => ['nullable', 'date'],
+            'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
+
+            'location' => ['nullable', 'string', 'max:255'],
+
+            // tickets comes as array from frontend
+            'tickets' => ['nullable', 'array'],
+
+            // validate each ticket field (tickets[0][name], tickets[0][price], etc.)
+            'tickets.*.name' => ['required_with:tickets', 'string', 'max:255'],
+            'tickets.*.price' => ['required_with:tickets', 'numeric', 'min:0'],
+            'tickets.*.stock' => ['required_with:tickets', 'integer', 'min:0'],
+            'tickets.*.start' => ['nullable', 'date'],
+            'tickets.*.end' => ['nullable', 'date'],
+
+            'banner' => ['nullable', 'image', 'mimes:jpg,png,webp', 'max:2048'],
         ];
     }
 
@@ -84,7 +107,9 @@ class StoreProductRequest extends FormRequest
         // Kita paksa konversi jadi boolean true/false agar database menerima nilai yang benar (1/0).
         $this->merge([
             'is_active' => $this->boolean('is_active'),
-            'is_featured' => $this->boolean('is_featured'),
+            'is_featured' => $this->boolean('is_featured'), 
+
+            'slug' => $this->slug ?? ($this->name ? Str::slug($this->name) : null),
         ]);
     }
 }

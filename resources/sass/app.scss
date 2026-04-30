@@ -6,3 +6,15 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+// Remove old @import statements and use @use instead
+// Or better, use Vite to import CSS directly
+
+// Modern way - import via @forward
+@forward 'bootstrap/scss/bootstrap';
+
+// Your custom variables
+$primary: #0d6efd;
+$secondary: #6c757d;
+
+// Then import bootstrap

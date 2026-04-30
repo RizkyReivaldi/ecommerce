@@ -105,8 +105,51 @@ class CatalogController extends Controller
         try {
             DB::beginTransaction();
 
-            $product = Product::create($request->validated());
+            $data = $request->validated();
 
+            // tickets logic - handle indexed array structure: tickets[0][name], tickets[0][price], etc.
+            if (!empty($data['tickets']) && is_array($data['tickets'])) {
+                $tickets = [];
+
+                foreach ($data['tickets'] as $ticket) {
+                    if (empty($ticket['name'])) continue;
+
+                    $tickets[] = [
+                        'name' => $ticket['name'],
+                        'price' => $ticket['price'] ?? 0,
+                        'stock' => $ticket['stock'] ?? 0,
+                        'start' => $ticket['start'] ?? null,
+                        'end' => $ticket['end'] ?? null,
+                    ];
+                }
+
+                if (!empty($tickets)) {
+                    $data['tickets'] = $tickets;
+                    // total stock from tickets
+                    $data['stock'] = collect($tickets)->sum('stock');
+                } else {
+                    $data['tickets'] = null;
+                }
+            } else {
+                $data['tickets'] = null;
+            }
+
+            // fallback (IMPORTANT if no tickets)
+            $data['stock'] = $data['stock'] ?? 0;
+
+            // status
+            $data['is_active'] = $request->status === 'publish';
+
+            // Handle banner upload
+            if ($request->hasFile('banner')) {
+                $bannerFile = $request->file('banner');
+                $bannerFilename = 'banner-' . time() . '.' . $bannerFile->extension();
+                $data['banner'] = $bannerFile->storeAs('products/banners', $bannerFilename, 'public');
+            }
+
+            $product = Product::create($data);
+
+            // upload gallery images
             if ($request->hasFile('images')) {
                 $this->uploadImages($request->file('images'), $product);
             }

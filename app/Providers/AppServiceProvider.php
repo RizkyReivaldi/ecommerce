@@ -16,9 +16,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Product::observe(ProductObserver::class);
 
+        App::setLocale(session('app_locale', config('app.locale')));
+
         View::composer('*', function ($view) {
-            App::setLocale(session('app_locale', config('app.locale')));
-            $view->with('categories', Category::all());
+            $view->with('navCategories', Category::all());
         });
+
     }
 }

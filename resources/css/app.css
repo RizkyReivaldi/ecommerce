@@ -65,6 +65,11 @@
 /* ======================================
    3. BASE STYLES
 ====================================== */
+
+
+
+
+
 body {
   font-family: "Inter", system-ui, sans-serif;
   margin: 0;
@@ -1600,4 +1605,58 @@ a, li,
 
 
 
+/* ======================================
+   FORCEFUL LEFT GAP ELIMINATION (ALL PAGES)
+====================================== */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+}
+
+/* Reset all possible debug/toolbar wrappers */
+.theme-wrapper,
+#themeWrapper,
+.phpebugbar-openhandler,
+.phpebugbar-openhandler-overlay,
+#app > div:first-child,
+#app > .container,
+body > div:first-child {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    left: 0 !important;
+    position: relative;
+}
+
+/* Force any immediate child of body to start flush left */
+body > * {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+/* Reset Bootstrap containers that may add padding (remove left gutter) */
+.container,
+.container-fluid,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* If you still need inner content padding, re-add it to direct children only */
+.container > .row,
+.container-fluid > .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* Ensure main content area has no offset */
+main, .main-content, #main, .content-wrapper {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
 

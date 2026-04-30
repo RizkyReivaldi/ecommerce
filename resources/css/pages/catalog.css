@@ -148,3 +148,15 @@
   background: linear-gradient(135deg, #ffffff, #dddddd);
   color: #000;
 }
+
+
+/* FIX LEFT GAP ON THIS PAGE */
+html body > *:first-child {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+.container, .container-fluid, .row {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}

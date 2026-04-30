@@ -25,6 +25,12 @@ class Product extends Model
         'weight',
         'is_active',
         'is_featured',
+        'start_date',
+        'end_date',
+        'location',
+        'tickets',
+        'banner'
+
     ];
 
     // Casts: Konversi tipe data otomatis
@@ -35,6 +41,7 @@ class Product extends Model
         'discount_price' => 'decimal:2',
         'is_active' => 'boolean',
         'is_featured' => 'boolean',
+        'tickets' => 'json',
     ];
 
     // ==================== RELATIONSHIPS ====================
@@ -354,5 +361,12 @@ class Product extends Model
     public function hasStock(int $quantity = 1): bool
     {
         return $this->stock >= $quantity;
+    }
+
+    public function scopeNotMovie($query)
+    {
+        return $query->whereHas('category', function ($q) {
+            $q->where('name', '!=', 'Movie');
+        });
     }
 }

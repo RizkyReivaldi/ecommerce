@@ -3,8 +3,15 @@
 // FUNGSI: Entry point untuk semua JavaScript
 // ================================================
 
-// Import Bootstrap JS (untuk dropdown, modal, dll)
-import * as bootstrap from "bootstrap";
+import './bootstrap';
+
+// Import Bootstrap JS only
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
+// No CSS import here
+
+// If you need CSS, import it in app.scss instead, NOT here
+// Remove this line: import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Simpan ke window agar bisa diakses global
 window.bootstrap = bootstrap;

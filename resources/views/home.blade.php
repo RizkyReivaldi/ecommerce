@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Loket - Platform Event & Tiket</title>
-    <!-- Bootstrap 5 CSS + Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Google Fonts (optional) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-    
-</head>
+
+
+
+
+
+@extends('layouts.app')
+
+@section('content')<!DOCTYPE html>
+
+
 <style>
 body {
     font-family: 'Inter', sans-serif;
@@ -246,13 +243,7 @@ section {
     color: white;
     box-shadow: 0 5px 15px rgba(37,99,235,0.3);
 }
-</style>
-
-
-
-
-<body>
- @include('partials.navbar')
+</style> 
     <!-- The homepage content (without navbar & footer as requested) -->
     <main>
 
@@ -596,12 +587,12 @@ section {
                 <ul class="nav nav-pills mb-4 loket-tabs" id="movieTab" role="tablist">
                     <li class="nav-item">
                         <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#now">
-                            🎬 Now Showing
+                             Now Showing
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#soon">
-                            ⏳ Coming Soon
+                             Coming Soon
                         </button>
                     </li>
                 </ul>
@@ -864,7 +855,7 @@ section {
             </div>
         </section>
     </main>
-    @include('partials.footer')
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -873,5 +864,8 @@ section {
             new bootstrap.Carousel(carousel, { interval: 5000, wrap: true });
         });
     </script>
-</body>
+
 </html>
+
+
+@endsection
